@@ -5,6 +5,7 @@ import List from './components/List.jsx';
 import ProfilePage from './components/ProfilePage.jsx'
 import BookPage from './components/BookPage.jsx'
 import HomePage from './components/HomePage.jsx'
+import Search from './components/Search.jsxgt'
 
 class App extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class App extends React.Component {
     })
     this.fetch('book', '1234567890', (book)=> {
       this.setState({
-        selectedBook: user
+        selectedBook: book
       })
     })
   }
@@ -56,7 +57,7 @@ class App extends React.Component {
   render () {
     return (
     <div>
-
+    <Search />
 
       <div className="selections">
         Test Pages:
