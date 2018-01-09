@@ -7,11 +7,17 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: []
+      items: [],
+      userProfile: []
     }
   }
 
   componentDidMount() {
+    this.findUser('dust_off', (user)=> {
+      this.setState({
+        userProfile: user
+      })
+    })
     $.ajax({
       url: '/items',
       success: (data) => {
@@ -25,9 +31,21 @@ class App extends React.Component {
     });
   }
 
+  findUser(user, cb) {
+    $.ajax({
+      url: `/user/${user}`,
+      success: (data) => {
+        cb(data)
+      },
+      error: (err) => {
+        console.log('err', err);
+      }
+    });
+  }
+
   render () {
     return (<div>
-      <h1>Item List</h1>
+      <h1>Item List: {this.state.userProfile.name}</h1>
       <List items={this.state.items}/>
     </div>)
   }
