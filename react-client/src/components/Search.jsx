@@ -19,7 +19,6 @@ class Search extends React.Component {
   handleSubmit() {
     console.log('clicked', this.state.query);
     this.props.fetch('book', this.state.query);
-    // write ajax request here
   }
 
   render() {
