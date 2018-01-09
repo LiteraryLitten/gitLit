@@ -12,32 +12,27 @@ class App extends React.Component {
     this.state = {
       view: null,
       items: [],
-      userProfile: []
+      userProfile: [],
+      selectedBook: [],
     }
   }
 
   componentDidMount() {
-    this.findUser('dust_off', (user)=> {
+    this.fetch('user', 'dust_off', (user)=> {
       this.setState({
         userProfile: user
       })
     })
-    // $.ajax({
-    //   url: '/items',
-    //   success: (data) => {
-    //     this.setState({
-    //       items: data
-    //     })
-    //   },
-    //   error: (err) => {
-    //     console.log('err', err);
-    //   }
-    // });
+    this.fetch('book', '1234567890', (book)=> {
+      this.setState({
+        selectedBook: user
+      })
+    })
   }
 
-  findUser(user, cb) {
+  fetch(thing, id, cb) {
     $.ajax({
-      url: `/user/${user}`,
+      url: `/${thing}/${id}`,
       success: (data) => {
         cb(data)
       },
@@ -48,7 +43,11 @@ class App extends React.Component {
   }
 
   changeView(event) {
-    var choice = event.target.value
+    if(event.target.value) {
+      var choice = event.target.value
+    } else {
+      choice = event;
+    }
     this.setState({
       view: choice
     });
@@ -72,19 +71,22 @@ class App extends React.Component {
       <div className="main-view">
         {this.state.view === 'Book'
           ? <BookPage
-            props={'test'}
+            book={this.state.selectedBook}
+            changeView={this.changeView.bind(this)}
           />
           : this.state.view === 'Profile'
             ? <ProfilePage
               props={'test'}
+              changeView={this.changeView.bind(this)}
             />
             :
             <HomePage
               props={'test'}
+              changeView={this.changeView.bind(this)}
             />
         }
       </div>
-      
+
     </div>)
   }
 }

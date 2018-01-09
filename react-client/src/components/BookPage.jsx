@@ -6,7 +6,7 @@ class BookPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      book: []
+      book: this.props.book
     }
   }
 
