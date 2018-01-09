@@ -58,7 +58,6 @@ class App extends React.Component {
     return (
     <div>
     <Search />
-
       <div className="selections">
         Test Pages:
         <select onChange={this.changeView.bind(this)}>

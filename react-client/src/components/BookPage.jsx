@@ -13,11 +13,12 @@ class BookPage extends React.Component {
   componentDidMount() {
 
   }
+  //{this.state.book.}
 
   render () {
     return (
       <div>
-      <h1>Book:</h1>
+      <h1>Book: </h1>
     </div>
     )
   }

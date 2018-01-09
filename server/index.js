@@ -27,6 +27,17 @@ app.get('/user/:username', (req, res)=> {
   })
 })
 
+app.get('/book/:isbn', (req, res)=> {
+  let isbn = req.params.isbn
+  db.findBook(isbn, (err, data)=> {
+    if(err) {
+      res.sendStatus(500);
+    } else {
+      res.json(data[0]);
+    }
+  })
+})
+
 app.listen(3000, function() {
   console.log('listening on port 3000!');
 });
