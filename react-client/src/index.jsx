@@ -5,7 +5,7 @@ import List from './components/List.jsx';
 import ProfilePage from './components/ProfilePage.jsx'
 import BookPage from './components/BookPage.jsx'
 import HomePage from './components/HomePage.jsx'
-import Search from './components/Search.jsxgt'
+import Search from './components/Search.jsx'
 
 class App extends React.Component {
   constructor(props) {
@@ -32,6 +32,7 @@ class App extends React.Component {
   }
 
   fetch(thing, id, cb) {
+    console.log('FETCH');
     $.ajax({
       url: `/${thing}/${id}`,
       success: (data) => {
@@ -57,7 +58,7 @@ class App extends React.Component {
   render () {
     return (
     <div>
-    <Search />
+    <Search fetch={this.fetch.bind(this)} />
 
       <div className="selections">
         Test Pages:
