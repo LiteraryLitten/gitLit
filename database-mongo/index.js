@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        // required: true
     },
     reviewedBooks: [Number],
     favoriteBooks: [Number]
@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema({
 
 const reviewSchema = new mongoose.Schema({
   idNameNumber: String,
-  user: [String],
+  user: String,
   isbn: Number,
   text: String,
   rating: Number
@@ -50,7 +50,7 @@ var Book = mongoose.model('Book', bookSchema);
 var User = mongoose.model('User', userSchema);
 var Review = mongoose.model('Review', reviewSchema);
 
-var selectAll = function(callback) {
+var selectAllBooks = function(callback) {
   Book.find({}, function(err, items) {
     if(err) {
       callback(err, null);
@@ -59,8 +59,6 @@ var selectAll = function(callback) {
     }
   });
 };
-
-module.exports.selectAll = selectAll;
 
 
 //********************
@@ -97,7 +95,7 @@ var testUser = new User({
 
 var fakeReview = new Review({
   idNameNumber: 'dust_off1234567890',
-  user: ['dust_off'],
+  user: 'dust_off',
   isbn: 1234567890,
   text: 'I hated it',
   rating: 4
@@ -150,50 +148,9 @@ var findProfile = (user, cb) => {
   User.find({username: user}).exec(cb)
 }
 
-module.exports.findUserFavorites = findUserFavorites;
-module.exports.findUserReviews = findUserReviews;
-module.exports.findProfile = findProfile;
-
-//
-// [ [ { _id: 5a54f2833ce933a371159ba6,
-//       title: 'Test Book Title 1',
-//       author: 'Test Author 1',
-//       isbn: 1234567890,
-//       __v: 0,
-//       reviews: [],
-//       genres: [Object] } ] ] undefined
-// [ [ { _id: 5a54f2833ce933a371159ba6,
-//       title: 'Test Book Title 1',
-//       author: 'Test Author 1',
-//       isbn: 1234567890,
-//       __v: 0,
-//       reviews: [],
-//       genres: [Object] } ],
-//   [ { _id: 5a54f2833ce933a371159ba7,
-//       title: 'Test Book Title 2',
-//       author: 'Test Author 2',
-//       isbn: 11234567890,
-//       __v: 0,
-//       reviews: [],
-//       genres: [Object] } ] ] undefined
-// [ [ { _id: 5a54f2833ce933a371159ba6,
-//       title: 'Test Book Title 1',
-//       author: 'Test Author 1',
-//       isbn: 1234567890,
-//       __v: 0,
-//       reviews: [],
-//       genres: [Object] } ],
-//   [ { _id: 5a54f2833ce933a371159ba7,
-//       title: 'Test Book Title 2',
-//       author: 'Test Author 2',
-//       isbn: 11234567890,
-//       __v: 0,
-//       reviews: [],
-//       genres: [Object] } ],
-//   [ { _id: 5a54f2833ce933a371159ba8,
-//       title: 'Test Book Title 3',
-//       author: 'Test Author 3',
-//       isbn: 99234567890,
-//       __v: 0,
-//       reviews: [],
-//       genres: [Object] } ] ] undefined
+module.exports = {
+  selectAllBooks,
+  findUserFavorites,
+  findUserReviews,
+  findProfile
+}
