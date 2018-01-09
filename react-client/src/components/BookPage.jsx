@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 
-class ProfilePage extends React.Component {
+class BookPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userProfile: []
+      book: this.props.book
     }
   }
 
@@ -17,10 +17,10 @@ class ProfilePage extends React.Component {
   render () {
     return (
       <div>
-      <h1>User Name:</h1>
+      <h1>Book:</h1>
     </div>
     )
   }
 }
 
-export default ProfilePage;
+export default BookPage;

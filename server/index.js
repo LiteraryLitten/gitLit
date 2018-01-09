@@ -31,12 +31,12 @@ app.listen(3000, function() {
   console.log('listening on port 3000!');
 });
 
-var logger = (err, data) => {
-  console.log('');
-  console.log('');
-  console.log(err, data);
-}
-var user = 'dust_off'
-
-db.findUserFavorites(user, logger);
-db.findUserReviews(user, logger)
+// var logger = (err, data) => {
+//   console.log('');
+//   console.log('');
+//   console.log(err, data);
+// }
+// var user = 'dust_off'
+//
+// db.findUserFavorites(user, logger);
+// db.findUserReviews(user, logger)

@@ -2,39 +2,37 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import List from './components/List.jsx';
-// import ProfilePage from './components/ProfilePage.jsx'
+import ProfilePage from './components/ProfilePage.jsx'
+import BookPage from './components/BookPage.jsx'
+import HomePage from './components/HomePage.jsx'
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      view: null,
       items: [],
-      userProfile: []
+      userProfile: [],
+      selectedBook: [],
     }
   }
 
   componentDidMount() {
-    this.findUser('dust_off', (user)=> {
+    this.fetch('user', 'dust_off', (user)=> {
       this.setState({
         userProfile: user
       })
     })
-    $.ajax({
-      url: '/items',
-      success: (data) => {
-        this.setState({
-          items: data
-        })
-      },
-      error: (err) => {
-        console.log('err', err);
-      }
-    });
+    this.fetch('book', '1234567890', (book)=> {
+      this.setState({
+        selectedBook: user
+      })
+    })
   }
 
-  findUser(user, cb) {
+  fetch(thing, id, cb) {
     $.ajax({
-      url: `/user/${user}`,
+      url: `/${thing}/${id}`,
       success: (data) => {
         cb(data)
       },
@@ -44,10 +42,51 @@ class App extends React.Component {
     });
   }
 
+  changeView(event) {
+    if(event.target.value) {
+      var choice = event.target.value
+    } else {
+      choice = event;
+    }
+    this.setState({
+      view: choice
+    });
+  }
+
   render () {
-    return (<div>
-      <h1>Item List: {this.state.userProfile.name}</h1>
-      <List items={this.state.items}/>
+    return (
+    <div>
+
+
+      <div className="selections">
+        Test Pages:
+        <select onChange={this.changeView.bind(this)}>
+          <option>Profile</option>
+          <option>Book</option>
+          <option>Null</option>
+        </select>
+      </div>
+
+
+      <div className="main-view">
+        {this.state.view === 'Book'
+          ? <BookPage
+            book={this.state.selectedBook}
+            changeView={this.changeView.bind(this)}
+          />
+          : this.state.view === 'Profile'
+            ? <ProfilePage
+              props={'test'}
+              changeView={this.changeView.bind(this)}
+            />
+            :
+            <HomePage
+              props={'test'}
+              changeView={this.changeView.bind(this)}
+            />
+        }
+      </div>
+
     </div>)
   }
 }
