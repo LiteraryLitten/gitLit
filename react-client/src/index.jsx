@@ -41,6 +41,7 @@ class App extends React.Component {
   }
 
   fetch(thing, id, cb) {
+    console.log('FETCH');
     $.ajax({
       url: `/${thing}/${id}`,
       success: (data) => {
@@ -67,7 +68,7 @@ class App extends React.Component {
   render () {
     return (
     <div>
-    <Search />
+    <Search fetch={this.fetch.bind(this)} />
       <div className="selections">
         Test Pages:
         <select onChange={this.changeView.bind(this)}>
