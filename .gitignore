@@ -3,9 +3,10 @@
 
 ## NPM ##
 node_modules/
+dist/
 
 ## API keys ##
 api/goodreads.js
 
 
-client-react/dist/bundle.js
+react-client/dist/bundle.js
