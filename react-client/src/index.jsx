@@ -36,9 +36,9 @@ class App extends React.Component {
     });
 
     // Search Example //ALSO works with ISBN: 0316769177
-    this.fetch('search', 'Catcher in the Rye', (search) => {
-      // console.log(search);
-    });
+    // this.fetch('search', 'Catcher in the Rye', (search) => {
+    //   // console.log(search);
+    // });
   }
 
   fetch(thing, id, cb) {
