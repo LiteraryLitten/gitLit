@@ -148,9 +148,13 @@ const findProfile = (user, cb) => {
 };
 
 const findBook = (book, cb) => {
-  if (book.length === 10 || book.length === 13) {
+  console.log(book);
+  const pattern = new RegExp('^\\d{10}$');
+  if ((book.length === 10 || book.length === 13) && pattern.test(book)) {
+    console.log('its an ISBN?');
     Book.find({ isbn: book }).exec(cb);
   } else {
+    console.log('its a title?');
     Book.find({ title: book }).exec(cb);
   }
 };

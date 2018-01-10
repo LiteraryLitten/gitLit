@@ -17,9 +17,9 @@ class App extends React.Component {
       selectedBook: [],
     };
     this.changeView = this.changeView.bind(this);
-    this.fetch = this.fetch.bind(this);
+    // this.fetch = this.fetch.bind(this);
   }
-
+  //
   componentDidMount() {
     // example load user by userName
     this.fetch('user', 'dust_off', (user) => {
@@ -29,15 +29,10 @@ class App extends React.Component {
     });
 
     // example fetch from library by ISBN
-    this.fetch('book', '1234567890', (book) => {
-      this.setState({
-        selectedBook: book,
-      });
-    });
-
-    // Search Example //ALSO works with ISBN: 0316769177
-    // this.fetch('search', 'Catcher in the Rye', (search) => {
-    //   // console.log(search);
+    // this.fetch('book', '1234567890', (book) => {
+    //   this.setState({
+    //     selectedBook: book,
+    //   });
     // });
   }
 
@@ -49,8 +44,7 @@ class App extends React.Component {
         cb(data);
       },
       error: (err) => {
-        // console.log('err', err);
-        // console.log(this.state.selectedBook);
+        console.log('err', err);
       },
     });
   }
