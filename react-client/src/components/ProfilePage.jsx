@@ -1,25 +1,23 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import $ from 'jquery';
 
 class ProfilePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userProfile: []
-    }
+      userProfile: [],
+    };
   }
 
   componentDidMount() {
 
   }
 
-  render () {
+  render() {
     return (
       <div>
-      <h1>User Name:</h1>
-    </div>
-    )
+        <h1>User Name:</h1>
+      </div>
+    );
   }
 }
 
