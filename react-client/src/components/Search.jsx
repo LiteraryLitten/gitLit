@@ -18,7 +18,7 @@ class Search extends React.Component {
 
   handleSubmit() {
     console.log('clicked', this.state.query);
-    this.props.fetch('book', this.state.query, (book) => {
+    this.props.fetch('search', this.state.query, (book) => {
       this.setState({
         selectedBook: book
       });

@@ -6,7 +6,6 @@ node_modules/
 dist/
 
 ## API keys ##
-api/goodreads.js
-
+api/
 
 react-client/dist/bundle.js
