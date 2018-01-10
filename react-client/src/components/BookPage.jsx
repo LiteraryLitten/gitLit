@@ -18,16 +18,12 @@ class BookPage extends React.Component {
     // console.log('mounted');
     const lookFor = this.props.book ? '0316769177' : this.props.book;
     this.props.fetch('search', lookFor, (data) => {
-      // console.log(data);
-      const year = data.original_publication_year._text;
-      const month = data.original_publication_month._text;
-      const day = data.original_publication_day._text;
-      const date = `${month}-${day}-${year}`;
+      console.log('test', data);
       this.setState({
         bookData: data,
-        title: data.best_book.title._text,
-        published: date,
-        author: data.best_book.author.name._text,
+        title: data.title,
+        published: `${data.month}-${data.day}-${data.year}`,
+        author: data.author,
       });
     });
   }
@@ -35,7 +31,7 @@ class BookPage extends React.Component {
   render() {
     return (
       <div>
-        {this.state.bookData.best_book
+        {this.state.bookData.title
           ?
             <div>
               <h1>
