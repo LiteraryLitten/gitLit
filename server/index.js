@@ -56,6 +56,17 @@ app.get('/search/:title', (req, res) => {
   });
 });
 
+app.get('/bestSellers', (req, res)=> {
+  console.log("on line 58 in server")
+  api.getBestSellersBooks((err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+      res.json(data);
+    }
+  })
+})
+
 app.listen(3000, () => {
   console.log('listening on port 3000!');
 });
