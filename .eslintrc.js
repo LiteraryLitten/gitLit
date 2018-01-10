@@ -1,5 +1,7 @@
 module.exports = {
 	"extends": "airbnb",
-	'plugins': ['react'],
-	
+	//'plugins': ['react'],
+	'globals': {
+        'document': true
+    }
 };
