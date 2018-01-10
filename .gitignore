@@ -10,3 +10,4 @@ api/goodreads.js
 
 
 react-client/dist/bundle.js
+react-client/env/config.js
