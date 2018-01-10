@@ -5,7 +5,7 @@ import List from './components/List.jsx';
 import ProfilePage from './components/ProfilePage.jsx'
 import BookPage from './components/BookPage.jsx'
 import HomePage from './components/HomePage.jsx'
-import Search from './components/Search.jsxgt'
+import Search from './components/Search.jsx'
 
 class App extends React.Component {
   constructor(props) {
@@ -19,15 +19,24 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+
+    //example load user by userName
     this.fetch('user', 'dust_off', (user)=> {
       this.setState({
         userProfile: user
       })
     })
+
+    //example fetch from library by ISBN
     this.fetch('book', '1234567890', (book)=> {
       this.setState({
         selectedBook: book
       })
+    })
+
+    //Search Example //ALSO works with ISBN: 0316769177
+    this.fetch('search', 'Catcher in the Rye', (search)=> {
+      console.log(search);
     })
   }
 
