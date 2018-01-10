@@ -40,6 +40,7 @@ class App extends React.Component {
       },
       error: (err) => {
         console.log('err', err);
+        console.log(this.state.selectedBook);
       }
     });
   }
