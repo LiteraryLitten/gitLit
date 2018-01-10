@@ -1,15 +1,16 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var db = require('../database-mongo');
-var api = require('../api/apiHelper.js')
+const express = require('express');
+const bodyParser = require('body-parser');
+const db = require('../database-mongo');
+const api = require('../api/apiHelper.js');
 
-var app = express();
+const app = express();
 
-app.use(express.static(__dirname + '/../react-client/dist'));
+app.use(express.static(`${__dirname}/../react-client/dist`));
+app.use(bodyParser.json());
 
-app.get('/items', function (req, res) {
-  db.selectAllBooks(function(err, data) {
-    if(err) {
+app.get('/items', (req, res) => {
+  db.selectAllBooks((err, data) => {
+    if (err) {
       res.sendStatus(500);
     } else {
       res.json(data);
@@ -17,43 +18,44 @@ app.get('/items', function (req, res) {
   });
 });
 
-app.get('/user/:username', (req, res)=> {
-  let username = req.params.username
-  db.findProfile(username, (err, data)=> {
-    if(err) {
+app.get('/user/:username', (req, res) => {
+  const { username } = req.params;
+  db.findProfile(username, (err, data) => {
+    if (err) {
       res.sendStatus(500);
     } else {
       res.json(data[0]);
     }
-  })
-})
+  });
+});
 
-app.get('/book/:isbn', (req, res)=> {
-
-  let isbn = req.params.isbn
-  db.findBook(isbn, (err, data)=> {
-    if(err) {
+app.get('/book/:isbn', (req, res) => {
+  const { isbn } = req.params;
+  db.findBook(isbn, (err, data) => {
+    if (err) {
       res.sendStatus(500);
     } else {
       res.json(data[0]);
     }
-  })
-})
+  });
+});
 
-app.get('/search/:title', (req, res)=> {
-  let title = req.params.title
-  
-  db.findBook(title, (err, data)=> {
-    if(err) {
+app.get('/search/:title', (req, res) => {
+  const { title } = req.params;
+  db.findBook(title, (err, data) => {
+    if (err) {
       res.sendStatus(500);
+    } else if (data.length > 0) {
+      res.jon(data);
     } else {
       api.searchBook(title, (searchResults) => {
-        res.json(searchResults)
-      })
+        // console.log(searchResults);
+        res.json(searchResults);
+      });
     }
-  })
-})
+  });
+});
 
-app.listen(3000, function() {
+app.listen(3000, () => {
   console.log('listening on port 3000!');
 });

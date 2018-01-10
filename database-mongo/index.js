@@ -1,20 +1,21 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
+
 mongoose.connect('mongodb://localhost/lit');
 
-var db = mongoose.connection;
+const db = mongoose.connection;
 
 // db.dropDatabase();
 // mongoose.connect('mongodb://localhost/lit');
 
-db.on('error', function() {
+db.on('error', () => {
   console.log('mongoose connection error');
 });
 
-db.once('open', function() {
+db.once('open', () => {
   console.log('mongoose connected successfully');
 });
 
-var bookSchema = mongoose.Schema({
+const bookSchema = mongoose.Schema({
   title: String,
   author: String,
   genres: [String],
@@ -24,18 +25,18 @@ var bookSchema = mongoose.Schema({
 });
 
 const userSchema = new mongoose.Schema({
-    name: String,
-    username: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    password: {
-        type: String,
-        // required: true
-    },
-    reviewedBooks: [Number],
-    favoriteBooks: [Number]
+  name: String,
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    // required: true
+  },
+  reviewedBooks: [Number],
+  favoriteBooks: [Number],
 });
 
 const reviewSchema = new mongoose.Schema({
@@ -43,16 +44,16 @@ const reviewSchema = new mongoose.Schema({
   user: String,
   isbn: Number,
   text: String,
-  rating: Number
+  rating: Number,
 });
 
-var Book = mongoose.model('Book', bookSchema);
-var User = mongoose.model('User', userSchema);
-var Review = mongoose.model('Review', reviewSchema);
+const Book = mongoose.model('Book', bookSchema);
+const User = mongoose.model('User', userSchema);
+const Review = mongoose.model('Review', reviewSchema);
 
-var selectAllBooks = function(callback) {
-  Book.find({}, function(err, items) {
-    if(err) {
+const selectAllBooks = (callback) => {
+  Book.find({}, (err, items) => {
+    if (err) {
       callback(err, null);
     } else {
       callback(null, items);
@@ -61,44 +62,44 @@ var selectAllBooks = function(callback) {
 };
 
 
-//********************
+//* *******************
 
-var bookOne = new Book({
+const bookOne = new Book({
   title: 'Test Book Title 1',
   author: 'Test Author 1',
   genres: ['Horror', 'Comedy'],
   isbn: 1234567890,
-  reviews: []
+  reviews: [],
 });
-var bookTwo = new Book({
+const bookTwo = new Book({
   title: 'Test Book Title 2',
   author: 'Test Author 2',
   genres: ['True Crimes', 'Comedy'],
   isbn: 11234567890,
-  reviews: []
+  reviews: [],
 });
-var bookThree = new Book({
+const bookThree = new Book({
   title: 'Test Book Title 3',
   author: 'Test Author 3',
   genres: ['Suspense', 'Action'],
   isbn: 99234567890,
-  reviews: []
+  reviews: [],
 });
 
-var testUser = new User({
-    name: 'dustin burns',
-    username: 'dust_off',
-    password: '1234',
-    reviewedBooks: [1234567890],
-    favoriteBooks: [1234567890, 11234567890, 99234567890]
+const testUser = new User({
+  name: 'dustin burns',
+  username: 'dust_off',
+  password: '1234',
+  reviewedBooks: [1234567890],
+  favoriteBooks: [1234567890, 11234567890, 99234567890],
 });
 
-var fakeReview = new Review({
+const fakeReview = new Review({
   idNameNumber: 'dust_off1234567890',
   user: 'dust_off',
   isbn: 1234567890,
   text: 'I hated it',
-  rating: 4
+  rating: 4,
 });
 
 // bookOne.save();
@@ -107,59 +108,57 @@ var fakeReview = new Review({
 // testUser.save();
 // fakeReview.save();
 
-var findUserFavorites = (user, cb) => {
-  var books = []
-  User.find({username: user}).then((data)=> {
+const findUserFavorites = (user, cb) => {
+  const books = [];
+  User.find({ username: user }).then((foundUser) => {
+    const len = foundUser[0].favoriteBooks.length;
 
-    var len = data[0].favoriteBooks.length
-
-    data[0].favoriteBooks.forEach((book)=> {
-      Book.find({isbn: book}).then((data)=> {
-        books.push(data)
-      }).then(()=>{
-        if(books.length === len) {
-          cb(books)
+    foundUser[0].favoriteBooks.forEach((book) => {
+      Book.find({ isbn: book }).then((foundBook) => {
+        books.push(foundBook);
+      }).then(() => {
+        if (books.length === len) {
+          cb(books);
         }
-      })
-    })
-  })
-}
+      });
+    });
+  });
+};
 
-var findUserReviews = (user, cb) => {
-  var reviews = []
-  User.find({username: user}).then((data)=> {
+const findUserReviews = (user, cb) => {
+  const reviews = [];
+  User.find({ username: user }).then((foundUser) => {
+    const len = foundUser[0].reviewedBooks.length;
 
-    var len = data[0].reviewedBooks.length;
-
-    data[0].reviewedBooks.forEach((book)=> {
-      var id = data[0].username + book
-      Review.find({idNameNumber: id}).then((data)=> {
-        reviews.push(data)
-      }).then(()=>{
-        if(reviews.length === len) {
-          cb(reviews)
+    foundUser[0].reviewedBooks.forEach((book) => {
+      const id = foundUser[0].username + book;
+      Review.find({ idNameNumber: id }).then((foundReview) => {
+        reviews.push(foundReview);
+      }).then(() => {
+        if (reviews.length === len) {
+          cb(reviews);
         }
-      })
-    })
-  })
-}
+      });
+    });
+  });
+};
 
-var findProfile = (user, cb) => {
-  User.find({username: user}).exec(cb)
-}
+const findProfile = (user, cb) => {
+  User.find({ username: user }).exec(cb);
+};
 
-var findBook = (book, cb) => {
-  if(book.length === 10 || book.length === 13) {
-    Book.find({isbn: book}).exec(cb)
+const findBook = (book, cb) => {
+  if (book.length === 10 || book.length === 13) {
+    Book.find({ isbn: book }).exec(cb);
   } else {
-    Book.find({title: book}).exec(cb)
+    Book.find({ title: book }).exec(cb);
   }
-}
+};
 
 module.exports = {
   selectAllBooks,
   findUserFavorites,
   findUserReviews,
   findProfile,
-  findBook
-}
+  findBook,
+};
