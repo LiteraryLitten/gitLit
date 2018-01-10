@@ -9,4 +9,4 @@ dist/
 api/goodreads.js
 
 
-client-react/dist/bundle.js
+react-client/dist/bundle.js
