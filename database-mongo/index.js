@@ -148,9 +148,18 @@ var findProfile = (user, cb) => {
   User.find({username: user}).exec(cb)
 }
 
+var findBook = (book, cb) => {
+  if(book.length === 10 || book.length === 13) {
+    Book.find({isbn: book}).exec(cb)
+  } else {
+    Book.find({title: book}).exec(cb)
+  }
+}
+
 module.exports = {
   selectAllBooks,
   findUserFavorites,
   findUserReviews,
-  findProfile
+  findProfile,
+  findBook
 }
