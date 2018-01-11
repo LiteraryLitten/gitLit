@@ -10,6 +10,10 @@ class Search extends React.Component {
     this.onChange = this.onChange.bind(this);
   }
 
+  // bind the fetch callback to this component
+  // accept a callback that returns the isbn of the first result or the selected one to APP
+  // the CB will set the state of the currentbook in the APP and trigger a re-render of the book page
+
   onChange(e) {
     this.setState({
       query: e.target.value,
@@ -20,7 +24,7 @@ class Search extends React.Component {
     console.log('clicked', this.state.query);
     this.props.fetch('search', this.state.query, (book) => {
       this.setState({
-        selectedBook: book
+        selectedBook: book,
       });
     });
   }
