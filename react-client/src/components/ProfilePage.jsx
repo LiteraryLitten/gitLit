@@ -33,7 +33,7 @@ class ProfilePage extends React.Component {
   }
 
   handleLogin() {
-   $.ajax({
+    $.ajax({
       url: '/login',
       type: 'POST',
       data: JSON.stringify({
@@ -42,7 +42,7 @@ class ProfilePage extends React.Component {
       }),
       success: (data) => {
         console.log(data);
-        if(data.type === 'success') {
+        if (data.type === 'success') {
           alert('Login Success');
         } else if (data.type === 'wrong password') {
           alert('Wrong Password: Try Again');
