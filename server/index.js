@@ -41,20 +41,17 @@ app.post('/user/:username', (req, res) => {
     };
     // check if exists in database
     db.findProfile(userData.username, (err, data) => {
-      if(err) {
-        console.log("ERR", err);
+      if (err) {
+        console.log('ERR', err);
+      } else if (!data.length) {
+        db.createProfile(userData);
+        // figure out how to callback this
+        response.type = 'success';
+        response.data = userData;
+        res.json(response);
       } else {
-
-        if (!data.length) {
-          db.createProfile(userData);
-          // figure out how to callback this
-          response.type = 'success';
-          response.data = userData;
-          res.json(response);
-        } else {
-          response.type = 'error';
-          res.json(response);
-        }
+        response.type = 'error';
+        res.json(response);
       }
     });
   });
@@ -62,7 +59,7 @@ app.post('/user/:username', (req, res) => {
 
 app.get('/book/:isbn', (req, res) => {
   const { isbn } = req.params;
-  console.log("we are on line 34", isbn)
+  // console.log('we are on line 34', isbn);
   db.findBook(isbn, (err, data) => {
     if (err) {
       res.sendStatus(500);
@@ -74,17 +71,20 @@ app.get('/book/:isbn', (req, res) => {
           // console.log('ERROR');
           res.sendStatus(500);
         } else {
-          // console.log('ELSE FOUND');
+          // console.log('Server line 74:', searchResults);
           api.getMoreBookData(searchResults, (error, results) => {
-            if (errAPI) {
+            if (error) {
               // console.log('ERROR');
               res.sendStatus(500);
             } else {
-              // console.log('CB for more DATA');
+              // console.log('Server line 80: about to parse the final API call');
               const bookData = organizeBookData(searchResults);
+              // console.log(bookData);
               const parRez = convert.xml2json(results.data);
               const jsonRez = JSON.parse(parRez).elements[0].elements[1].elements;
               const updatedData = addReviewData(jsonRez, bookData);
+              // console.log('added some stuff, like description:');
+              // console.log(updatedData.description);
 
               res.json(updatedData);
             }
@@ -93,26 +93,6 @@ app.get('/book/:isbn', (req, res) => {
       });
     }
   });
-});
-
-app.get('/bestSeller/:isbn', (req, res) => {
-  const { isbn } = req.params;
-  console.log("we are on Bseller line 34", isbn)
-    api.searchBook(isbn, (errAPI, searchResults) => {
-      console.log("the searchResuls are:" , isbn);
-      if (errAPI) {
-        console.log('ERROR');
-        //res.sendStatus(500);
-      }  else {
-          // console.log('CB for more DATA');
-          // const bookData = organizeBookData(searchResults);
-          // const parRez = convert.xml2json(results.data);
-          // const jsonRez = JSON.parse(parRez).elements[0].elements[1].elements;
-          // const updatedData = addReviewData(jsonRez, bookData);
-
-          res.json(searchResults);
-    }
-    });
 });
 
 app.get('/search/:title', (req, res) => {
@@ -135,14 +115,13 @@ app.get('/search/:title', (req, res) => {
   });
 });
 
-app.get('/bestSellers', (req, res)=> {
+app.get('/bestSellers', (req, res) => {
   // console.log("on line 58 in server", req);
   api.getBestBooks((err, data) => {
-    console.log
     // console.log(err, data.data)
     if (err) {
       res.sendStatus(500);
-      //console.error(err);
+      // console.error(err);
     } else {
       res.json(data.data);
     }
