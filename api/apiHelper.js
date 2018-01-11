@@ -9,7 +9,7 @@ const param = require('jquery-param');
 const $ = require('jquery');
 
 const searchBook = (book, cb) => {
-  console.log('we are here now in searchbook');
+  //console.log("we are here now in searchbook");
   axios.get('https://www.goodreads.com/search.xml', {
     params: {
       q: book,
@@ -17,7 +17,7 @@ const searchBook = (book, cb) => {
     },
   })
     .then((response) => {
-      console.log('here on line 20', response.data);
+     // console.log("here on line 20",response.data);
       const parseRes = convert.xml2json(response.data, { compact: true, spaces: 1 });
       const books = JSON.parse(parseRes).GoodreadsResponse.search.results.work;
       let theBook = books;

@@ -34,24 +34,28 @@ class HomePage extends React.Component {
       url: '/bestSellers',
       type: 'GET',
     })
-      .done((result) => {
-        // const books = result.results;
-        // // console.log(books);
-        // const book1 = books[0];
-        // // console.log(book1);
-        // const b1isbn = book1.isbns[0];
-        // // console.log(b1isbn);
-        // const b1isbn13 = b1isbn.isbn13;
-        // console.log(b1isbn13);
-        //
-        // $.ajax({
-        //   url: `/book/${b1isbn13}`,
-        // })
-        //   .done((data) => {
-        //     console.log(data);
-        //     this.setState({
-        //     });
-        //   });
+    .done((result) => {
+      //console.log("on line 26 in Hompepage", result.results);
+      const books = result.results;
+
+      // books.forEach((book, index) => {
+      //   while(index <= 3) {
+      //     const book + index = book;
+      //     const title + index = (book + index).title;
+      //   }
+
+      });
+      console.log(books);
+      const book1 = books[0];
+      const book2 = books[1];
+      const book3 = books[2];
+      const b1isbn = book1.isbns[0].isbn13 ? book1.isbns[0].isbn13 : null;
+      const b2isbn = book2.isbns[0].isbn10 ? book1.isbns[0].isbn10 : null;
+      const b3isbn = book3.isbns[0].isbn10 ? book1.isbns[0].isbn10 : null;
+      const title1 = book1.title ? book1.title  : null ;
+      const title2 = book2.title //? book2.title : null;
+      console.log(title2);
+      const title3 = book3.title ? "ASKGARYVEE" : book3.title;
 
         // console.log("on line 26 in Hompepage", result.results);
         const books = result.results;
