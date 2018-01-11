@@ -45,6 +45,7 @@ app.post('/login', (req, res) => {
           loginData.type = 'invalid username';
         } else if (loginData.password === data[0].password) {
           loginData.type = 'success';
+          loginData.userProfile = data[0];
         } else {
           loginData.type = 'wrong password';
         }

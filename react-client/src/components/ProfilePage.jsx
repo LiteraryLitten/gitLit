@@ -16,6 +16,7 @@ class ProfilePage extends React.Component {
     this.saveName = this.saveName.bind(this);
     this.saveUsername = this.saveUsername.bind(this);
     this.savePassword = this.savePassword.bind(this);
+    // this.renderView = this.renderView.bind(this);
   }
 
   componentDidMount() {
@@ -41,14 +42,15 @@ class ProfilePage extends React.Component {
         password: this.state.password,
       }),
       success: (data) => {
-        console.log(data);
         if (data.type === 'success') {
           alert('Login Success');
+          this.setState({ userProfile: data.userProfile });
         } else if (data.type === 'wrong password') {
           alert('Wrong Password: Try Again');
         } else {
           alert ('Invalid username: Try Again');
         }
+        console.log(this.state.userProfile);
       },
       error: (err) => {
         console.log('err', err);
@@ -81,29 +83,70 @@ class ProfilePage extends React.Component {
     });
   }
 
+  renderView() {
+    if (this.state.userProfile === []) {
+      return (
+        <div>
+          <div className="login">
+            <label>
+              Login
+            </label>
+            <input
+              type="text"
+              value={this.username}
+              onChange={this.saveUsername}
+              placeholder="Username"
+            />
+            <input
+              type="password"
+              value={this.password}
+              onChange={this.savePassword}
+              placeholder="Password"
+            />
+            <button onClick={this.handleLogin} > Login </button>
+          </div>
+          <div className="signup">
+            <label>
+              Signup
+            </label>
+            <input
+              type="text"
+              value={this.name}
+              onChange={this.saveName}
+              placeholder="Name"
+            />
+            <input
+              type="text"
+              value={this.username}
+              onChange={this.saveUsername}
+              placeholder="Username"
+            />
+            <input
+              type="password"
+              value={this.password}
+              onChange={this.savePassword}
+              placeholder="Password"
+            />
+            <button onClick={this.handleSignup} > Signup </button>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+        USER LOGGED IN YO
+        </div>
+      )
+      
+    }
+  }
 
   render() {
     return (
       <div>
-      <div className='login'>
-      <label>
-      Login
-      </label>
-      <input type="text" value={this.username} onChange={this.saveUsername} placeholder="Username" />
-      <input type="password" value={this.password} onChange={this.savePassword} placeholder="Password" />
-      <button onClick={this.handleLogin} > Login </button>
+        {this.renderView()}
       </div>
-      <div className='signup'>
-      <label>
-      Signup
-      </label>
-      <input type="text" value={this.name} onChange={this.saveName} placeholder="Name" />
-      <input type="text" value={this.username} onChange={this.saveUsername} placeholder="Username" />
-      <input type="password" value={this.password} onChange={this.savePassword} placeholder="Password" />
-      <button onClick={this.handleSignup} > Signup </button>
-      </div>
-      </div>
-      );
+    );
   }
 }
 
