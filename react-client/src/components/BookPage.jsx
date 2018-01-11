@@ -37,8 +37,12 @@ class BookPage extends React.Component {
   }
 
   render() {
+    const isbn = '9780399178573';
+    // http://covers.openlibrary.org/b/isbn/9780385472579-S.jpg
+    // http://covers.openlibrary.org/b/isbn/9780399178573-L.jpg
     return (
       <div>
+        <img src="http://covers.openlibrary.org/b/isbn/9780399178573-L.jpg" />
         {this.state.bookData.title
           ?
             <div>
