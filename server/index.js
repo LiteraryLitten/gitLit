@@ -41,10 +41,10 @@ app.post('/login', (req, res) => {
         console.log(err);
       } else {
         console.log(data);
-        if (loginData.password === data[0].password) {
+        if (!data.length) {
+          loginData.type = 'invalid username';
+        } else if (loginData.password === data[0].password) {
           loginData.type = 'success';
-        } else if (!data.length) {
-          loginData.type = 'no username';
         } else {
           loginData.type = 'wrong password';
         }

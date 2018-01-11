@@ -47,7 +47,7 @@ class ProfilePage extends React.Component {
         } else if (data.type === 'wrong password') {
           alert('Wrong Password: Try Again');
         } else {
-          alert ('Cannot find username: Try Again');
+          alert ('Invalid username: Try Again');
         }
       },
       error: (err) => {
