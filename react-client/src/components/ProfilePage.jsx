@@ -33,16 +33,32 @@ class ProfilePage extends React.Component {
   }
 
   handleLogin() {
-    this.props.fetch('user', this.state.username, (user) => {
-      this.setState({
-        userProfile: user,
-      });
+   $.ajax({
+      url: '/login',
+      type: 'POST',
+      data: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password,
+      }),
+      success: (data) => {
+        console.log(data);
+        if(data.type === 'success') {
+          alert('Login Success');
+        } else if (data.type === 'wrong password') {
+          alert('Wrong Password: Try Again');
+        } else {
+          alert ('Cannot find username: Try Again');
+        }
+      },
+      error: (err) => {
+        console.log('err', err);
+      },
     });
   }
 
   handleSignup() {
     $.ajax({
-      url: `/user/${this.state.username}`,
+      url: '/signup',
       type: 'POST',
       data: JSON.stringify({
         name: this.state.name,
@@ -73,8 +89,8 @@ class ProfilePage extends React.Component {
       <label>
       Login
       </label>
-      <input type="text" value={this.username} onChange={this.onChange} placeholder="Username" />
-      <input type="password" value={this.password} onChange={this.onChange} placeholder="Password" />
+      <input type="text" value={this.username} onChange={this.saveUsername} placeholder="Username" />
+      <input type="password" value={this.password} onChange={this.savePassword} placeholder="Password" />
       <button onClick={this.handleLogin} > Login </button>
       </div>
       <div className='signup'>
