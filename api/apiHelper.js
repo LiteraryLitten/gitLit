@@ -9,6 +9,7 @@ const param = require('jquery-param');
 const $ = require('jquery');
 
 const searchBook = (book, cb) => {
+  console.log("we are here now in searchbook");
   axios.get('https://www.goodreads.com/search.xml', {
     params: {
       q: book,
@@ -16,6 +17,7 @@ const searchBook = (book, cb) => {
     },
   })
     .then((response) => {
+      console.log("here on line 20",response.data);
       const parseRes = convert.xml2json(response.data, { compact: true, spaces: 1 });
       const books = JSON.parse(parseRes).GoodreadsResponse.search.results.work;
       // console.log('books', books[0]);
@@ -45,21 +47,22 @@ const getMoreBookData = (book, cb) => {
     });
 };
 
-const getBestSellersBooks = (callback) => {
-  let url = 'https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json';
-  url += `?${param({ 'api-key': NYTKey.key })}`;
-  $.ajax({
-    url,
-    type: 'GET',
-  })
-    .done((result) => {
+var getBestBooks = (cb) => {
+  var url = "https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json";
+  url += '?' + param({'api-key': NYTKey.key});
+
+  axios.get(url)
+    .then((response) => {
+      cb(null, response);
     })
-    .fail((err) => {
-      throw err;
+    .catch((error) => {
+       cb(error, null);
     });
 };
+
 
 module.exports = {
   searchBook,
   getMoreBookData,
+  getBestBooks
 };
