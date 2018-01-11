@@ -95,6 +95,25 @@ app.get('/book/:isbn', (req, res) => {
   });
 });
 
+app.get('/bestSeller/:isbn', (req, res) => {
+  const { isbn } = req.params;
+  console.log("we are on Bseller line 34", isbn)
+    api.searchBook(isbn, (errAPI, searchResults) => {
+      console.log("the searchResuls are:" , isbn);
+      if (errAPI) {
+        console.log('ERROR');
+        //res.sendStatus(500);
+      }  else {
+          // console.log('CB for more DATA');
+          // const bookData = organizeBookData(searchResults);
+          // const parRez = convert.xml2json(results.data);
+          // const jsonRez = JSON.parse(parRez).elements[0].elements[1].elements;
+          // const updatedData = addReviewData(jsonRez, bookData);
+
+          res.json(searchResults);
+    }
+    });
+});
 
 app.get('/search/:title', (req, res) => {
   const { title } = req.params;
@@ -118,8 +137,8 @@ app.get('/search/:title', (req, res) => {
 
 app.get('/bestSellers', (req, res)=> {
   // console.log("on line 58 in server", req);
-
   api.getBestBooks((err, data) => {
+    console.log
     // console.log(err, data.data)
     if (err) {
       res.sendStatus(500);
