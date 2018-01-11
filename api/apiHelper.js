@@ -45,21 +45,22 @@ const getMoreBookData = (book, cb) => {
     });
 };
 
-const getBestSellersBooks = (callback) => {
-  let url = 'https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json';
-  url += `?${param({ 'api-key': NYTKey.key })}`;
-  $.ajax({
-    url,
-    type: 'GET',
-  })
-    .done((result) => {
+var getBestBooks = (cb) => {
+  var url = "https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json";
+  url += '?' + param({'api-key': NYTKey.key});
+
+  axios.get(url)
+    .then((response) => {
+      cb(null, response);
     })
-    .fail((err) => {
-      throw err;
+    .catch((error) => {
+       cb(error, null);
     });
 };
+
 
 module.exports = {
   searchBook,
   getMoreBookData,
+  getBestBooks
 };

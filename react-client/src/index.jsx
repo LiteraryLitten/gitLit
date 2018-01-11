@@ -84,6 +84,7 @@ class App extends React.Component {
       <HomePage
         props="test"
         changeView={this.changeView}
+        fetch={this.fetch}
       />
     );
   }

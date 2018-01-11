@@ -44,7 +44,7 @@ app.post('/user/:username', (req, res) => {
       if(err) {
         console.log("ERR", err);
       } else {
-    
+
         if (!data.length) {
           db.createProfile(userData);
           // figure out how to callback this
@@ -62,11 +62,9 @@ app.post('/user/:username', (req, res) => {
 
 app.get('/book/:isbn', (req, res) => {
   const { isbn } = req.params;
-
-  // look in the database for the book
-  // works with either a title or an ISBN
-  db.findBook(isbn, (errDB, data) => {
-    if (errDB) {
+  console.log("we are on line 34", isbn)
+  db.findBook(isbn, (err, data) => {
+    if (err) {
       res.sendStatus(500);
     } else if (data.length > 0) {
       res.json(data[0]);
@@ -118,13 +116,16 @@ app.get('/search/:title', (req, res) => {
   });
 });
 
-app.get('/bestSellers', (req, res) => {
-  console.log('on line 58 in server');
-  api.getBestSellersBooks((err, data) => {
+app.get('/bestSellers', (req, res)=> {
+  // console.log("on line 58 in server", req);
+
+  api.getBestBooks((err, data) => {
+    // console.log(err, data.data)
     if (err) {
-      console.error(err);
+      res.sendStatus(500);
+      //console.error(err);
     } else {
-      res.json(data);
+      res.json(data.data);
     }
   });
 });
