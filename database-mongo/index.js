@@ -147,6 +147,13 @@ const findProfile = (user, cb) => {
   User.find({ username: user }).exec(cb);
 };
 
+const createProfile = (user) => {
+          const newProfile = new User(user);
+          newProfile.save();
+
+
+};
+
 const findBook = (book, cb) => {
   console.log(book);
   const pattern = new RegExp('^\\d{10}$');
@@ -165,4 +172,5 @@ module.exports = {
   findUserReviews,
   findProfile,
   findBook,
+  createProfile,
 };

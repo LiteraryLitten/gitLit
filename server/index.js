@@ -32,6 +32,34 @@ app.get('/user/:username', (req, res) => {
   });
 });
 
+app.post('/user/:username', (req, res) => {
+  req.on('data', (chunk) => {
+    const userData = JSON.parse(chunk.toString());
+    const response = {
+      type: '',
+      data: {},
+    };
+    // check if exists in database
+    db.findProfile(userData.username, (err, data) => {
+      if(err) {
+        console.log("ERR", err);
+      } else {
+    
+        if (!data.length) {
+          db.createProfile(userData);
+          // figure out how to callback this
+          response.type = 'success';
+          response.data = userData;
+          res.json(response);
+        } else {
+          response.type = 'error';
+          res.json(response);
+        }
+      }
+    });
+  });
+});
+
 app.get('/book/:isbn', (req, res) => {
   const { isbn } = req.params;
 
