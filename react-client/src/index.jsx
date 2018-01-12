@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import $ from 'jquery';
-// import List from './components/List.jsx';
+
 import ProfilePage from './components/ProfilePage.jsx';
 import BookPage from './components/BookPage.jsx';
 import HomePage from './components/HomePage.jsx';
@@ -17,27 +18,12 @@ class App extends React.Component {
       selectedBook: [],
     };
     this.changeView = this.changeView.bind(this);
-    // this.fetch = this.fetch.bind(this);
   }
-  //
-  componentDidMount() {
-    // example load user by userName
-    this.fetch('user', 'dust_off', (user) => {
-      this.setState({
-        userProfile: user,
-      });
-    });
 
-    // example fetch from library by ISBN
-    // this.fetch('book', '1234567890', (book) => {
-    //   this.setState({
-    //     selectedBook: book,
-    //   });
-    // });
+  componentDidMount() {
   }
 
   fetch(thing, id, cb) {
-    // console.log('FETCH');
     $.ajax({
       url: `/${thing}/${id}`,
       success: (data) => {

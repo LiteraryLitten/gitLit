@@ -31,11 +31,9 @@
     "jquery": "^3.2.1",
     "jquery-param": "^0.2.0",
     "mongoose": "^4.8.6",
-    "mysql": "^2.13.0",
     "prop-types": "^15.6.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "react-star-ratings": "^1.4.1",
     "xml-js": "^1.6.2"
   }
 }
