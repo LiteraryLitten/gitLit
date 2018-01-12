@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import $ from 'jquery';
-
 import ProfilePage from './components/ProfilePage.jsx';
 import BookPage from './components/BookPage.jsx';
 import HomePage from './components/HomePage.jsx';
@@ -31,7 +29,6 @@ class App extends React.Component {
       },
       error: (err) => {
         console.log('err', err);
-
       },
     });
   }
