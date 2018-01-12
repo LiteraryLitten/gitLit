@@ -18,6 +18,7 @@ class ProfilePage extends React.Component {
     this.savePassword = this.savePassword.bind(this);
     this.renderView = this.renderView.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.changePassword = this.changePassword.bind(this);
   }
 
   componentDidMount() {
@@ -89,6 +90,10 @@ class ProfilePage extends React.Component {
     });
   }
 
+  changePassword() {
+
+  }
+
   renderView() {
     console.log(this.state.userProfile.length);
     if (this.state.userProfile.length === 0) {
@@ -139,13 +144,21 @@ class ProfilePage extends React.Component {
         </div>
       );
     } else {
+      let user = this.state.userProfile;
       return (
-        <div>
+        <div className="userProfile">
           USER LOGGED IN YO
+          <div className="name">
+            Name : {user.name} <br />
+            Username : {user.username} <br />
+            <button onClick={this.changePassword} > Change Password </button> <br />
+            My Bookshelf : {user.favoriteBooks} <br />
+            My Reviews : {user.reviewedBooks}
+          </div>
           {this.state.userProfile.username}
           <button onClick={this.handleLogout} > Logout </button>
         </div>
-      )
+      );
     }
   }
 
