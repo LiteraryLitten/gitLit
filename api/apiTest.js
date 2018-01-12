@@ -1,9 +1,4 @@
 const organizeBookData = (data) => {
-  // console.log('organizeBookData');
-  // console.log(data);
-  // console.log('');
-  // console.log('');
-  // console.log('');
   const usefulData = {
     year: data.original_publication_year._text,
     month: data.original_publication_month._text,
@@ -12,10 +7,6 @@ const organizeBookData = (data) => {
     author: data.best_book.author.name._text,
     averageRating: data.average_rating._text,
   };
-  // console.log(usefulData);
-  // console.log('');
-  // console.log('');
-  // console.log('');
   return usefulData;
 };
 
@@ -29,6 +20,7 @@ const addReviewData = (reviewData, bookData) => {
 
   return bookData;
 };
+
 
 module.exports = {
   organizeBookData,
