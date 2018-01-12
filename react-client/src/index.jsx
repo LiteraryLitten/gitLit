@@ -35,15 +35,6 @@ class App extends React.Component {
   }
 
   changeView(choice) {
-    // if (typeof event === 'string') {
-    //   console.log(event);
-    // }
-    // let choice;
-    // if (event.target.value) {
-    //   choice = event.target.value;
-    // } else {
-    //   choice = event;
-    // }
     this.setState({
       view: choice,
     });
@@ -61,7 +52,7 @@ class App extends React.Component {
     } else if (this.state.view === 'Profile') {
       return (
         <ProfilePage
-          props="test"
+          // props="test"
           fetch={this.fetch}
           changeView={this.changeView}
         />
@@ -69,7 +60,7 @@ class App extends React.Component {
     }
     return (
       <HomePage
-        props="test"
+        // props="test"
         changeView={this.changeView}
         fetch={this.fetch}
       />
@@ -80,20 +71,9 @@ class App extends React.Component {
     return (
       <div>
         <NavBar changeView={this.changeView} />
-        {/* <div className="selections">
-        Test Pages:
-          <select onChange={this.changeView}>
-            <option>Null</option>
-            <option>Profile</option>
-            <option>Book</option>
-          </select>
-        </div> */}
-
-
         <div className="main-view">
           {this.renderView()}
         </div>
-
       </div>);
   }
 }

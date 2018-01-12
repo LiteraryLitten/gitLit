@@ -16,7 +16,7 @@ db.once('open', () => {
 });
 
 const bookSchema = mongoose.Schema({
-  //change schema
+  // change schema
   year: String,
   month: String,
   day: String,
@@ -112,34 +112,33 @@ const createProfile = (user) => {
 };
 
 const findBook = (book, cb) => {
-  //console.log('findBook is working with:', book);
+  // console.log('findBook is working with:', book);
   const pattern = new RegExp('^\\d{10,13}$');
   if ((book.length === 10 || book.length === 13) && pattern.test(book)) {
-    //console.log('its an ISBN?');
+    // console.log('its an ISBN?');
     Book.find({ isbn: book }).exec(cb);
   } else {
-   // console.log('its a title?');
+    // console.log('its a title?');
     Book.find({ title: book }).exec(cb);
   }
 };
 
 const saveBook = (bookInfo) => {
-
-    newBook = new Book({
-      year: bookInfo.year,
-      month: bookInfo.month,
-      day: bookInfo.day,
-      title: bookInfo.title,
-      author: bookInfo.author,
-      averageRating: bookInfo.averageRating,
-      description: bookInfo.description,
-      imageURL: bookInfo.imageURL,
-      pages: bookInfo.pages,
-      popularShelves: bookInfo.popularShelves,
-      // reviewWidget: bookInfo.reviewWidget,
-    })
-    newBook.save();
-}
+  const newBook = new Book({
+    year: bookInfo.year,
+    month: bookInfo.month,
+    day: bookInfo.day,
+    title: bookInfo.title,
+    author: bookInfo.author,
+    averageRating: bookInfo.averageRating,
+    description: bookInfo.description,
+    imageURL: bookInfo.imageURL,
+    pages: bookInfo.pages,
+    popularShelves: bookInfo.popularShelves,
+    // reviewWidget: bookInfo.reviewWidget,
+  });
+  newBook.save();
+};
 
 module.exports = {
   selectAllBooks,
@@ -148,5 +147,5 @@ module.exports = {
   findProfile,
   findBook,
   createProfile,
-  saveBook
+  saveBook,
 };
