@@ -51,7 +51,7 @@ app.post('/login', (req, res) => {
         }
       }
       res.json(loginData);
-    });  
+    });
   });
 });
 
@@ -84,6 +84,7 @@ app.post('/signup', (req, res) => {
 
 app.get('/book/:isbn', (req, res) => {
   const { isbn } = req.params;
+  //console.log("On line 87 in server", req);
 
   //console.log("we are on line 34", isbn)
   db.findBook(isbn, (err, data) => {
@@ -106,11 +107,21 @@ app.get('/book/:isbn', (req, res) => {
               // console.log('Server line 80: about to parse the final API call');
               const bookData = organizeBookData(searchResults);
               // console.log(bookData);
+              //console.log('on line 109', searchResults);
+
               const parRez = convert.xml2json(results.data);
+
               const jsonRez = JSON.parse(parRez).elements[0].elements[1].elements;
+
               const updatedData = addReviewData(jsonRez, bookData);
               // console.log('added some stuff, like description:');
               // console.log(updatedData.description);
+
+              //this is where i want to save the data into the database before i send it back
+              // but first i want to check whether the data already exist in the database
+              // the data will be saved in the format given in bookdata
+              //console.log("on line 119", updatedData);
+              db.saveBook(updatedData);
 
               res.json(updatedData);
             }
@@ -149,6 +160,7 @@ app.get('/bestSellers', (req, res) => {
       res.sendStatus(500);
       // console.error(err);
     } else {
+      //console.log("in line ")
       res.json(data.data);
     }
   });

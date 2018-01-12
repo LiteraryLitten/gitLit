@@ -20,7 +20,7 @@ class BookPage extends React.Component {
     // /book/:isbn
     const lookFor = this.props.book ? 'Catcher in the Rye' : this.props.book;
     this.props.fetch('book', lookFor, (data) => {
-      console.log(data);
+      //console.log("in bookpage", data);
       this.setState({
         bookData: data,
         title: data.title,

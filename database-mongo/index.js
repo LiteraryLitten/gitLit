@@ -16,12 +16,18 @@ db.once('open', () => {
 });
 
 const bookSchema = mongoose.Schema({
+  //change schema
+  year: String,
+  month: String,
+  day: String,
   title: String,
   author: String,
-  genres: [String],
-  isbn: Number,
-  url: String,
-  reviews: [Number],
+  averageRating: String,
+  description: String,
+  imageURL: String,
+  pages: String,
+  popularShelves: [String],
+  // reviewWidget: [String]
 });
 
 const userSchema = new mongoose.Schema({
@@ -60,53 +66,6 @@ const selectAllBooks = (callback) => {
     }
   });
 };
-
-
-//* *******************
-
-const bookOne = new Book({
-  title: 'Test Book Title 1',
-  author: 'Test Author 1',
-  genres: ['Horror', 'Comedy'],
-  isbn: 1234567890,
-  reviews: [],
-});
-const bookTwo = new Book({
-  title: 'Test Book Title 2',
-  author: 'Test Author 2',
-  genres: ['True Crimes', 'Comedy'],
-  isbn: 11234567890,
-  reviews: [],
-});
-const bookThree = new Book({
-  title: 'Test Book Title 3',
-  author: 'Test Author 3',
-  genres: ['Suspense', 'Action'],
-  isbn: 99234567890,
-  reviews: [],
-});
-
-const testUser = new User({
-  name: 'dustin burns',
-  username: 'dust_off',
-  password: '1234',
-  reviewedBooks: [1234567890],
-  favoriteBooks: [1234567890, 11234567890, 99234567890],
-});
-
-const fakeReview = new Review({
-  idNameNumber: 'dust_off1234567890',
-  user: 'dust_off',
-  isbn: 1234567890,
-  text: 'I hated it',
-  rating: 4,
-});
-
-// bookOne.save();
-// bookTwo.save();
-// bookThree.save();
-// testUser.save();
-// fakeReview.save();
 
 const findUserFavorites = (user, cb) => {
   const books = [];
@@ -164,6 +123,24 @@ const findBook = (book, cb) => {
   }
 };
 
+const saveBook = (bookInfo) => {
+
+    newBook = new Book({
+      year: bookInfo.year,
+      month: bookInfo.month,
+      day: bookInfo.day,
+      title: bookInfo.title,
+      author: bookInfo.author,
+      averageRating: bookInfo.averageRating,
+      description: bookInfo.description,
+      imageURL: bookInfo.imageURL,
+      pages: bookInfo.pages,
+      popularShelves: bookInfo.popularShelves,
+      // reviewWidget: bookInfo.reviewWidget,
+    })
+    newBook.save();
+}
+
 module.exports = {
   selectAllBooks,
   findUserFavorites,
@@ -171,4 +148,5 @@ module.exports = {
   findProfile,
   findBook,
   createProfile,
+  saveBook
 };
