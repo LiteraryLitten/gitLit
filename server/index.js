@@ -40,7 +40,7 @@ app.post('/login', (req, res) => {
       if (err) {
         console.log(err);
       } else {
-        console.log(data);
+        // console.log(data);
         if (!data.length) {
           loginData.type = 'invalid username';
         } else if (loginData.password === data[0].password) {

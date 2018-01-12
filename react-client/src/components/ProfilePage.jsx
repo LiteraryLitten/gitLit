@@ -16,11 +16,11 @@ class ProfilePage extends React.Component {
     this.saveName = this.saveName.bind(this);
     this.saveUsername = this.saveUsername.bind(this);
     this.savePassword = this.savePassword.bind(this);
-    // this.renderView = this.renderView.bind(this);
+    this.renderView = this.renderView.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   componentDidMount() {
-
   }
 
   saveName(e) {
@@ -51,11 +51,17 @@ class ProfilePage extends React.Component {
           alert ('Invalid username: Try Again');
         }
         console.log(this.state.userProfile);
+        this.renderView();
       },
       error: (err) => {
         console.log('err', err);
       },
     });
+  }
+
+  handleLogout() {
+    this.setState({ userProfile: [] });
+    this.renderView();
   }
 
   handleSignup() {
@@ -84,7 +90,8 @@ class ProfilePage extends React.Component {
   }
 
   renderView() {
-    if (this.state.userProfile === []) {
+    console.log(this.state.userProfile.length);
+    if (this.state.userProfile.length === 0) {
       return (
         <div>
           <div className="login">
@@ -134,10 +141,11 @@ class ProfilePage extends React.Component {
     } else {
       return (
         <div>
-        USER LOGGED IN YO
+          USER LOGGED IN YO
+          {this.state.userProfile.username}
+          <button onClick={this.handleLogout} > Logout </button>
         </div>
       )
-      
     }
   }
 
