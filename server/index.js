@@ -32,7 +32,30 @@ app.get('/user/:username', (req, res) => {
   });
 });
 
-app.post('/user/:username', (req, res) => {
+app.post('/login', (req, res) => {
+  let loginData = {};
+  req.on('data', (chunk) => {
+    loginData = JSON.parse(chunk.toString());
+    db.findProfile(loginData.username, (err, data) => {
+      if (err) {
+        console.log(err);
+      } else {
+        // console.log(data);
+        if (!data.length) {
+          loginData.type = 'invalid username';
+        } else if (loginData.password === data[0].password) {
+          loginData.type = 'success';
+          loginData.userProfile = data[0];
+        } else {
+          loginData.type = 'wrong password';
+        }
+      }
+      res.json(loginData);
+    });  
+  });
+});
+
+app.post('/signup', (req, res) => {
   req.on('data', (chunk) => {
     const userData = JSON.parse(chunk.toString());
     const response = {
@@ -42,16 +65,18 @@ app.post('/user/:username', (req, res) => {
     // check if exists in database
     db.findProfile(userData.username, (err, data) => {
       if (err) {
-        console.log('ERR', err);
-      } else if (!data.length) {
-        db.createProfile(userData);
-        // figure out how to callback this
-        response.type = 'success';
-        response.data = userData;
-        res.json(response);
+        console.log("ERR", err);
       } else {
-        response.type = 'error';
-        res.json(response);
+        if (!data.length) {
+          db.createProfile(userData);
+          // figure out how to callback this
+          response.type = 'success';
+          response.data = userData;
+          res.json(response);
+        } else {
+          response.type = 'error';
+          res.json(response);
+        }
       }
     });
   });

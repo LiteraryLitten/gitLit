@@ -24,7 +24,7 @@ class HomePage extends React.Component {
 
   componentDidMount() {
     this.getBestSellersBooks(); // (//invoke with callback
-    console.log('on line 30 in Hompepage', this.props.fetch);
+    // console.log('on line 30 in Hompepage', this.props.fetch);
   }
 
   getBestSellersBooks(callback) {
@@ -55,7 +55,7 @@ class HomePage extends React.Component {
 
         // console.log("on line 26 in Hompepage", result.results);
         const books = result.results;
-        console.log(books);
+        // console.log(books);
         const book1 = books[0];
         const book2 = books[1];
         const book3 = books[2];
@@ -64,13 +64,13 @@ class HomePage extends React.Component {
         const b3isbn = book3.isbns[0].isbn13;// ? book1.isbns[0].isbn13 : null;
         const title1 = book1.title ? 'I GIVE YOU MY BODY ...' : book1.title;
         const title2 = book2.title; // ? book2.title : null;
-        console.log(title2);
+        //console.log(title2);
         const title3 = book3.title ? 'ASKGARYVEE' : book3.title;
 
         if (b1isbn) {
         // console.log(b1isbn);
           this.props.fetch('book', b1isbn, (book) => {
-            console.log('test', book);
+            // console.log('test', book);
             this.setState({
               imageUrl1: book.imageURL,
               star1: book.averageRating,
@@ -81,7 +81,7 @@ class HomePage extends React.Component {
         if (b2isbn) {
         // console.log(b1isbn);
           this.props.fetch('book', b2isbn, (book) => {
-            console.log('test', book);
+            // console.log('test', book);
             this.setState({
               imageUrl2: book.imageURL,
               star2: book.averageRating,
@@ -91,7 +91,7 @@ class HomePage extends React.Component {
         if (b3isbn) {
         // console.log(b1isbn);
           this.props.fetch('book', b3isbn, (book) => {
-            console.log('test', book);
+            // console.log('test', book);
             this.setState({
               imageUrl3: book.imageURL,
               star3: book.averageRating,
