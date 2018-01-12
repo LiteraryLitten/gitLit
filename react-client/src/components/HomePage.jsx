@@ -74,9 +74,9 @@ class HomePage extends React.Component {
         <Grid container className={classes.root}>
           <Grid item xs={12}>
             <Grid container className={classes.demo} justify="center" spacing={Number(spacing)}>
-              {[0, 1, 2].map(value => (
+              {['Book 1', 'Book 2', 'Book 3'].map(value => (
                 <Grid key={value} item>
-                  <Paper className={classes.paper} />
+                  <Paper className={classes.paper}>{value}</Paper>
                 </Grid>
               ))}
             </Grid>
