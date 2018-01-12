@@ -9,7 +9,6 @@ const param = require('jquery-param');
 const $ = require('jquery');
 
 const searchBook = (book, cb) => {
-  // console.log('we are here now in searchbook');
   axios.get('https://www.goodreads.com/search.xml', {
     params: {
       q: book,
@@ -17,7 +16,6 @@ const searchBook = (book, cb) => {
     },
   })
     .then((response) => {
-      // console.log('here on line 20', response.data);
       const parseRes = convert.xml2json(response.data, { compact: true, spaces: 1 });
       const books = JSON.parse(parseRes).GoodreadsResponse.search.results.work;
       let theBook = books;
@@ -41,8 +39,6 @@ const getMoreBookData = (book, cb) => {
   const url = `https://www.goodreads.com/book/show/${id}?format=xml&key=${goodreadsKey.key}`;
   axios.get(url)
     .then((response) => {
-      // console.log('apiHelper found data 44:');
-      // console.log('getting more Data', response);
       cb(null, response);
     })
     .catch((error) => {

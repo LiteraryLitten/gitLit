@@ -84,7 +84,8 @@ app.post('/signup', (req, res) => {
 
 app.get('/book/:isbn', (req, res) => {
   const { isbn } = req.params;
-  // console.log('we are on line 34', isbn);
+
+  //console.log("we are on line 34", isbn)
   db.findBook(isbn, (err, data) => {
     if (err) {
       res.sendStatus(500);
