@@ -27,6 +27,7 @@
     "angular": "^1.6.3",
     "axios": "^0.17.1",
     "body-parser": "^1.17.2",
+    "classnames": "^2.2.5",
     "express": "^4.15.0",
     "jquery": "^3.2.1",
     "jquery-param": "^0.2.0",
@@ -36,6 +37,7 @@
     "prop-types": "^15.6.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-popper": "^0.7.5",
     "typeface-roboto": "0.0.50",
     "xml-js": "^1.6.2"
   }
