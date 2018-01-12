@@ -3,10 +3,10 @@
 
 ## NPM ##
 node_modules/
-dist/
 
 ## API keys ##
-api/
+api/apiKeys.js
 
+## React ##
 react-client/dist/bundle.js
 react-client/env/config.js

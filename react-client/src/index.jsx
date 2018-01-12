@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-// import List from './components/List.jsx';
 import ProfilePage from './components/ProfilePage.jsx';
 import BookPage from './components/BookPage.jsx';
 import HomePage from './components/HomePage.jsx';
 import Search from './components/Search.jsx';
+import NavBar from './components/NavBar.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -17,27 +17,12 @@ class App extends React.Component {
       selectedBook: [],
     };
     this.changeView = this.changeView.bind(this);
-    // this.fetch = this.fetch.bind(this);
   }
-  //
-  componentDidMount() {
-    // example load user by userName
-    this.fetch('user', 'dust_off', (user) => {
-      this.setState({
-        userProfile: user,
-      });
-    });
 
-    // example fetch from library by ISBN
-    // this.fetch('book', '1234567890', (book) => {
-    //   this.setState({
-    //     selectedBook: book,
-    //   });
-    // });
+  componentDidMount() {
   }
 
   fetch(thing, id, cb) {
-    // console.log('FETCH');
     $.ajax({
       url: `/${thing}/${id}`,
       success: (data) => {
@@ -45,18 +30,20 @@ class App extends React.Component {
       },
       error: (err) => {
         console.log('err', err);
-
       },
     });
   }
 
-  changeView(event) {
-    let choice;
-    if (event.target.value) {
-      choice = event.target.value;
-    } else {
-      choice = event;
-    }
+  changeView(choice) {
+    // if (typeof event === 'string') {
+    //   console.log(event);
+    // }
+    // let choice;
+    // if (event.target.value) {
+    //   choice = event.target.value;
+    // } else {
+    //   choice = event;
+    // }
     this.setState({
       view: choice,
     });
@@ -92,15 +79,15 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Search fetch={this.fetch} />
-        <div className="selections">
+        <NavBar changeView={this.changeView} />
+        {/* <div className="selections">
         Test Pages:
           <select onChange={this.changeView}>
             <option>Null</option>
             <option>Profile</option>
             <option>Book</option>
           </select>
-        </div>
+        </div> */}
 
 
         <div className="main-view">

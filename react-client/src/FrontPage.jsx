@@ -1,12 +1,8 @@
 import React from 'react';
-import $ from 'jquery';
-
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { Button, Paper } from 'material-ui';
 import Grid from 'material-ui/Grid';
-import { FormLabel, FormControlLabel } from 'material-ui/Form';
-import Radio, { RadioGroup } from 'material-ui/Radio';
-import Paper from 'material-ui/Paper';
+import { withStyles } from 'material-ui/styles';
+
 
 const styles = theme => ({
   root: {
@@ -21,7 +17,7 @@ const styles = theme => ({
   },
 });
 
-class HomePage extends React.Component {
+class FrontPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -36,24 +32,40 @@ class HomePage extends React.Component {
     this.getBestSellersBooks();
   }
 
+  fetch(thing, id, cb) {
+    $.ajax({
+      url: `/${thing}/${id}`,
+      success: (data) => {
+        cb(data);
+      },
+      error: (err) => {
+        console.log('err', err);
+      },
+    });
+  }
+
   getBestSellersBooks() {
     $.ajax({
       url: '/bestSellers',
       type: 'GET',
     })
       .done((result) => {
+        // console.log(result);
         const books = result.results.slice(0, 3);
+        // let i = 0;
         books.forEach((book) => {
           const isbn = book.isbns[0].isbn13;
-          this.props.fetch('book', isbn, (goodReads) => {
+          this.fetch('book', isbn, (goodReads) => {
             book.imageURL = goodReads.imageURL;
             book.averageRating = goodReads.averageRating;
+            const tempState = this.state.books.slice();
+            tempState.push(book);
+            this.setState({
+              books: tempState,
+            });
+            console.log(this.state.books);
           });
         });
-        this.setState({
-          books,
-        });
-        console.log(this.state.books);
       })
       .fail((err) => {
         throw err;
@@ -68,29 +80,31 @@ class HomePage extends React.Component {
     const { classes } = this.props;
     const { spacing } = this.state;
 
+
     return (
-      <div>
-        {/* <h1> Literary Litten: The Rotten Tomatoes for Books</h1> */}
-        <Grid container className={classes.root}>
+      <div className={{ padding: '15px' }}>
+
+        <Grid container>
           <Grid item xs={12}>
             <Grid container className={classes.demo} justify="center" spacing={Number(spacing)}>
-              {['Book 1', 'Book 2', 'Book 3'].map(value => (
+              {[0, 1, 2].map(value => (
                 <Grid key={value} item>
-                  <Paper className={classes.paper}>{value}</Paper>
+                  <Paper className={classes.paper} />
                 </Grid>
               ))}
             </Grid>
           </Grid>
         </Grid>
+
+        <Button raised color="primary">
+          Hello World
+        </Button>
+
       </div>
     );
   }
 }
 
-// GuttersGrid.propTypes = {
-//   classes: PropTypes.object.isRequired,
-// };
+export default withStyles(styles)(FrontPage);
 
-export default withStyles(styles)(HomePage);
-
-// export default HomePage;
+// export default FrontPage;
