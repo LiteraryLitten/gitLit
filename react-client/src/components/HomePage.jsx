@@ -42,7 +42,7 @@ class HomePage extends React.Component {
       type: 'GET',
     })
       .done((result) => {
-        const books = result.results.slice(0, 3);
+        const books = result.results;// .slice(0, 3);
         const updatedBooks = [];
         books.forEach((book) => {
           const isbn = book.isbns[0].isbn13;
