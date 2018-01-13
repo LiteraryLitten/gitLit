@@ -16,7 +16,6 @@ db.once('open', () => {
 });
 
 const bookSchema = mongoose.Schema({
-  // change schema
   year: String,
   month: String,
   day: String,
