@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import classnames from 'classnames';
-import Card, { CardHeader, CardMedia, CardContent, CardActions } from 'material-ui/Card';
+import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
 import Collapse from 'material-ui/transitions/Collapse';
-import Avatar from 'material-ui/Avatar';
+// import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 import red from 'material-ui/colors/red';
@@ -12,12 +12,16 @@ import FavoriteIcon from 'material-ui-icons/Favorite';
 // import ShareIcon from 'material-ui-icons/Share';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
+import Divider from 'material-ui/Divider';
+
+import Rating from './Rating.jsx';
 
 import Grid from 'material-ui/Grid';
 
 const styles = theme => ({
   card: {
     maxWidth: 300,
+    // height: 200,
   },
   media: {
     height: 25,
@@ -37,6 +41,9 @@ const styles = theme => ({
   flexGrow: {
     flex: '1 1 auto',
   },
+  control: {
+    padding: 100,
+  },
 });
 
 class BookCard extends React.Component {
@@ -45,7 +52,9 @@ class BookCard extends React.Component {
     this.state = {
       book: this.props.book,
       expanded: false,
+      rating: 3.4,
     };
+    console.log(this.props.book);
   }
 
   handleExpandClick() {
@@ -56,40 +65,34 @@ class BookCard extends React.Component {
     const { classes } = this.props;
 
     return (
-      <Grid item>
+      <Grid item style={{ padding: 20 }}>
         <Card className={classes.card}>
           <CardHeader
             avatar={
-              <Avatar aria-label="Recipe" className={classes.avatar}>
-                  R
-              </Avatar>
+              <img src={this.state.book.imageURL} alt="" />
               }
             action={
               <IconButton>
                 <MoreVertIcon />
               </IconButton>
               }
-            title="Shrimp and Chorizo Paella"
-            subheader="September 14, 2016"
+            title={this.state.book.title}
+            subheader={this.state.book.author}
           />
-          <CardMedia
-            className={classes.media}
-            image="/static/images/cards/paella.jpg"
-            title="Contemplative Reptile"
-          />
+          <Divider light />
           <CardContent>
             <Typography component="p">
-                This impressive paella is a perfect party dish and a fun meal to cook together with
-                your guests. Add 1 cup of frozen peas along with the mussels, if you like.
+              {this.state.book.description}
             </Typography>
           </CardContent>
           <CardActions disableActionSpacing>
             <IconButton aria-label="Add to favorites">
               <FavoriteIcon />
             </IconButton>
-            {/* <IconButton aria-label="Share">
-              <ShareIcon />
-            </IconButton> */}
+
+            <Rating total="5" current={this.state.rating} />
+
+
             <div className={classes.flexGrow} />
             <IconButton
               className={classnames(classes.expand, {

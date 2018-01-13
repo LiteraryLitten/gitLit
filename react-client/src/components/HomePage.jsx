@@ -11,15 +11,15 @@ import Grid from 'material-ui/Grid';
 import BookCard from './BookCard.jsx';
 
 const styles = theme => ({
-  // root: {
-  //   flexGrow: 1,
-  // },
+  root: {
+    flexGrow: 1,
+  },
   // paper: {
   //   height: 140,
   //   width: 100,
   // },
   // control: {
-  //   padding: theme.spacing.unit * 2,
+  //   padding: 100,
   // },
 });
 
@@ -43,17 +43,21 @@ class HomePage extends React.Component {
     })
       .done((result) => {
         const books = result.results.slice(0, 3);
+        const updatedBooks = [];
         books.forEach((book) => {
           const isbn = book.isbns[0].isbn13;
           this.props.fetch('book', isbn, (goodReads) => {
             book.imageURL = goodReads.imageURL;
             book.averageRating = goodReads.averageRating;
+
+            const tempState = this.state.books.slice();
+            tempState.push(book);
+            this.setState({
+              books: tempState,
+            });
           });
         });
-        this.setState({
-          books,
-        });
-        console.log(this.state.books);
+        // console.log(this.state.books);
       })
       .fail((err) => {
         throw err;
@@ -61,12 +65,16 @@ class HomePage extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
+
     return (
       <Grid
         container
+        className={classes.root}
+        justify="center"
       >
         {this.state.books.map(book => (
-          <BookCard book={book} />
+          <BookCard book={book} key={book.isbns[0].isbn13} />
               ))}
       </Grid>
     );
