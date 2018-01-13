@@ -72,6 +72,7 @@ class BookPage extends React.Component {
     });
     this.submitRank = this.submitRank.bind(this);
     this.enterReview = this.enterReview.bind(this);
+    this.submitReview = this.submitReview.bind(this);
   }
 
   submitRank() {
@@ -82,6 +83,22 @@ class BookPage extends React.Component {
     this.setState({
       typeReview: e.target.value,
     });
+  }
+
+  submitReview() {
+    console.log('sending review');
+    const url = '/review';
+    const data = { review: this.state.typeReview };
+
+    fetch(url, {
+      method: 'POST', // or 'PUT'
+      body: JSON.stringify(data),
+      headers: new Headers({
+        'Content-Type': 'application/json',
+      }),
+    }).then(res => res.json())
+      .catch(error => console.error('Error:', error))
+      .then(response => console.log('Success:', response));
   }
 
   render() {
@@ -123,6 +140,7 @@ class BookPage extends React.Component {
               raised
               className={classes.button}
               disabled={!(this.state.typeReview.length > 1)}
+              onClick={this.submitReview}
             >
               Submit
             </Button>
@@ -135,10 +153,10 @@ class BookPage extends React.Component {
                 rows={5}
                 label="Review"
                 InputLabelProps={{
-                  shrink: true,
-                }}
+                    shrink: true,
+                  }}
                 placeholder="Reviwe Here"
-                fullWidth
+                fullWidtho
                 margin="normal"
                 onChange={this.enterReview}
               />
