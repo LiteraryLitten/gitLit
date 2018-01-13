@@ -6,6 +6,7 @@ import BookPage from './components/BookPage.jsx';
 import HomePage from './components/HomePage.jsx';
 import Search from './components/Search.jsx';
 import NavBar from './components/NavBar.jsx';
+import { Rating } from 'semantic-ui-react';
 
 class App extends React.Component {
   constructor(props) {
@@ -70,10 +71,12 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <NavBar changeView={this.changeView} />
+        <Rating icon="heart" defaultRating={1} maxRating={3} />
+
+        {/* <NavBar changeView={this.changeView} />
         <div className="main-view">
           {this.renderView()}
-        </div>
+        </div> */}
       </div>);
   }
 }

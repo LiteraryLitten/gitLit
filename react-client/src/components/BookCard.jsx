@@ -13,8 +13,7 @@ import FavoriteIcon from 'material-ui-icons/Favorite';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
 import Divider from 'material-ui/Divider';
-
-import Rating from './Rating.jsx';
+import { Rating } from 'semantic-ui-react';
 
 import Grid from 'material-ui/Grid';
 
@@ -89,8 +88,6 @@ class BookCard extends React.Component {
             <IconButton aria-label="Add to favorites">
               <FavoriteIcon />
             </IconButton>
-
-            <Rating total="5" current={this.state.rating} />
 
 
             <div className={classes.flexGrow} />
