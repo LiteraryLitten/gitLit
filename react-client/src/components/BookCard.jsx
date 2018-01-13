@@ -64,9 +64,9 @@ class BookCard extends React.Component {
 
   goToBook() {
     const isbn = this.state.book.isbn13;
-    //!!!!!!!!!!!!!!!!!
-    //!!! figure out how to use React Router
-    //!!!!!!!!!!!!!!!!!
+    //! !!!!!!!!!!!!!!!!
+    //! !! figure out how to use React Router
+    //! !!!!!!!!!!!!!!!!
   }
 
   handleExpandClick() {
@@ -74,13 +74,7 @@ class BookCard extends React.Component {
   }
 
   submitRank(rating) {
-    const isbn13 = this.props.book.isbn13 || 'isbn';
-    const url = `/rate/${isbn13}/${rating}`;
 
-    fetch(url)
-      .then(res => res.json())
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
   }
 
   render() {

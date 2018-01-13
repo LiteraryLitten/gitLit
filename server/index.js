@@ -149,9 +149,10 @@ app.get('/rate/:isbn/:rating', (req, res) => {
 
 
 app.post('/review', (req, res) => {
-  const { review } = req.body;
+  const { review, rating } = req.body;
   console.log(review);
-  res.json(review);
+  console.log(rating);
+  res.json(req.body);
 });
 
 

@@ -139,6 +139,32 @@ const save = (bookInfo) => {
   newBook.save();
 };
 
+const saveReview = (review) => {
+  const newReview = new Review({
+    idNameNumber: review.user + review.isbn13,
+    user: review.user,
+    isbn: review.isbn13,
+    text: review.review,
+    rating: review.rating,
+  });
+};
+// isbn13
+// :
+// "Catcher in the Rye"
+// review
+// :
+// "test"
+// user
+// :
+// "Dust-Off"
+// reviewSchema = new mongoose.Schema({
+//   idNameNumber: String,
+//   user: String,
+//   isbn: Number,
+//   text: String,
+//   rating: Number,
+// });
+
 module.exports = {
   selectAllBooks,
   findUserFavorites,
