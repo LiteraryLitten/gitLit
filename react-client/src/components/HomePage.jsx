@@ -18,7 +18,7 @@ class HomePage extends React.Component {
     this.state = {
       books: [],
       loading: true,
-      view: 'HomePage',
+      view: this.props.view,
     };
     this.getBestSellersBooks = this.getBestSellersBooks.bind(this);
     this.setBook = this.setBook.bind(this);
@@ -69,7 +69,7 @@ class HomePage extends React.Component {
 
           if (numCount === returnCount) {
             console.log(this.state.view);
-            if (this.state.view !== null) {
+            if (this.state.view === null) {
               this.setState({
                 books: updatedBooks,
                 loading: false,
