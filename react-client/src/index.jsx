@@ -16,7 +16,7 @@ class App extends React.Component {
       items: [],
       userProfile: [],
       selectedBook: [],
-    }
+    };
     this.changeView = this.changeView.bind(this);
   }
 
@@ -31,6 +31,7 @@ class App extends React.Component {
       },
       error: (err) => {
         console.log('err', err);
+        cb(null);
       },
     });
   }
@@ -53,7 +54,6 @@ class App extends React.Component {
     } else if (this.state.view === 'Profile') {
       return (
         <ProfilePage
-          // props="test"
           fetch={this.fetch}
           changeView={this.changeView}
         />
@@ -61,9 +61,9 @@ class App extends React.Component {
     }
     return (
       <HomePage
-        // props="test"
         changeView={this.changeView}
         fetch={this.fetch}
+        view={this.state.view}
       />
     );
   }

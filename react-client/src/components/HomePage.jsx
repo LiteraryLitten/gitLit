@@ -1,12 +1,8 @@
 import React from 'react';
 import $ from 'jquery';
-
-// import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
-// import { FormLabel, FormControlLabel } from 'material-ui/Form';
-// import Radio, { RadioGroup } from 'material-ui/Radio';
-// import Paper from 'material-ui/Paper';
+import { CircularProgress } from 'material-ui/Progress';
 
 import BookCard from './BookCard.jsx';
 
@@ -14,13 +10,6 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
   },
-  // paper: {
-  //   height: 140,
-  //   width: 100,
-  // },
-  // control: {
-  //   padding: 100,
-  // },
 });
 
 class HomePage extends React.Component {
@@ -28,12 +17,19 @@ class HomePage extends React.Component {
     super(props);
     this.state = {
       books: [],
+      loading: true,
+      view: 'HomePage',
     };
     this.getBestSellersBooks = this.getBestSellersBooks.bind(this);
+    this.setBook = this.setBook.bind(this);
   }
 
   componentDidMount() {
     this.getBestSellersBooks();
+    this.setState({
+      loading: true,
+      view: this.props.view,
+    });
   }
 
   getBestSellersBooks() {
@@ -42,41 +38,80 @@ class HomePage extends React.Component {
       type: 'GET',
     })
       .done((result) => {
-        const books = result.results;// .slice(0, 3);
-        const updatedBooks = [];
-        books.forEach((book) => {
-          const isbn = book.isbns[0].isbn13;
-          this.props.fetch('book', isbn, (goodReads) => {
-            book.imageURL = goodReads.imageURL;
-            book.averageRating = goodReads.averageRating;
-
-            const tempState = this.state.books.slice();
-            tempState.push(book);
-            this.setState({
-              books: tempState,
-            });
-          });
-        });
-        // console.log(this.state.books);
+        this.setBook(result);
       })
       .fail((err) => {
         throw err;
       });
   }
 
+  setBook(bookArray) {
+    // console.log(bookArray.results);
+    const books = bookArray.results;// .slice(0, 3);
+
+    let numCount = books.length;
+    let returnCount = 0;
+
+    const updatedBooks = [];
+    books.forEach((book) => {
+      // console.log(book);
+      if (book.isbns.length > 0) {
+        const isbn = book.isbns[0].isbn13;
+        this.props.fetch('book', isbn, (goodReads) => {
+          returnCount++;
+          if (goodReads !== null) {
+            book.imageURL = goodReads.imageURL;
+            book.averageRating = goodReads.averageRating;
+            updatedBooks.push(book);
+          } else {
+            numCount--;
+          }
+
+          if (numCount === returnCount) {
+            console.log(this.state.view);
+            if (this.state.view !== null) {
+              this.setState({
+                books: updatedBooks,
+                loading: false,
+              });
+            }
+          }
+        });
+      }
+    });
+  }
+
+
   render() {
     const { classes } = this.props;
 
     return (
-      <Grid
-        container
-        className={classes.root}
-        justify="center"
-      >
-        {this.state.books.map(book => (
-          <BookCard book={book} key={book.isbns[0].isbn13} />
-              ))}
-      </Grid>
+      <div>
+        {this.state.loading
+          ?
+            <div style={{ textAlign: 'center' }}>
+              <CircularProgress
+                className={classes.progress}
+                size={100}
+              />
+            </div>
+          :
+            <Grid
+              container
+              className={classes.root}
+              justify="center"
+            >
+              {this.state.books.map(book => (
+                <BookCard
+                  book={book}
+                  key={book.isbns[0].isbn13}
+                  changeView={this.props.changeView}
+                />
+            ))}
+            </Grid>
+        }
+
+      </div>
     );
   }
 }

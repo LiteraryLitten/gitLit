@@ -55,10 +55,18 @@ class BookCard extends React.Component {
     };
     console.log(this.props.book);
     this.submitRank = this.submitRank.bind(this);
+    this.goToBook = this.goToBook.bind(this);
   }
 
   componentDidMount() {
     // this.submitRank(5);
+  }
+
+  goToBook() {
+    const isbn = this.state.book.isbn13;
+    //!!!!!!!!!!!!!!!!!
+    //!!! figure out how to use React Router
+    //!!!!!!!!!!!!!!!!!
   }
 
   handleExpandClick() {
@@ -79,7 +87,7 @@ class BookCard extends React.Component {
     const { classes } = this.props;
 
     return (
-      <Grid item style={{ padding: 20 }}>
+      <Grid item style={{ padding: 20 }} onClick={this.goToBook}>
         <Card className={classes.card}>
           <CardHeader
             avatar={
