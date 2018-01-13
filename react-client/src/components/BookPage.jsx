@@ -44,15 +44,15 @@ class BookPage extends React.Component {
         imageURL: '',
         pages: '',
         popularShelves: '',
+        isbn13: 0,
       },
       typeReview: '',
+      rating: 0,
     };
-    this.submitRank = this.submitRank.bind(this);
   }
 
   componentDidMount() {
-    // /book/:isbn
-    const lookFor = this.props.book ? 'Catcher in the Rye' : this.props.book;
+    const lookFor = this.props.book ? '9780871404428' : this.props.book;
     this.props.fetch('book', lookFor, (data) => {
       console.log('in bookpage', data);
       this.setState({
@@ -66,18 +66,20 @@ class BookPage extends React.Component {
           imageURL: data.imageURL,
           pages: data.pages,
           popularShelves: data.popularShelves,
+          isbn13: data.isbn13,
         },
         typeReview: '',
       });
     });
+    this.submitRating = this.submitRating.bind(this);
     this.submitRank = this.submitRank.bind(this);
     this.enterReview = this.enterReview.bind(this);
     this.submitReview = this.submitReview.bind(this);
   }
 
-  submitRank() {
-    console.log('ranked');
-  }
+  // submitRank() {
+  //   console.log('ranked');
+  // }
 
   enterReview(e) {
     this.setState({
@@ -86,19 +88,26 @@ class BookPage extends React.Component {
   }
 
   submitReview() {
-    console.log('sending review');
-    const url = '/review';
-    const data = { review: this.state.typeReview };
+    const review = this.state.typeReview;
+    const { isbn13 } = this.state.book;
+    const { rating } = this.state;
+    this.props.submitReview(review, isbn13, rating);
+  }
 
-    fetch(url, {
-      method: 'POST', // or 'PUT'
-      body: JSON.stringify(data),
-      headers: new Headers({
-        'Content-Type': 'application/json',
-      }),
-    }).then(res => res.json())
-      .catch(error => console.error('Error:', error))
-      .then(response => console.log('Success:', response));
+  submitRating(rating) {
+    this.setState({
+      rating,
+    });
+
+    this.submitReview();
+
+    // const isbn13 = this.props.book.isbn13 || 'isbn';
+    // const url = `/rate/${isbn13}/${rating}`;
+    //
+    // fetch(url)
+    //   .then(res => res.json())
+    //   .then(res => console.log(res))
+    //   .catch(err => console.log(err));
   }
 
   render() {
@@ -116,7 +125,7 @@ class BookPage extends React.Component {
               icon="Star"
               defaultRating={3}
               maxRating={5}
-              click={this.submitRank}
+              click={this.submitRating}
             />
 
             <Typography>
@@ -156,7 +165,7 @@ class BookPage extends React.Component {
                     shrink: true,
                   }}
                 placeholder="Reviwe Here"
-                fullWidtho
+                fullWidth
                 margin="normal"
                 onChange={this.enterReview}
               />
