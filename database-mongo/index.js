@@ -27,6 +27,7 @@ const bookSchema = mongoose.Schema({
   imageURL: String,
   pages: String,
   popularShelves: [String],
+  isbn13: String,
   // reviewWidget: [String]
 });
 
@@ -35,7 +36,6 @@ const userSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
-    unique: true,
   },
   password: {
     type: String,
@@ -118,12 +118,11 @@ const findBook = (book, cb) => {
     // console.log('its an ISBN?');
     Book.find({ isbn: book }).exec(cb);
   } else {
-    // console.log('its a title?');
     Book.find({ title: book }).exec(cb);
   }
 };
 
-const saveBook = (bookInfo) => {
+const save = (bookInfo) => {
   const newBook = new Book({
     year: bookInfo.year,
     month: bookInfo.month,
@@ -135,6 +134,7 @@ const saveBook = (bookInfo) => {
     imageURL: bookInfo.imageURL,
     pages: bookInfo.pages,
     popularShelves: bookInfo.popularShelves,
+    isbn13: bookInfo.isbn13,
     // reviewWidget: bookInfo.reviewWidget,
   });
   newBook.save();
@@ -147,5 +147,5 @@ module.exports = {
   findProfile,
   findBook,
   createProfile,
-  saveBook,
+  save,
 };

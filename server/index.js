@@ -82,9 +82,6 @@ app.post('/signup', (req, res) => {
 
 app.get('/book/:isbn', (req, res) => {
   const { isbn } = req.params;
-  // console.log("On line 87 in server", req);
-
-  // console.log("we are on line 34", isbn)
   db.findBook(isbn, (err, data) => {
     if (err) {
       res.sendStatus(500);
@@ -93,34 +90,20 @@ app.get('/book/:isbn', (req, res) => {
     } else {
       api.searchBook(isbn, (errAPI, searchResults) => {
         if (errAPI) {
-          // console.log('ERROR');
           res.sendStatus(500);
         } else {
-          // console.log('Server line 74:', searchResults);
           api.getMoreBookData(searchResults, (error, results) => {
             if (error) {
-              // console.log('ERROR');
               res.sendStatus(500);
             } else {
-              // console.log('Server line 80: about to parse the final API call');
+              searchResults.isbn13 = isbn;
               const bookData = organizeBookData(searchResults);
-              // console.log(bookData);
-              // console.log('on line 109', searchResults);
-
               const parRez = convert.xml2json(results.data);
-
               const jsonRez = JSON.parse(parRez).elements[0].elements[1].elements;
-
               const updatedData = addReviewData(jsonRez, bookData);
-              // console.log('added some stuff, like description:');
-              // console.log(updatedData.description);
-
-              // this is where i want to save the data into the database before i send it back
-              // but first i want to check whether the data already exist in the database
-              // the data will be saved in the format given in bookdata
-              // console.log("on line 119", updatedData);
-              db.saveBook(updatedData);
-
+              db.save(updatedData);
+             // api.filterByPopularShelves(updatedData);
+              //console.log("on line 107 in server", updatedData);
               res.json(updatedData);
             }
           });
@@ -151,14 +134,10 @@ app.get('/search/:title', (req, res) => {
 });
 
 app.get('/bestSellers', (req, res) => {
-  // console.log("on line 58 in server", req);
   api.getBestBooks((err, data) => {
-    // console.log(err, data.data)
     if (err) {
       res.sendStatus(500);
-      // console.error(err);
     } else {
-      // console.log("in line ")
       res.json(data.data);
     }
   });

@@ -60,6 +60,21 @@ const getBestBooks = (cb) => {
     });
 };
 
+// iterate through the collection of shelves
+// find out whether can search api based on shelf ==> answer is NO.. can find shelves by members
+// get a collection of books based on the given shelf
+//
+
+// const filterByPopularShelves = (book) => {
+
+//   console.log( " on line 68 in apiHelper", book);
+//   // take one shelf and
+
+//   book.popularShelves.forEach(shelf => {
+//     //
+//   }
+
+// }
 
 module.exports = {
   searchBook,
