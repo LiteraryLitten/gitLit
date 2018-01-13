@@ -15,7 +15,7 @@ class App extends React.Component {
       items: [],
       userProfile: [],
       selectedBook: [],
-    };
+    }
     this.changeView = this.changeView.bind(this);
   }
 
