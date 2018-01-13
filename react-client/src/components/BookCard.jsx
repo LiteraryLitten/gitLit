@@ -55,10 +55,25 @@ class BookCard extends React.Component {
       rating: 3.4,
     };
     console.log(this.props.book);
+    this.submitRank = this.submitRank.bind(this);
+  }
+
+  componentDidMount() {
+    // this.submitRank(5);
   }
 
   handleExpandClick() {
     this.setState({ expanded: !this.state.expanded });
+  }
+
+  submitRank(rating) {
+    const isbn13 = this.props.book.isbn13 || 'isbn';
+    const url = `/rate/${isbn13}/${rating}`;
+
+    fetch(url)
+      .then(res => res.json())
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
   }
 
   render() {
@@ -85,13 +100,20 @@ class BookCard extends React.Component {
               {this.state.book.description}
             </Typography>
           </CardContent>
+
+          <Divider light />
+
           <CardActions disableActionSpacing>
             <IconButton aria-label="Add to favorites">
               <FavoriteIcon />
             </IconButton>
 
-            <Rating total="5" current={this.state.rating} />
-
+            <Rating
+              icon="Star"
+              defaultRating={3}
+              maxRating={5}
+              click={this.submitRank}
+            />
 
             <div className={classes.flexGrow} />
             <IconButton

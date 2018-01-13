@@ -65,18 +65,16 @@ app.post('/signup', (req, res) => {
     // check if exists in database
     db.findProfile(userData.username, (err, data) => {
       if (err) {
-        console.log("ERR", err);
+        console.log('ERR', err);
+      } else if (!data.length) {
+        db.createProfile(userData);
+        // figure out how to callback this
+        response.type = 'success';
+        response.data = userData;
+        res.json(response);
       } else {
-        if (!data.length) {
-          db.createProfile(userData);
-          // figure out how to callback this
-          response.type = 'success';
-          response.data = userData;
-          res.json(response);
-        } else {
-          response.type = 'error';
-          res.json(response);
-        }
+        response.type = 'error';
+        res.json(response);
       }
     });
   });
@@ -84,9 +82,9 @@ app.post('/signup', (req, res) => {
 
 app.get('/book/:isbn', (req, res) => {
   const { isbn } = req.params;
-  //console.log("On line 87 in server", req);
+  // console.log("On line 87 in server", req);
 
-  //console.log("we are on line 34", isbn)
+  // console.log("we are on line 34", isbn)
   db.findBook(isbn, (err, data) => {
     if (err) {
       res.sendStatus(500);
@@ -107,7 +105,7 @@ app.get('/book/:isbn', (req, res) => {
               // console.log('Server line 80: about to parse the final API call');
               const bookData = organizeBookData(searchResults);
               // console.log(bookData);
-              //console.log('on line 109', searchResults);
+              // console.log('on line 109', searchResults);
 
               const parRez = convert.xml2json(results.data);
 
@@ -117,10 +115,10 @@ app.get('/book/:isbn', (req, res) => {
               // console.log('added some stuff, like description:');
               // console.log(updatedData.description);
 
-              //this is where i want to save the data into the database before i send it back
+              // this is where i want to save the data into the database before i send it back
               // but first i want to check whether the data already exist in the database
               // the data will be saved in the format given in bookdata
-              //console.log("on line 119", updatedData);
+              // console.log("on line 119", updatedData);
               db.saveBook(updatedData);
 
               res.json(updatedData);
@@ -160,10 +158,17 @@ app.get('/bestSellers', (req, res) => {
       res.sendStatus(500);
       // console.error(err);
     } else {
-      //console.log("in line ")
+      // console.log("in line ")
       res.json(data.data);
     }
   });
+});
+// `/rate/${isbn13}/${rating}`
+app.get('/rate/:isbn/:rating', (req, res) => {
+  // get the current loged in user
+  const { isbn } = req.params;
+  const { rating } = req.params;
+  res.json([isbn, rating]);
 });
 
 app.listen(3000, () => {
