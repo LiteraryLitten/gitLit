@@ -6,11 +6,16 @@ const organizeBookData = (data) => {
     title: data.best_book.title._text,
     author: data.best_book.author.name._text,
     averageRating: data.average_rating._text,
+    // isbn10: data.isbn._text,
+    isbn13: data.isbn13,
   };
+
+  //console.log("on line 14 in apiTest", usefulData);
   return usefulData;
 };
 
 const addReviewData = (reviewData, bookData) => {
+  // console.log("in apiTest",JSON.stringify(reviewData, null, 2));
   bookData.pages = reviewData[19].elements[0].cdata;
   bookData.imageURL = reviewData[8].elements[0].text;
   bookData.reviewWidget = reviewData[27].elements;
@@ -20,7 +25,6 @@ const addReviewData = (reviewData, bookData) => {
 
   return bookData;
 };
-
 
 module.exports = {
   organizeBookData,
