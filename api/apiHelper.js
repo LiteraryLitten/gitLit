@@ -1,16 +1,12 @@
 const axios = require('axios');
 
 const convert = require('xml-js');
-// const { organizeBookData } = require('./apiTest.js');
-// const { addReviewData } = require('./apiTest.js');
 const { goodReadsKey } = require('./apiKeys.js');
 const { NYTKey } = require('./apiKeys.js');
 const apiKeys = require('./apiKeys.js');
 const param = require('jquery-param');
-// const $ = require('jquery');
 
 const searchBook = (book, cb) => {
-  // console.log('we are here now in searchbook');
   axios.get('https://www.goodreads.com/search.xml', {
     params: {
       q: book,

@@ -39,8 +39,10 @@ class MenueButton extends React.Component {
   }
 
   handleClose(e) {
-    this.props.changeView(e);
-    console.log('MenueButton', e);
+    if (typeof e === 'string') {
+      console.log('MenueButton', e);
+      this.props.changeView(e);
+    }
     this.setState({ open: false });
   }
 

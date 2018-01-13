@@ -1,24 +1,26 @@
 import React from 'react';
 import $ from 'jquery';
 
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
-import { FormLabel, FormControlLabel } from 'material-ui/Form';
-import Radio, { RadioGroup } from 'material-ui/Radio';
-import Paper from 'material-ui/Paper';
+// import { FormLabel, FormControlLabel } from 'material-ui/Form';
+// import Radio, { RadioGroup } from 'material-ui/Radio';
+// import Paper from 'material-ui/Paper';
+
+import BookCard from './BookCard.jsx';
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
   },
-  paper: {
-    height: 140,
-    width: 100,
-  },
-  control: {
-    padding: theme.spacing.unit * 2,
-  },
+  // paper: {
+  //   height: 140,
+  //   width: 100,
+  // },
+  // control: {
+  //   padding: 100,
+  // },
 });
 
 class HomePage extends React.Component {
@@ -26,10 +28,8 @@ class HomePage extends React.Component {
     super(props);
     this.state = {
       books: [],
-      spacing: '16',
     };
     this.getBestSellersBooks = this.getBestSellersBooks.bind(this);
-    this.handleUserClick = this.handleUserClick.bind(this);
   }
 
   componentDidMount() {
@@ -42,47 +42,41 @@ class HomePage extends React.Component {
       type: 'GET',
     })
       .done((result) => {
-        const books = result.results.slice(0, 3);
+        const books = result.results;// .slice(0, 3);
+        const updatedBooks = [];
         books.forEach((book) => {
           const isbn = book.isbns[0].isbn13;
           this.props.fetch('book', isbn, (goodReads) => {
             book.imageURL = goodReads.imageURL;
             book.averageRating = goodReads.averageRating;
+
+            const tempState = this.state.books.slice();
+            tempState.push(book);
+            this.setState({
+              books: tempState,
+            });
           });
         });
-        this.setState({
-          books,
-        });
-        console.log(this.state.books);
+        // console.log(this.state.books);
       })
       .fail((err) => {
         throw err;
       });
   }
 
-  handleUserClick() {
-    console.log('I was clicked');
-  }
-
   render() {
     const { classes } = this.props;
-    const { spacing } = this.state;
 
     return (
-      <div>
-        {/* <h1> Literary Litten: The Rotten Tomatoes for Books</h1> */}
-        <Grid container className={classes.root}>
-          <Grid item xs={12}>
-            <Grid container className={classes.demo} justify="center" spacing={Number(spacing)}>
-              {['Book 1', 'Book 2', 'Book 3'].map(value => (
-                <Grid key={value} item>
-                  <Paper className={classes.paper}>{value}</Paper>
-                </Grid>
+      <Grid
+        container
+        className={classes.root}
+        justify="center"
+      >
+        {this.state.books.map(book => (
+          <BookCard book={book} key={book.isbns[0].isbn13} />
               ))}
-            </Grid>
-          </Grid>
-        </Grid>
-      </div>
+      </Grid>
     );
   }
 }
@@ -92,5 +86,3 @@ class HomePage extends React.Component {
 // };
 
 export default withStyles(styles)(HomePage);
-
-// export default HomePage;
