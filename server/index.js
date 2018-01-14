@@ -102,8 +102,8 @@ app.get('/book/:isbn', (req, res) => {
               const jsonRez = JSON.parse(parRez).elements[0].elements[1].elements;
               const updatedData = addReviewData(jsonRez, bookData);
               db.save(updatedData);
-             // api.filterByPopularShelves(updatedData);
-              //console.log("on line 107 in server", updatedData);
+              // api.filterByPopularShelves(updatedData);
+              // console.log("on line 107 in server", updatedData);
               res.json(updatedData);
             }
           });
@@ -121,13 +121,8 @@ app.get('/search/:title', (req, res) => {
     } else {
       const parsResults = searchResults.map((book) => {
         const cleanBook = organizeBookData(book);
-        // db.save(cleanBook)
         return organizeBookData(book);
       });
-      // use the parse function to create more readable database
-      // build a 'save' function to add it to the db
-      // the save function need to check for 'extra' data and then fetch it
-      // );
       res.json(parsResults);
     }
   });
@@ -142,13 +137,24 @@ app.get('/bestSellers', (req, res) => {
     }
   });
 });
-// `/rate/${isbn13}/${rating}`
+
 app.get('/rate/:isbn/:rating', (req, res) => {
+  // !!!!!!!!!!!!!!
   // get the current loged in user
+  // !!!!!!!!!!!!!!
   const { isbn } = req.params;
   const { rating } = req.params;
   res.json([isbn, rating]);
 });
+
+
+app.post('/review', (req, res) => {
+  db.saveReview(req.body, (err, data) => {
+    // console.log(err, data);
+    res.json(data);
+  });
+});
+
 
 app.listen(3000, () => {
   console.log('listening on port 3000!');

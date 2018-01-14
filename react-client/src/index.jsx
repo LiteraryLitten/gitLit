@@ -13,10 +13,11 @@ class App extends React.Component {
     this.state = {
       view: null,
       items: [],
-      userProfile: [],
-      selectedBook: [],
+      userProfile: { username: 'Dust-Off' },
+      selectedBook: {},
     };
     this.changeView = this.changeView.bind(this);
+    this.submitReview = this.submitReview.bind(this);
   }
 
   componentDidMount() {
@@ -30,6 +31,7 @@ class App extends React.Component {
       },
       error: (err) => {
         console.log('err', err);
+        cb(null);
       },
     });
   }
@@ -40,6 +42,24 @@ class App extends React.Component {
     });
   }
 
+  submitReview(review, isbn13, rating) {
+    const user = this.state.userProfile.username;
+    const data = {
+      review, user, isbn13, rating,
+    };
+    console.log('inside the APP @ 50', data);
+
+    fetch('/review', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: new Headers({
+        'Content-Type': 'application/json',
+      }),
+    }).then(res => res.json())
+      .catch(error => console.error('Error:', error))
+      .then(response => console.log('Success:', response));
+  }
+
   renderView() {
     if (this.state.view === 'Book') {
       return (
@@ -47,12 +67,12 @@ class App extends React.Component {
           book={this.state.selectedBook}
           changeView={this.changeView}
           fetch={this.fetch}
+          submitReview={this.submitReview}
         />
       );
     } else if (this.state.view === 'Profile') {
       return (
         <ProfilePage
-          // props="test"
           fetch={this.fetch}
           changeView={this.changeView}
         />
@@ -60,9 +80,9 @@ class App extends React.Component {
     }
     return (
       <HomePage
-        // props="test"
         changeView={this.changeView}
         fetch={this.fetch}
+        view={this.state.view}
       />
     );
   }
@@ -70,7 +90,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <NavBar changeView={this.changeView} />
+        <NavBar changeView={this.changeView} fetch={this.fetch} />
         <div className="main-view">
           {this.renderView()}
         </div>

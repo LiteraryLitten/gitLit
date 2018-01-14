@@ -1,4 +1,17 @@
 import React from 'react';
+import TextField from 'material-ui/TextField';
+import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
+import Button from 'material-ui/Button';
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+  input: {
+    display: 'none',
+  },
+});
 
 class Search extends React.Component {
   constructor(props) {
@@ -30,15 +43,31 @@ class Search extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
+
     return (
-      <div>
-        <label>
-          Search for a book:
-        </label>
-        <input type="text" value={this.query} onChange={this.onChange} />
-        <button onClick={this.handleSubmit} > Search </button>
-      </div>
+      <span>
+        <Button
+          raised
+          dense
+          color="contrast"
+          className={classes.button}
+          disabled={this.state.query.length < 1}
+          onClick={this.handleSubmit}
+        >
+          {this.state.query.length < 1 ? '' : 'Search'}
+        </Button>
+        <TextField
+          InputLabelProps={{
+            shrink: true,
+          }}
+          placeholder="Search"
+          margin="normal"
+          onChange={this.onChange}
+        />
+      </span>
     );
   }
 }
-export default Search;
+
+export default withStyles(styles)(Search);
