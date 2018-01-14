@@ -27,6 +27,7 @@ const bookSchema = mongoose.Schema({
   pages: String,
   popularShelves: [String],
   isbn13: String,
+  genres: String,
   // reviewWidget: [String]
 });
 
@@ -121,7 +122,7 @@ const findBook = (book, cb) => {
   }
 };
 
-const save = (bookInfo) => {
+const save = (bookInfo, genres) => {
   const newBook = new Book({
     year: bookInfo.year,
     month: bookInfo.month,
@@ -134,6 +135,7 @@ const save = (bookInfo) => {
     pages: bookInfo.pages,
     popularShelves: bookInfo.popularShelves,
     isbn13: bookInfo.isbn13,
+    genres: genres,
     // reviewWidget: bookInfo.reviewWidget,
   });
   newBook.save();

@@ -60,24 +60,67 @@ const getBestBooks = (cb) => {
     });
 };
 
-// iterate through the collection of shelves
-// find out whether can search api based on shelf ==> answer is NO.. can find shelves by members
-// get a collection of books based on the given shelf
-//
-
-// const filterByPopularShelves = (book) => {
-
-//   console.log( " on line 68 in apiHelper", book);
-//   // take one shelf and
-
-//   book.popularShelves.forEach(shelf => {
-//     //
-//   }
-
-// }
+const genresWhiteList = ['action and adventure',
+  'anthology',
+  'art',
+  'autobiographies',
+  'biographies',
+  'biography',
+  'business',
+  'children\'s',
+  'christian',
+  'classics',
+  'comics',
+  'cookbooks',
+  'diaries',
+  'dictionaries',
+  'drama',
+  'ebooks',
+  'encyclopedias',
+  'fantasy',
+  'fiction',
+  'graphic novels',
+  'guide',
+  'health',
+  'historical fiction',
+  'history',
+  'horror',
+  'journals',
+  'lifestyle',
+  'math',
+  'memoir',
+  'motivational',
+  'music',
+  'mystery',
+  'non-fiction',
+  'poetry',
+  'prayer books',
+  'psychology',
+  'religion spirituality & new age',
+  'romance',
+  'satire',
+  'science',
+  'science fiction',
+  'self help',
+  'series',
+  'sports',
+  'thriller',
+  'travel',
+  'trilogy',
+  'young adult'];
+const filterByPopularShelves = (book) => {
+  let genres = '';
+  book.popularShelves.forEach((shelf) => {
+    if (genresWhiteList.indexOf(shelf) > -1) {
+      genres += shelf[0].toUpperCase() + shelf.slice(1) + ' ';
+    }
+  });
+  return genres.split(' ').slice(0,4).join(' ');
+};
 
 module.exports = {
   searchBook,
   getMoreBookData,
   getBestBooks,
+  filterByPopularShelves,
 };
