@@ -5,9 +5,9 @@ import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import renderHTML from 'react-render-html';
 import Grid from 'material-ui/Grid';
-import Rating from './Rating.jsx';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
+import Rating from './Rating.jsx';
 
 const styles = theme => ({
   root: {
@@ -49,6 +49,10 @@ class BookPage extends React.Component {
       typeReview: '',
       rating: 0,
     };
+    this.submitRating = this.submitRating.bind(this);
+    // this.submitRank = this.submitRank.bind(this);
+    this.enterReview = this.enterReview.bind(this);
+    this.passReview = this.passReview.bind(this);
   }
 
   componentDidMount() {
@@ -71,10 +75,6 @@ class BookPage extends React.Component {
         typeReview: '',
       });
     });
-    this.submitRating = this.submitRating.bind(this);
-    this.submitRank = this.submitRank.bind(this);
-    this.enterReview = this.enterReview.bind(this);
-    this.submitReview = this.submitReview.bind(this);
   }
 
   // submitRank() {
@@ -87,27 +87,24 @@ class BookPage extends React.Component {
     });
   }
 
-  submitReview() {
+  passReview(newRating) {
+    // console.log('inside the BookPage @ 91', newRating, this.state.rating);
+    // let rating = 0;
+    // if (newRating) {
+    //   rating = newRating;
+    // } else {
+    //   rating = this.state.rating;
+    // }
     const review = this.state.typeReview;
     const { isbn13 } = this.state.book;
-    const { rating } = this.state;
-    this.props.submitReview(review, isbn13, rating);
+    this.props.submitReview(review, isbn13, this.state.rating);
   }
 
   submitRating(rating) {
     this.setState({
       rating,
     });
-
-    this.submitReview();
-
-    // const isbn13 = this.props.book.isbn13 || 'isbn';
-    // const url = `/rate/${isbn13}/${rating}`;
-    //
-    // fetch(url)
-    //   .then(res => res.json())
-    //   .then(res => console.log(res))
-    //   .catch(err => console.log(err));
+    this.passReview();
   }
 
   render() {
@@ -119,7 +116,7 @@ class BookPage extends React.Component {
           <Grid item xs={1} />
 
           <Grid item xs sm={2} className={classes.pic}>
-            <img src={this.state.book.imageURL} />
+            <img src={this.state.book.imageURL} alt="" />
 
             <Rating
               icon="Star"
@@ -149,7 +146,7 @@ class BookPage extends React.Component {
               raised
               className={classes.button}
               disabled={!(this.state.typeReview.length > 1)}
-              onClick={this.submitReview}
+              onClick={this.passReview}
             >
               Submit
             </Button>

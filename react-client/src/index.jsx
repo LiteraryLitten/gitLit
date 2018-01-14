@@ -47,6 +47,7 @@ class App extends React.Component {
     const data = {
       review, user, isbn13, rating,
     };
+    console.log('inside the APP @ 50', data);
 
     fetch('/review', {
       method: 'POST',

@@ -149,10 +149,10 @@ app.get('/rate/:isbn/:rating', (req, res) => {
 
 
 app.post('/review', (req, res) => {
-  const { review, rating } = req.body;
-  console.log(review);
-  console.log(rating);
-  res.json(req.body);
+  db.saveReview(req.body, (err, data) => {
+    // console.log(err, data);
+    res.json(data);
+  });
 });
 
 
