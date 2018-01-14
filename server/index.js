@@ -101,9 +101,9 @@ app.get('/book/:isbn', (req, res) => {
               const parRez = convert.xml2json(results.data);
               const jsonRez = JSON.parse(parRez).elements[0].elements[1].elements;
               const updatedData = addReviewData(jsonRez, bookData);
+              var genres = api.filterByPopularShelves(updatedData);
+              updatedData.genres = genres;
               db.save(updatedData);
-              // api.filterByPopularShelves(updatedData);
-              // console.log("on line 107 in server", updatedData);
               res.json(updatedData);
             }
           });
