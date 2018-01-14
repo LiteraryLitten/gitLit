@@ -48,6 +48,7 @@ const styles = theme => ({
 
 class BookCard extends React.Component {
   constructor(props) {
+    console.log("on line 51", props);
     super(props);
     this.state = {
       book: this.props.book,
@@ -100,6 +101,13 @@ class BookCard extends React.Component {
           <CardContent>
             <Typography component="p">
               {this.state.book.description}
+            </Typography>
+          </CardContent>
+
+          <Divider light />
+          <CardContent>
+            <Typography component="p">
+              {this.state.book.genres}
             </Typography>
           </CardContent>
 
