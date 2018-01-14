@@ -139,31 +139,59 @@ const save = (bookInfo) => {
   newBook.save();
 };
 
-const saveReview = (review) => {
-  const newReview = new Review({
-    idNameNumber: review.user + review.isbn13,
-    user: review.user,
-    isbn: review.isbn13,
-    text: review.review,
-    rating: review.rating,
+const findReview = (review, cb) => {
+  Review.findOne({ idNameNumber: review }, (err, item) => {
+    if (err) {
+      cb(err, null);
+    } else {
+      cb(null, item);
+    }
   });
 };
-// isbn13
-// :
-// "Catcher in the Rye"
-// review
-// :
-// "test"
-// user
-// :
-// "Dust-Off"
-// reviewSchema = new mongoose.Schema({
-//   idNameNumber: String,
-//   user: String,
-//   isbn: Number,
-//   text: String,
-//   rating: Number,
-// });
+
+const saveReview = (review, cb) => {
+  const reviewID = `${review.user}${review.isbn13}`;
+  findReview(reviewID, (err, data) => {
+    if (err) {
+      console.log('ERR on Database line 156');
+      console.log(err);
+      cb(err, null);
+    } else if (data) {
+      console.log('Success on databae review look up line 160');
+      console.log(data);
+
+      if (review.review.length > 0) {
+        updatedReview = review.review;
+      } else {
+        updatedReview = data.text;
+      }
+
+      if (review.rating > 0) {
+        updatedRating = review.rating;
+      } else {
+        updatedRating = data.rating;
+      }
+
+      Review.update({ idNameNumber: reviewID }, {
+        text: updatedReview,
+        rating: updatedRating,
+      }, (errUpdate, dataUpdate) => {
+        cb(errUpdate, dataUpdate);
+      });
+    } else {
+      console.log('NEW', data);
+      const newReview = new Review({
+        idNameNumber: reviewID,
+        user: review.user,
+        isbn: review.isbn13,
+        text: review.review,
+        rating: review.rating,
+      });
+      newReview.save();
+      cb(null, data);
+    }
+  });
+};
 
 module.exports = {
   selectAllBooks,
@@ -173,4 +201,6 @@ module.exports = {
   findBook,
   createProfile,
   save,
+  saveReview,
+  findReview,
 };

@@ -8,6 +8,7 @@ import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 import MenueButton from './MenueButton.jsx';
+import Search from './Search.jsx';
 
 const styles = {
   root: {
@@ -30,8 +31,11 @@ function NavBar(props) {
         <Toolbar>
           <MenueButton changeView={props.changeView} />
           <Typography type="title" color="inherit" className={classes.flex}>
-            Literary Litten: The Rotten Tomatoes for Books
+            Literary Litten
           </Typography>
+
+          <Search />
+
           <Button color="contrast">Login</Button>
         </Toolbar>
       </AppBar>

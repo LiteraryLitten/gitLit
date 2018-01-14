@@ -46,15 +46,13 @@ class HomePage extends React.Component {
   }
 
   setBook(bookArray) {
-    // console.log(bookArray.results);
-    const books = bookArray.results;// .slice(0, 3);
+    const books = bookArray.results;
 
     let numCount = books.length;
     let returnCount = 0;
 
     const updatedBooks = [];
     books.forEach((book) => {
-      // console.log(book);
       if (book.isbns.length > 0) {
         const isbn = book.isbns[0].isbn13;
         this.props.fetch('book', isbn, (goodReads) => {
