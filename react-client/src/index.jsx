@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
+
 import ProfilePage from './components/ProfilePage.jsx';
 import BookPage from './components/BookPage.jsx';
 import HomePage from './components/HomePage.jsx';
-import Search from './components/Search.jsx';
 import NavBar from './components/NavBar.jsx';
 
 class App extends React.Component {
