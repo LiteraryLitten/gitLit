@@ -90,7 +90,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <NavBar changeView={this.changeView} />
+        <NavBar changeView={this.changeView} fetch={this.fetch} />
         <div className="main-view">
           {this.renderView()}
         </div>

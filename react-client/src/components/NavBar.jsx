@@ -34,7 +34,7 @@ function NavBar(props) {
             Literary Litten
           </Typography>
 
-          <Search />
+          <Search fetch={props.fetch} />
 
           <Button color="contrast">Login</Button>
         </Toolbar>
