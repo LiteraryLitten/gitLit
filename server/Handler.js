@@ -129,7 +129,7 @@ module.exports = {
   },
   postReview: (req, res) => {
     db.saveReview(req.body, (err, data) => {
-      res.json(data);
+      res.json([err, data]);
     });
   },
 };

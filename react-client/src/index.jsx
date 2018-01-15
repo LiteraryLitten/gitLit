@@ -20,9 +20,6 @@ class App extends React.Component {
     this.submitReview = this.submitReview.bind(this);
   }
 
-  componentDidMount() {
-  }
-
   fetch(thing, id, cb) {
     $.ajax({
       url: `/${thing}/${id}`,
@@ -36,7 +33,14 @@ class App extends React.Component {
     });
   }
 
-  changeView(choice) {
+  changeView(choice, book) {
+    console.log('changing view');
+    // console.log(choice, book);
+    if (book) {
+      this.setState({
+        selectedBook: book,
+      });
+    }
     this.setState({
       view: choice,
     });

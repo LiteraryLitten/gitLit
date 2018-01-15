@@ -135,7 +135,7 @@ const save = (bookInfo, genres) => {
     pages: bookInfo.pages,
     popularShelves: bookInfo.popularShelves,
     isbn13: bookInfo.isbn13,
-    genres: genres,
+    genres,
     // reviewWidget: bookInfo.reviewWidget,
   });
   newBook.save();
@@ -181,7 +181,7 @@ const saveReview = (review, cb) => {
         cb(errUpdate, dataUpdate);
       });
     } else {
-      console.log('NEW', data);
+      console.log('add NEW DB @ 184', review);
       const newReview = new Review({
         idNameNumber: reviewID,
         user: review.user,
