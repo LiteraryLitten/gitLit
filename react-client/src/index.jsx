@@ -19,6 +19,7 @@ class App extends React.Component {
     };
     this.changeView = this.changeView.bind(this);
     this.submitReview = this.submitReview.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
   //
   //componentDidMount() {
@@ -73,6 +74,12 @@ class App extends React.Component {
       .then(response => console.log('Success:', response));
   }
 
+  handleSearch() {
+    this.setState({ view: 'Search' });
+    console.log('IN INDEX.JSX');
+    this.renderView();
+  }
+
   renderView() {
     if (this.state.view === 'Book') {
       return (
@@ -90,6 +97,13 @@ class App extends React.Component {
           changeView={this.changeView}
         />
       );
+    } else if (this.state.view === 'Search') {
+      return (
+        <SearchPage
+          fetch={this.fetch}
+          changeView={this.changeView}
+        />
+      );
     }
     return (
       <HomePage
@@ -103,9 +117,13 @@ class App extends React.Component {
   render() {
     return (
       <div>
+<<<<<<< HEAD
         <Rating icon="heart" defaultRating={1} maxRating={3} />
 
         {/* <NavBar changeView={this.changeView} />
+=======
+        <NavBar changeView={this.changeView} fetch={this.fetch} handleSearch={this.handleSearch} />
+>>>>>>> rendering search page
         <div className="main-view">
           {this.renderView()}
         </div> */}
