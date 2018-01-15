@@ -75,8 +75,10 @@ class App extends React.Component {
   }
 
   handleSearch(query) {
-    this.setState({ view: 'Search', searchedBook: query });
-    this.renderView();
+    this.setState({ view: 'Search', searchedBook: query }, function () {
+      console.log(this.state.searchedBook);
+      this.renderView();
+    });
   }
 
   renderView() {
