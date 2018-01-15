@@ -4,12 +4,10 @@ import { withStyles } from 'material-ui/styles';
 import classnames from 'classnames';
 import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
 import Collapse from 'material-ui/transitions/Collapse';
-// import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 import red from 'material-ui/colors/red';
 import FavoriteIcon from 'material-ui-icons/Favorite';
-// import ShareIcon from 'material-ui-icons/Share';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
 import Divider from 'material-ui/Divider';
@@ -47,42 +45,52 @@ const styles = theme => ({
 
 class BookCard extends React.Component {
   constructor(props) {
-    console.log("on line 51", props);
     super(props);
     this.state = {
       book: this.props.book,
       expanded: false,
       rating: 3.4,
+      description: '',
     };
-    console.log(this.props.book);
+    // console.log(this.props.book);
     this.submitRank = this.submitRank.bind(this);
     this.goToBook = this.goToBook.bind(this);
+    this.handleExpandClick = this.handleExpandClick.bind(this);
   }
 
   componentDidMount() {
-    // this.submitRank(5);
+    // /bo*/
+    let str = this.props.book.description;
+    str = str.replace(/<br>/gi, '\n');
+    str = str.replace(/<p.*>/gi, '\n');
+    str = str.replace(/<a.*href="(.*?)".*>(.*?)<\/a>/gi, ' $2 (Link->$1) ');
+    str = str.replace(/<(?:.|\s)*?>/g, '');
+    // const desc = this.props.book.description;
+    // const newDesc = desc.replace(/<*>/, '!!');
+    const arrayString = `${str.split(' ').join(' ').substring(0, 200)}...`;
+    this.setState({
+      description: arrayString,
+    });
   }
 
   goToBook() {
-    const isbn = this.state.book.isbn13;
-    //! !!!!!!!!!!!!!!!!
-    //! !! figure out how to use React Router
-    //! !!!!!!!!!!!!!!!!
+    this.props.changeView('Book', this.state.book);
   }
 
   handleExpandClick() {
+    console.log('expand');
     this.setState({ expanded: !this.state.expanded });
   }
 
   submitRank(rating) {
-
+    // stuff here
   }
 
   render() {
     const { classes } = this.props;
 
     return (
-      <Grid item style={{ padding: 20 }} onClick={this.goToBook}>
+      <Grid item style={{ padding: 20 }} >
         <Card className={classes.card}>
           <CardHeader
             avatar={
@@ -95,11 +103,13 @@ class BookCard extends React.Component {
               }
             title={this.state.book.title}
             subheader={this.state.book.author}
+            onClick={this.goToBook}
+            style={{ cursor: 'pointer' }}
           />
           <Divider light />
           <CardContent>
             <Typography component="p">
-              {this.state.book.description}
+              {this.state.description} <PopUp description={this.state.book.description} />
             </Typography>
           </CardContent>
 
@@ -128,46 +138,7 @@ class BookCard extends React.Component {
 >>>>>>> star ratings sends post request
 
             <div className={classes.flexGrow} />
-            <IconButton
-              className={classnames(classes.expand, {
-                [classes.expandOpen]: this.state.expanded,
-              })}
-              onClick={this.handleExpandClick}
-              aria-expanded={this.state.expanded}
-              aria-label="Show more"
-            >
-              <ExpandMoreIcon />
-            </IconButton>
           </CardActions>
-          <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-              <Typography paragraph type="body2">
-                  Method:
-              </Typography>
-              <Typography paragraph>
-                  Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-                  minutes.
-              </Typography>
-              <Typography paragraph>
-                  Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
-                  heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
-                  browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving
-                  chicken and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion,
-                  salt and pepper, and cook, stirring often until thickened and fragrant, about 10
-                  minutes. Add saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-              </Typography>
-              <Typography paragraph>
-                  Add rice and stir very gently to distribute. Top with artichokes and peppers, and
-                  cook without stirring, until most of the liquid is absorbed, 15 to 18 minutes.
-                  Reduce heat to medium-low, add reserved shrimp and mussels, tucking them down into
-                  the rice, and cook again without stirring, until mussels have opened and rice is
-                  just tender, 5 to 7 minutes more. (Discard any mussels that don’t open.)
-              </Typography>
-              <Typography>
-                  Set aside off of the heat to let rest for 10 minutes, and then serve.
-              </Typography>
-            </CardContent>
-          </Collapse>
         </Card>
       </Grid>
     );

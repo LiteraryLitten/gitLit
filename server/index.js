@@ -1,11 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const convert = require('xml-js');
+// const convert = require('xml-js');
 
-const db = require('../database-mongo');
-const api = require('../api/apiHelper.js');
-const { organizeBookData } = require('../api/apiTest.js');
-const { addReviewData } = require('../api/apiTest.js');
+// const db = require('../database-mongo');
+// const api = require('../api/apiHelper.js');
+// const { organizeBookData } = require('../api/apiTest.js');
+// const { addReviewData } = require('../api/apiTest.js');
 const handler = require('./Handler.js');
 
 const app = express();
@@ -22,14 +22,14 @@ app.get('/search/:title', handler.getSearchTitle);
 app.get('/bestSellers', handler.getBestSellers);
 app.post('/review', handler.postReview);
 
-app.get('/rate/:isbn/:rating', (req, res) => {
-  // !!!!!!!!!!!!!!
-  // get the current loged in user
-  // !!!!!!!!!!!!!!
-  const { isbn } = req.params;
-  const { rating } = req.params;
-  res.json([isbn, rating]);
-});
+// app.get('/rate/:isbn/:rating', (req, res) => {
+//   // !!!!!!!!!!!!!!
+//   // get the current loged in user
+//   // !!!!!!!!!!!!!!
+//   const { isbn } = req.params;
+//   const { rating } = req.params;
+//   res.json([isbn, rating]);
+// });
 
 
 app.listen(3000, () => {
