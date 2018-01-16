@@ -38,7 +38,6 @@ function NavBar(props) {
 
           <Search fetch={props.fetch} handleSearch={props.handleSearch} />
           <Login description="login" />
-          <Button color="contrast">Login</Button>
         </Toolbar>
       </AppBar>
     </div>
