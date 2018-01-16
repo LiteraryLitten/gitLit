@@ -108,14 +108,33 @@ const genresWhiteList = ['action and adventure',
   'travel',
   'trilogy',
   'young adult'];
-const filterByPopularShelves = (book) => {
-  let genres = '';
-  book.popularShelves.forEach((shelf) => {
-    if (genresWhiteList.indexOf(shelf) > -1) {
-      genres += shelf[0].toUpperCase() + shelf.slice(1) + ' ';
-    }
+
+const createWordsForPopShelves = (shelvesArray) => {
+  // console.log('on line 121 in apiHelper', shelvesArray, shelvesArray.length);
+  const newPopShelves = [];
+  shelvesArray.forEach((shelf) => {
+    const shelfWords = shelf.split('-');
+    newPopShelves.push(shelfWords);
   });
-  return genres.split(' ').slice(0,4).join(' ');
+  return newPopShelves;
+};
+
+const filterByPopularShelves = (book) => {
+  const genres = [];
+  const popShelvesWithOnlyWords = createWordsForPopShelves(book.popularShelves);
+  // console.log('on line 135 in apiHelper', popShelvesWithOnlyWords);
+  popShelvesWithOnlyWords.forEach((shelf) => {
+    shelf.forEach((word) => {
+      if (genresWhiteList.indexOf(word) > -1) {
+        if(genres.indexOf(word) === -1) {
+          // console.log("here you are word:", word);
+          genres.push(word);
+        }
+      }
+    });
+  });
+  // console.log('on line 150 in apiHelper', genres);
+  return genres;
 };
 
 module.exports = {
