@@ -56,9 +56,9 @@ class SearchPage extends React.Component {
       return (
       <div>
         <h2>SEARCH RESULTS</h2> <br />
-        {searchCards.map((book) => {
+        {searchCards.map((book) =>(
           <BookCard book={book} />
-        })}
+        ))}
       </div>
     );
     }
