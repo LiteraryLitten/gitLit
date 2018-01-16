@@ -6,6 +6,7 @@ import ProfilePage from './components/ProfilePage.jsx';
 import BookPage from './components/BookPage.jsx';
 import HomePage from './components/HomePage.jsx';
 import NavBar from './components/NavBar.jsx';
+import SearchPage from './components/SearchPage.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -18,7 +19,16 @@ class App extends React.Component {
     };
     this.changeView = this.changeView.bind(this);
     this.submitReview = this.submitReview.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
+  //
+  //componentDidMount() {
+    // example load user by userName
+    // this.fetch('user', 'dust_off', (user) => {
+    //   this.setState({
+    //     userProfile: user,
+    //   });
+    // });
 
   fetch(thing, id, cb) {
     $.ajax({
@@ -64,6 +74,23 @@ class App extends React.Component {
       .then(response => console.log('Success:', response));
   }
 
+  handleSearch(query) {
+    //do the fetch here
+    //pass that data into the search page
+
+
+    this.setState({ view: 'Search', searchedBook: query }, function () {
+      console.log(this.state.searchedBook);
+      this.fetch('search', this.state.searchedBook, (results) => {
+        this.setState({
+          searchResults: results,
+        }, function () {
+          this.renderView();
+        });
+      });
+    });
+  }
+
   renderView() {
     if (this.state.view === 'Book') {
       return (
@@ -81,6 +108,15 @@ class App extends React.Component {
           changeView={this.changeView}
         />
       );
+    } else if (this.state.view === 'Search') {
+      return (
+        <SearchPage
+          fetch={this.fetch}
+          changeView={this.changeView}
+          searchedBook={this.state.searchedBook}
+          searchResults={this.state.searchResults}
+        />
+      );
     }
     return (
       <HomePage
@@ -94,7 +130,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <NavBar changeView={this.changeView} fetch={this.fetch} />
+        <NavBar changeView={this.changeView} fetch={this.fetch} handleSearch={this.handleSearch} />
         <div className="main-view">
           {this.renderView()}
         </div>
