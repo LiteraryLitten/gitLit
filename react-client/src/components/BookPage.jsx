@@ -50,36 +50,27 @@ class BookPage extends React.Component {
       rating: 0,
     };
     this.submitRating = this.submitRating.bind(this);
-    // this.submitRank = this.submitRank.bind(this);
     this.enterReview = this.enterReview.bind(this);
     this.passReview = this.passReview.bind(this);
   }
 
   componentDidMount() {
-    const lookFor = this.props.book ? '9780871404428' : this.props.book;
-    this.props.fetch('book', lookFor, (data) => {
-      console.log('in bookpage', data);
+    if (typeof this.props.book === 'object' && this.props.book.isbn13) {
+      console.log(this.props.book.isbn13);
       this.setState({
-        book: {
-          bookData: data,
-          title: data.title,
-          published: `${data.month}-${data.day}-${data.year}`,
-          author: data.author,
-          averageRating: data.averageRating,
-          description: data.description,
-          imageURL: data.imageURL,
-          pages: data.pages,
-          popularShelves: data.popularShelves,
-          isbn13: data.isbn13,
-        },
-        typeReview: '',
+        book: this.props.book,
       });
-    });
+    } else {
+      const lookFor = this.props.book ? '9780871404428' : this.props.book;
+      this.props.fetch('book', lookFor, (data) => {
+        data.published = `${data.month}-${data.day}-${data.year}`;
+        this.setState({
+          book: data,
+          typeReview: '',
+        });
+      });
+    }
   }
-
-  // submitRank() {
-  //   console.log('ranked');
-  // }
 
   enterReview(e) {
     this.setState({
@@ -87,24 +78,15 @@ class BookPage extends React.Component {
     });
   }
 
-  passReview(newRating) {
-    // console.log('inside the BookPage @ 91', newRating, this.state.rating);
-    // let rating = 0;
-    // if (newRating) {
-    //   rating = newRating;
-    // } else {
-    //   rating = this.state.rating;
-    // }
-    const review = this.state.typeReview;
+  passReview() {
     const { isbn13 } = this.state.book;
-    this.props.submitReview(review, isbn13, this.state.rating);
+    this.props.submitReview(this.state.typeReview, isbn13, this.state.rating);
   }
 
   submitRating(rating) {
     this.setState({
       rating,
-    });
-    this.passReview();
+    }, this.passReview);
   }
 
   render() {

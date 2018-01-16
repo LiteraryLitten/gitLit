@@ -25,6 +25,7 @@ class HomePage extends React.Component {
   }
 
   componentDidMount() {
+    console.log('mouted');
     this.getBestSellersBooks();
     this.setState({
       loading: true,
@@ -38,16 +39,17 @@ class HomePage extends React.Component {
       type: 'GET',
     })
       .done((result) => {
+        console.log('bestSellers GOTTEN');
         this.setBook(result);
       })
       .fail((err) => {
+        console.log('no gotten?');
         throw err;
       });
   }
 
   setBook(bookArray) {
     const books = bookArray.results;
-
     let numCount = books.length;
     let returnCount = 0;
 
@@ -58,15 +60,18 @@ class HomePage extends React.Component {
         this.props.fetch('book', isbn, (goodReads) => {
           returnCount++;
           if (goodReads !== null) {
-            book.imageURL = goodReads.imageURL;
-            book.averageRating = goodReads.averageRating;
+            const bookNYC = Array.from(book);
+            book = goodReads;
+            book.bookNYC = bookNYC;
+            // book.imageURL = goodReads.imageURL;
+            // book.averageRating = goodReads.averageRating;
             updatedBooks.push(book);
           } else {
             numCount--;
           }
 
           if (numCount === returnCount) {
-            console.log(this.state.view);
+            // console.log(this.state.view);
             if (this.state.view === null) {
               this.setState({
                 books: updatedBooks,
@@ -102,7 +107,7 @@ class HomePage extends React.Component {
               {this.state.books.map(book => (
                 <BookCard
                   book={book}
-                  key={book.isbns[0].isbn13}
+                  key={book.isbn13}
                   changeView={this.props.changeView}
                 />
             ))}
