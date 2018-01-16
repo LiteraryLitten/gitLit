@@ -8,6 +8,7 @@ import Dialog, {
 } from 'material-ui/Dialog';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import renderHTML from 'react-render-html';
+import TextField from 'material-ui/TextField';
 
 
 class Login extends React.Component {
@@ -38,17 +39,62 @@ class Login extends React.Component {
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
+          aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="alert-dialog-title">Login/Signup</DialogTitle>
+          <DialogTitle id="form-dialog-title">Login/Signup</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText>
+              Log In
             </DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="username"
+              label="username"
+              type="string"
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="login-password"
+              label="password"
+              type="password"
+            />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
-              Close
+              Login
+            </Button>
+          </DialogActions>
+          <DialogContent>
+            <DialogContentText>
+              Sign Up
+            </DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="name"
+              type="string"
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="username"
+              label="username"
+              type="string"
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="signup-password"
+              label="password"
+              type="password"
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Signup
             </Button>
           </DialogActions>
         </Dialog>
