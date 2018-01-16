@@ -64,7 +64,7 @@ class SearchPage extends React.Component {
     }
     return (
       <div>
-        <h2>NO SEARCH RESULTS</h2> <br />
+        <h2>LOADING SEARCH RESULTS</h2> <br />
         
       </div>
     );
