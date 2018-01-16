@@ -119,6 +119,7 @@ class Login extends React.Component {
   }
 
   render() {
+<<<<<<< HEAD
     if (this.props.user.name) {
       return (
         <div>
@@ -181,7 +182,7 @@ class Login extends React.Component {
                 margin="dense"
                 id="username"
                 label="username"
-                type="string" 
+                type="string"
                 onChange={this.saveUsername}
               />
               <TextField
@@ -208,7 +209,78 @@ class Login extends React.Component {
 
 
 
-      
+
+=======
+    return (
+      <div>
+
+          <Button color="contrast" onClick={this.handleClickOpen}>Login</Button>
+        {/* <Button onClick={this.handleClickOpen}>Open alert dialog</Button> */}
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogTitle id="form-dialog-title">Login/Signup</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Log In
+            </DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="username"
+              label="username"
+              type="string"
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="login-password"
+              label="password"
+              type="password"
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Login
+            </Button>
+          </DialogActions>
+          <DialogContent>
+            <DialogContentText>
+              Sign Up
+            </DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="name"
+              type="string"
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="username"
+              label="username"
+              type="string"
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="signup-password"
+              label="password"
+              type="password"
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Signup
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    );
+>>>>>>> login box popup created
   }
 }
 
