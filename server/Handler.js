@@ -110,11 +110,12 @@ module.exports = {
       if (err) {
         res.sendStatus(500);
       } else {
-        const parsResults = searchResults.map((book) => {
-          const cleanBook = organizeBookData(book);
-          return organizeBookData(book);
-        });
-        res.json(parsResults);
+        // const parsResults = searchResults.map((book) => {
+        //   const cleanBook = organizeBookData(book);
+        //   return organizeBookData(book);
+        // });
+        // res.json(parsResults);
+        res.json(searchResults);
       }
     });
   },
