@@ -1,17 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import classnames from 'classnames';
 import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
-import Collapse from 'material-ui/transitions/Collapse';
 import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 import red from 'material-ui/colors/red';
 import FavoriteIcon from 'material-ui-icons/Favorite';
-import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
 import Divider from 'material-ui/Divider';
-import renderHTML from 'react-render-html';
 
 import PopUp from './PopUp.jsx';
 import Rating from './Rating.jsx';
@@ -26,18 +22,18 @@ const styles = theme => ({
   media: {
     height: 25,
   },
-  expand: {
-    transform: 'rotate(0deg)',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  avatar: {
-    backgroundColor: red[500],
-  },
+  // expand: {
+  //   transform: 'rotate(0deg)',
+  //   transition: theme.transitions.create('transform', {
+  //     duration: theme.transitions.duration.shortest,
+  //   }),
+  // },
+  // expandOpen: {
+  //   transform: 'rotate(180deg)',
+  // },
+  // avatar: {
+  //   backgroundColor: red[500],
+  // },
   flexGrow: {
     flex: '1 1 auto',
   },
@@ -51,13 +47,13 @@ class BookCard extends React.Component {
     super(props);
     this.state = {
       book: this.props.book,
-      expanded: false,
+      // expanded: false,
       rating: 0,
       description: '',
     };
     this.submitRank = this.submitRank.bind(this);
     this.goToBook = this.goToBook.bind(this);
-    this.handleExpandClick = this.handleExpandClick.bind(this);
+    // this.handleExpandClick = this.handleExpandClick.bind(this);
   }
 
   componentDidMount() {
@@ -76,10 +72,10 @@ class BookCard extends React.Component {
     this.props.changeView('Book', this.state.book);
   }
 
-  handleExpandClick() {
-    console.log('expand');
-    this.setState({ expanded: !this.state.expanded });
-  }
+  // handleExpandClick() {
+  //   console.log('expand');
+  //   this.setState({ expanded: !this.state.expanded });
+  // }
 
   submitRank(rating) {
     // stuff here
@@ -114,11 +110,11 @@ class BookCard extends React.Component {
 
           <Divider light />
           <CardContent>
-          <Typography component="p">
-            {this.state.book.genres.map(genre => (
-                genre[0].toUpperCase() + genre.slice(1) + ' '
+            <Typography component="p">
+              {this.state.book.genres.map(genre => (
+                `${genre[0].toUpperCase() + genre.slice(1)} `
             ))}
-          </Typography>
+            </Typography>
           </CardContent>
 
           <Divider light />

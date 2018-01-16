@@ -40,7 +40,12 @@ class HomePage extends React.Component {
     })
       .done((result) => {
         console.log('bestSellers GOTTEN');
-        this.setBook(result);
+        console.log(result);
+        // this.setBook(result);
+        this.setState({
+          books: result,
+          loading: false,
+        });
       })
       .fail((err) => {
         console.log('no gotten?');

@@ -110,22 +110,27 @@ module.exports = {
       if (err) {
         res.sendStatus(500);
       } else {
-        // const parsResults = searchResults.map((book) => {
-        //   const cleanBook = organizeBookData(book);
-        //   return organizeBookData(book);
-        // });
-        // res.json(parsResults);
-        res.json(searchResults);
+        const parsResults = searchResults.map((book) => {
+          const cleanBook = organizeBookData(book);
+          return organizeBookData(book);
+        });
+        res.json(parsResults);
       }
     });
   },
+  // getBestSellers: (req, res) => {
+  //   api.getBestBooks((err, data) => {
+  //     if (err) {
+  //       res.sendStatus(500);
+  //     } else {
+  //       res.json(data.data);
+  //     }
+  //   });
+  // },
   getBestSellers: (req, res) => {
-    api.getBestBooks((err, data) => {
-      if (err) {
-        res.sendStatus(500);
-      } else {
-        res.json(data.data);
-      }
+    console.log('getting best Sellers in server');
+    api.getBestBooks((data) => {
+      res.json(data);
     });
   },
   postReview: (req, res) => {
