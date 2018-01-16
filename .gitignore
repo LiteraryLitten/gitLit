@@ -6,6 +6,7 @@ node_modules/
 
 ## API keys ##
 api/apiKeys.js
+api/goodreads.js
 
 ## React ##
 react-client/dist/bundle.js
