@@ -129,7 +129,7 @@ module.exports = {
   // },
   getBestSellers: (req, res) => {
     console.log('getting best Sellers in server');
-    api.getBestBooks3((data) => {
+    api.getBestBooks((data) => {
       res.json(data);
     });
   },

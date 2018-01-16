@@ -84,8 +84,8 @@ const addReviewData2 = (grDataByID) => {
 
   let popularShelves = [];
   try {
-    console.log('');
-    console.log(grDataByID[28].elements.map(el => el.attributes.name));
+    // console.log('');
+    // console.log(grDataByID[28].elements.map(el => el.attributes.name));
     popularShelves = grDataByID[28].elements.map(el => el.attributes.name);
   } catch (e) {
     console.log(e);
