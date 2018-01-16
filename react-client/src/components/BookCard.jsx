@@ -49,7 +49,7 @@ class BookCard extends React.Component {
     this.state = {
       book: this.props.book,
       expanded: false,
-      rating: 3.4,
+      rating: 0,
       description: '',
     };
     this.submitRank = this.submitRank.bind(this);
@@ -128,7 +128,7 @@ class BookCard extends React.Component {
 =======
             <Rating
               icon="Star"
-              defaultRating={3}
+              defaultRating={this.state.book.averageRating}
               maxRating={5}
               click={this.submitRank}
             />
