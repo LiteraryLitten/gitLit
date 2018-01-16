@@ -52,24 +52,20 @@ class BookCard extends React.Component {
     this.state = {
       book: this.props.book,
       expanded: false,
-      rating: 3.4,
+      rating: 0,
       description: '',
     };
-    // console.log(this.props.book);
     this.submitRank = this.submitRank.bind(this);
     this.goToBook = this.goToBook.bind(this);
     this.handleExpandClick = this.handleExpandClick.bind(this);
   }
 
   componentDidMount() {
-    // /bo*/
     let str = this.props.book.description;
     str = str.replace(/<br>/gi, '\n');
     str = str.replace(/<p.*>/gi, '\n');
     str = str.replace(/<a.*href="(.*?)".*>(.*?)<\/a>/gi, ' $2 (Link->$1) ');
     str = str.replace(/<(?:.|\s)*?>/g, '');
-    // const desc = this.props.book.description;
-    // const newDesc = desc.replace(/<*>/, '!!');
     const arrayString = `${str.split(' ').join(' ').substring(0, 200)}...`;
     this.setState({
       description: arrayString,
@@ -118,13 +114,14 @@ class BookCard extends React.Component {
 
           <Divider light />
           <CardContent>
-            <Typography component="p">
-              {this.state.book.genres}
-            </Typography>
+          <Typography component="p">
+            {this.state.book.genres.map(genre => (
+                genre[0].toUpperCase() + genre.slice(1) + ' '
+            ))}
+          </Typography>
           </CardContent>
 
           <Divider light />
-
           <CardActions disableActionSpacing>
             <IconButton aria-label="Add to favorites">
               <FavoriteIcon />
@@ -132,7 +129,7 @@ class BookCard extends React.Component {
 
             <Rating
               icon="Star"
-              defaultRating={3}
+              defaultRating={this.state.book.averageRating}
               maxRating={5}
               click={this.submitRank}
             />
