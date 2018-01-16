@@ -7,7 +7,7 @@ import renderHTML from 'react-render-html';
 import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
-import Rating from './Rating.jsx';
+import Bookshelf from './Bookshelf.jsx';
 
 const styles = theme => ({
   root: {
@@ -66,11 +66,7 @@ const User = props =>(
               My Bookshelf
             </h2>
             <Paper >  
-              <span>
-              {props.user.favoriteBooks}
-              </span>
-
-
+              <Bookshelf book={props.favoriteBooks} />
             </Paper>
           </Grid>
         </Grid>

@@ -32,7 +32,8 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        <ExpandMoreIcon onClick={this.handleClickOpen} />
+
+          <Button color="contrast" onClick={this.handleClickOpen}>Login</Button>
         {/* <Button onClick={this.handleClickOpen}>Open alert dialog</Button> */}
         <Dialog
           open={this.state.open}
@@ -40,7 +41,7 @@ class Login extends React.Component {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">Description</DialogTitle>
+          <DialogTitle id="alert-dialog-title">Login/Signup</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
             </DialogContentText>
