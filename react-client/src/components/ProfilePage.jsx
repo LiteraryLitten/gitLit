@@ -6,7 +6,7 @@ class ProfilePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userProfile: [], 
+      userProfile: [],
       login: {
         username: '',
         password: '',
