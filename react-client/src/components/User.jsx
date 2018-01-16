@@ -16,51 +16,65 @@ const styles = theme => ({
   },
   paper: {
     padding: 16,
-    textAlign: 'left',
-    color: theme.palette.text.secondary,
-  },
-  pic: {
     textAlign: 'center',
-  },
-  p: {
-    backgroundColor: 'lightgrey',
-  },
-  note: {
-    textAlign: 'right',
+    color: theme.palette.text.secondary,
   },
 });
 
 const User = props =>(
     <div>
     <Grid container spacing={24}>
-          <Grid item xs={1} />
 
-          <Grid item xs sm={2} className='UserPic'>
-            <img src='https://cdn1.iconfinder.com/data/icons/rcons-user-action/512/users_woman-512.png' />
-          </Grid>
-
-          <Grid item xs sm={7}>
+          <Grid item xs={12} sm={6} className='UserPic'>
+            <h2>Your Profile</h2>
             <Paper >
-              <span className='user'>
-                Name : {props.user.name}
+
+              
+              <Grid container spacing={16}>
+                <Grid item xs={8}  >
+                  <img src='https://cdn1.iconfinder.com/data/icons/social-messaging-productivity-1-1/128/gender-female2-256.png' alt="" />
+                </Grid>
+                <Grid item xs={3}  >
+                  <span className='user'>
+                    Name : <br /> {props.user.name}
+                  </span>
+                  <br />
+                  <span className='user'>
+                    Username : <br /> {props.user.username} <br />
+                  </span>
+                  <Button 
+                  raised
+                  onClick={props.changePassword} >
+                  Edit Profile
+                  </Button> <br />
+                </Grid>
+                
+              </Grid>
+            </Paper>
+            <h2>
+              My Reviews
+            </h2>
+            <Paper >  
+              <span>
+              {props.user.favoriteBooks}
               </span>
-              <br />
-              <span className='user'>
-                Username : {props.user.username} <br />
-              </span>
-              <Button 
-              raised
-              onClick={props.changePassword} >
-              Change Password
-              </Button> <br />
             </Paper>
           </Grid>
 
-          <Grid item xs={12} sm={12} />
+          <Grid item xs={12} sm={6}>
+            <h2>
+              My Bookshelf
+            </h2>
+            <Paper >  
+              <span>
+              {props.user.favoriteBooks}
+              </span>
+
+
+            </Paper>
+          </Grid>
         </Grid>
           <div className="name">
-    My Bookshelf : {props.user.favoriteBooks} <br />
-    My Reviews : {props.user.reviewedBooks}
   </div>
     </div>
     );
