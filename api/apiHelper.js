@@ -47,18 +47,80 @@ const getMoreBookData = (book, cb) => {
     });
 };
 
-const getBestBooks = (cb) => {
+const getNYT2 = () => {
   let url = 'https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json';
   url += `?${param({ 'api-key': NYTKey })}`;
-
-  axios.get(url)
-    .then((response) => {
-      cb(null, response);
-    })
-    .catch((error) => {
-      cb(error, null);
-    });
+  return (
+    axios.get(url)
+  );
 };
+
+const getBestBooks = (cb) => {
+  getNYT2()
+    .then(searchMap)
+    .then((data) => {
+      const allCleanBooks = [];
+      data.forEach((one) => {
+        const parseRes = convert.xml2json(one.data, { compact: true, spaces: 1 });
+        const books = JSON.parse(parseRes).GoodreadsResponse.search.results.work;
+        let theBook = books;
+        if (books.length > 0) {
+          theBook = books[0];
+        }
+        allCleanBooks.push(theBook);
+
+        // console.log(jsonBook);
+      });
+      // console.log(allCleanBooks[0]);
+      cb(allCleanBooks[0]);
+    })
+    .catch(cb);
+};
+
+// .then((response) => {
+//   // console.log('here on line 20');// , response.data);
+//   const parseRes = convert.xml2json(response.data, { compact: true, spaces: 1 });
+//   const books = JSON.parse(parseRes).GoodreadsResponse.search.results.work;
+//   let theBook = books;
+//   if (books.length > 0) {
+//     theBook = books[0];
+//   }
+//   // console.log('books');// , theBook);
+//   cb(null, theBook);
+// })
+// .catch((error) => {
+//   // console.log('here on line 20');// , error);
+//   cb(error, null);
+// });
+
+const search3 = book => (
+  console.log(book)
+  axios.get('https://www.goodreads.com/search.xml', {
+    params: {
+      q: book,
+      key: goodReadsKey,
+    },
+  })
+);
+const searchMap = (books) => {
+  const promises = books.data.results.map(book => search3(book));
+  return Promise.all(promises);
+};
+
+const dataMap = (goodReadsData) => {
+
+};
+
+// var asyncMap = function(tasks, callback) {
+//     var promises = tasks.map(function(task) {
+//       return new Promise (resolve => {task(resolve)});
+//     });
+//     Promise.all(promises)
+//       .then(values => {
+//         return callback(values);
+//       });
+// };
+
 
 const genresWhiteList = ['action and adventure',
   'anthology',

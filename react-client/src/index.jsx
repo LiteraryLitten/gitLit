@@ -14,7 +14,13 @@ class App extends React.Component {
     this.state = {
       view: null,
       items: [],
-      userProfile: { username: 'Dust-Off' },
+      userProfile: {
+        name: 'Mish',
+        username: 'Mish',
+        password: 'test',
+        reviewedBooks: [], // book objects here -> save it to db
+        favoriteBooks: [], // book objects here -> save it to db
+      },
       selectedBook: {},
     };
     this.changeView = this.changeView.bind(this);
