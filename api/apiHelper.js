@@ -17,12 +17,12 @@ const searchBook = (book, cb) => {
       // console.log('here on line 20');// , response.data);
       const parseRes = convert.xml2json(response.data, { compact: true, spaces: 1 });
       const books = JSON.parse(parseRes).GoodreadsResponse.search.results.work;
-      //let theBook = books;
-      // if (books.length > 0) {
-      //   theBook = books;
-      // }
+      let theBook = books;
+      if (books.length > 0) {
+        theBook = books[0];
+      }
       // console.log('books');// , theBook);
-      cb(null, books);
+      cb(null, theBook);
     })
     .catch((error) => {
       // console.log('here on line 20');// , error);
@@ -76,22 +76,6 @@ const getBestBooks = (cb) => {
     })
     .catch(cb);
 };
-
-// .then((response) => {
-//   // console.log('here on line 20');// , response.data);
-//   const parseRes = convert.xml2json(response.data, { compact: true, spaces: 1 });
-//   const books = JSON.parse(parseRes).GoodreadsResponse.search.results.work;
-//   let theBook = books;
-//   if (books.length > 0) {
-//     theBook = books[0];
-//   }
-//   // console.log('books');// , theBook);
-//   cb(null, theBook);
-// })
-// .catch((error) => {
-//   // console.log('here on line 20');// , error);
-//   cb(error, null);
-// });
 
 const search3 = book => (
   console.log(book)

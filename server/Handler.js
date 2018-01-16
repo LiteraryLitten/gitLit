@@ -110,12 +110,11 @@ module.exports = {
       if (err) {
         res.sendStatus(500);
       } else {
-        // const parsResults = searchResults.map((book) => {
-        //   const cleanBook = organizeBookData(book);
-        //   return organizeBookData(book);
-        // });
-        // res.json(parsResults);
-        res.json(searchResults);
+        const parsResults = searchResults.map((book) => {
+          const cleanBook = organizeBookData(book);
+          return organizeBookData(book);
+        });
+        res.json(parsResults);
       }
     });
   },
@@ -126,7 +125,7 @@ module.exports = {
       // if (err) {
       //   res.sendStatus(500);
       // } else {
-      res.json(data);
+      // res.json(data);
       // }
     });
     // res.json('sending');
