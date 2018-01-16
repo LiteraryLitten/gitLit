@@ -1,5 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
+import User from './User.jsx';
 
 class ProfilePage extends React.Component {
   constructor(props) {
@@ -149,15 +150,8 @@ class ProfilePage extends React.Component {
       let user = this.state.userProfile;
       return (
         <div className="userProfile">
-          USER LOGGED IN YO
-          <div className="name">
-            Name : {user.name} <br />
-            Username : {user.username} <br />
-            <button onClick={this.changePassword} > Change Password </button> <br />
-            My Bookshelf : {user.favoriteBooks} <br />
-            My Reviews : {user.reviewedBooks}
-          </div>
-          {this.state.userProfile.username}
+          <h2>Your Profile</h2>
+          <User user={user} onClick={this.changePassword.bind(this)} />
           <button onClick={this.handleLogout} > Logout </button>
         </div>
       );
