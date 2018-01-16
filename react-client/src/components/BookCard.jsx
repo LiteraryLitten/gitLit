@@ -22,18 +22,18 @@ const styles = theme => ({
   media: {
     height: 25,
   },
-  expand: {
-    transform: 'rotate(0deg)',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  avatar: {
-    backgroundColor: red[500],
-  },
+  // expand: {
+  //   transform: 'rotate(0deg)',
+  //   transition: theme.transitions.create('transform', {
+  //     duration: theme.transitions.duration.shortest,
+  //   }),
+  // },
+  // expandOpen: {
+  //   transform: 'rotate(180deg)',
+  // },
+  // avatar: {
+  //   backgroundColor: red[500],
+  // },
   flexGrow: {
     flex: '1 1 auto',
   },
@@ -47,13 +47,13 @@ class BookCard extends React.Component {
     super(props);
     this.state = {
       book: this.props.book,
-      expanded: false,
+      // expanded: false,
       rating: 0,
       description: '',
     };
     this.submitRank = this.submitRank.bind(this);
     this.goToBook = this.goToBook.bind(this);
-    this.handleExpandClick = this.handleExpandClick.bind(this);
+    // this.handleExpandClick = this.handleExpandClick.bind(this);
   }
 
   componentDidMount() {
@@ -72,10 +72,10 @@ class BookCard extends React.Component {
     this.props.changeView('Book', this.state.book);
   }
 
-  handleExpandClick() {
-    console.log('expand');
-    this.setState({ expanded: !this.state.expanded });
-  }
+  // handleExpandClick() {
+  //   console.log('expand');
+  //   this.setState({ expanded: !this.state.expanded });
+  // }
 
   submitRank(rating) {
     // stuff here

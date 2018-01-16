@@ -5,6 +5,7 @@ const { goodReadsKey } = require('./apiKeys.js');
 const { NYTKey } = require('./apiKeys.js');
 const apiKeys = require('./apiKeys.js');
 const param = require('jquery-param');
+const { organizeBookData, addReviewData, addReviewData2 } = require('./apiTest.js');
 
 const searchBook = (book, cb) => {
   axios.get('https://www.goodreads.com/search.xml', {
@@ -48,18 +49,18 @@ const getMoreBookData = (book, cb) => {
 };
 
 
-const getBestBooks = (cb) => {
-  let url = 'https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json';
-  url += `?${param({ 'api-key': NYTKey })}`;
-
-  axios.get(url)
-    .then((response) => {
-      cb(null, response);
-    })
-    .catch((error) => {
-      cb(error, null);
-    });
-};
+// const getBestBooks = (cb) => {
+//   let url = 'https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json';
+//   url += `?${param({ 'api-key': NYTKey })}`;
+//
+//   axios.get(url)
+//     .then((response) => {
+//       cb(null, response);
+//     })
+//     .catch((error) => {
+//       cb(error, null);
+//     });
+// };
 
 const getNYT2 = () => {
   let url = 'https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json';
@@ -69,65 +70,129 @@ const getNYT2 = () => {
   );
 };
 
-const getBestBooks2 = (cb) => {
+const getBestBooks = (cb) => {
   getNYT2()
-    .then(searchMap)
-    .then((data) => {
-      console.log('After SerachMap example book:', data[0]);
-      // console.log('');
-      cb(data[0]);
-      // data.data
-      const allCleanBooks = [];
-      data.forEach((one) => {
-        const parseRes = convert.xml2json(one.data, { compact: true, spaces: 1 });
-        const books = JSON.parse(parseRes).GoodreadsResponse.search.results.work;
-        let theBook = books;
-        if (books.length > 0) {
-          theBook = books[0];
-        }
-        allCleanBooks.push(theBook);
-
-        // console.log(jsonBook);
+    .then((nytData) => {
+      const testISBN13 = [];
+      nytData.data.results.forEach((nytBook) => {
+        if (nytBook.isbns.length <= 0) { return; }
+        const { isbn13 } = nytBook.isbns[0];
+        const book = { isbn13 };
+        testISBN13.push(isbn13);
       });
-      // console.log(allCleanBooks[0]);
-      cb(allCleanBooks[0]);
+      return testISBN13;
     })
-    .catch(cb);
+    .then(returnArrayOfGrID)
+    .then(goodReadsObjFromIDs)
+    .then((arrayOfBooks) => {
+      cb(arrayOfBooks);
+    })
+    .catch((err) => {
+      console.log('getBestBooks had a problem:', err);
+    });
 };
 
-const search3 = (book) => {
-  const { isbn13 } = book.isbns[0];
-  console.log('Searching for Book:', book.isbns);
-  console.log('');
-  // if (book.isbns.length <= 0) { console.log('ON SNAP', book); }
+const apiGrID = (isbn13) => {
+  const url = 'https://www.goodreads.com/book/isbn_to_id';
   return (
-    axios.get('https://www.goodreads.com/search.xml', {
+    axios.get(url, {
       params: {
-        q: isbn13,
+        isbn: isbn13,
         key: goodReadsKey,
       },
     })
   );
 };
-const searchMap = (books) => {
-  const promises = books.data.results.map(book => search3(book));
+
+const findGoodIdFromISBN = (collection) => {
+  const promises = collection.map(isbn13 => apiGrID(isbn13));
   return Promise.all(promises);
 };
 
-const dataMap = (goodReadsData) => {
-
+const returnArrayOfGrID = (isbnArray) => {
+  const arrayGrID = [];
+  return new Promise((resolve, reject) => {
+    findGoodIdFromISBN(isbnArray)
+      .then((data) => {
+        data.forEach((grByIsbnReturn) => {
+          arrayGrID.push(grByIsbnReturn.data);
+        });
+        resolve(arrayGrID);
+      });
+  });
 };
 
-// var asyncMap = function(tasks, callback) {
-//     var promises = tasks.map(function(task) {
-//       return new Promise (resolve => {task(resolve)});
-//     });
-//     Promise.all(promises)
-//       .then(values => {
-//         return callback(values);
-//       });
+const goodReadsObjFromIDs = (goodReadsIdArray) => {
+  const bookCollection = [];
+  return new Promise((resolve, reject) => {
+    goodReadsIdArray.forEach((grId) => {
+      bookCollection.push({ grId });
+    });
+    findGoodData(bookCollection)
+      .then((rawData) => {
+        const bookObjects = [];
+        rawData.forEach((data) => {
+          const parRez = convert.xml2json(data.data);
+          const jsonRez = JSON.parse(parRez).elements[0].elements[1].elements;
+          const parsedData = addReviewData2(jsonRez);
+          if (parsedData === null) return;
+
+          const genres = filterByPopularShelves(parsedData);
+          parsedData.genres = genres;
+
+          bookObjects.push(parsedData);
+        });
+        resolve(bookObjects);
+      });
+  });
+};
+
+const apiGrAllData = (grID) => {
+  const url = `https://www.goodreads.com/book/show/${grID}?format=xml&key=${goodReadsKey}`;
+  return (
+    axios.get(url)
+  );
+};
+
+const findGoodData = (bookArray) => {
+  const promises = bookArray.map(book => apiGrAllData(book.grId));
+  return Promise.all(promises);
+};
+
+// const search3 = (book) => {
+//   const { isbn13 } = book.isbns[0];
+//   return (
+//     axios.get('https://www.goodreads.com/search.xml', {
+//       params: {
+//         q: isbn13,
+//         key: goodReadsKey,
+//       },
+//     })
+//   );
 // };
 
+// const searchMap = (books) => {
+//   const promises = books.data.results.map((book) => {
+//     if (book.isbns.length <= 0) return;
+//     return search3(book);
+//   });
+//   return Promise.all(promises);
+// };
+//
+// const getMoreBookData2 = (book) => {
+//   const url = `https://www.goodreads.com/book/show/${book.id}?format=xml&key=${goodReadsKey}`;
+//   return (axios.get(url));
+// };
+//
+// const reviewMap = (books) => {
+//   const promises = books.map(book => getMoreBookData2(book));
+//   return Promise.all(promises);
+// };
+//
+//
+// const dataMap = (goodReadsData) => {
+//
+// };
 
 const genresWhiteList = ['action and adventure',
   'anthology',
@@ -195,7 +260,7 @@ const filterByPopularShelves = (book) => {
   popShelvesWithOnlyWords.forEach((shelf) => {
     shelf.forEach((word) => {
       if (genresWhiteList.indexOf(word) > -1) {
-        if(genres.indexOf(word) === -1) {
+        if (genres.indexOf(word) === -1) {
           // console.log("here you are word:", word);
           genres.push(word);
         }
@@ -209,7 +274,8 @@ const filterByPopularShelves = (book) => {
 module.exports = {
   searchBook,
   getMoreBookData,
-  getBestBooks,
+  // getBestBooks,
   filterByPopularShelves,
-  getBestBooks2,
+  // getBestBooks2,
+  getBestBooks,
 };

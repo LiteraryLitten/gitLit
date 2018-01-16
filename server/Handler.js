@@ -118,26 +118,20 @@ module.exports = {
       }
     });
   },
+  // getBestSellers: (req, res) => {
+  //   api.getBestBooks((err, data) => {
+  //     if (err) {
+  //       res.sendStatus(500);
+  //     } else {
+  //       res.json(data.data);
+  //     }
+  //   });
+  // },
   getBestSellers: (req, res) => {
-    api.getBestBooks((err, data) => {
-      if (err) {
-        res.sendStatus(500);
-      } else {
-        res.json(data.data);
-      }
+    console.log('getting best Sellers in server');
+    api.getBestBooks3((data) => {
+      res.json(data);
     });
-  },
-  getBestSellers2: (req, res) => {
-    api.getBestBooks2((data) => {
-      // console.log('inside handler @ 122 - cb for betSelelrs');
-      // console.log(data);
-      // if (err) {
-      //   res.sendStatus(500);
-      // } else {
-      // res.json(data);
-      // }
-    });
-    // res.json('sending');
   },
   postReview: (req, res) => {
     db.saveReview(req.body, (err, data) => {

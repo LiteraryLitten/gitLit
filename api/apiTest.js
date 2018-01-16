@@ -10,12 +10,10 @@ const organizeBookData = (data) => {
     isbn13: data.isbn13,
   };
 
-  //console.log("on line 14 in apiTest", usefulData);
   return usefulData;
 };
 
 const addReviewData = (reviewData, bookData) => {
-  // console.log("in apiTest",JSON.stringify(reviewData, null, 2));
   bookData.pages = reviewData[19].elements[0].cdata;
   bookData.imageURL = reviewData[8].elements[0].text;
   bookData.reviewWidget = reviewData[27].elements;
@@ -26,7 +24,93 @@ const addReviewData = (reviewData, bookData) => {
   return bookData;
 };
 
+const addReviewData2 = (grDataByID) => {
+  let isbn13 = 0;
+  try {
+    isbn13 = grDataByID[3].elements[0].cdata;
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+
+  let year = 0;
+  let month = 0;
+  let day = 0;
+  try {
+    year = grDataByID[17].elements[7].elements[0].text;
+    month = grDataByID[17].elements[8].elements[0].text;
+    day = grDataByID[17].elements[9].elements[0].text;
+  } catch (error) {
+    try {
+      year = grDataByID[10].elements[0].text;
+      month = grDataByID[11].elements[0].text;
+      day = grDataByID[12].elements[0].text;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  let title = '';
+  let author = '';
+  try {
+    title = grDataByID[1].elements[0].cdata;
+    author = grDataByID[26].elements[0].elements[1].elements[0].text;
+  } catch (error) {
+    console.log(error);
+  }
+
+  let pages = 0;
+  let averageRating = 0;
+  try {
+    pages = grDataByID[19].elements[0].cdata;
+    averageRating = grDataByID[18].elements[0].text;
+  } catch (error) {
+    console.log(error);
+  }
+
+  let description = '';
+  try {
+    description = grDataByID[16].elements[0].cdata;
+  } catch (err) {
+    console.log(err);
+  }
+
+  let imageURL = '';
+  try {
+    imageURL = grDataByID[8].elements[0].text;
+  } catch (e) {
+    console.log(e);
+  }
+
+  let popularShelves = [];
+  try {
+    console.log('');
+    console.log(grDataByID[28].elements.map(el => el.attributes.name));
+    popularShelves = grDataByID[28].elements.map(el => el.attributes.name);
+  } catch (e) {
+    console.log(e);
+  }
+
+  const usefulData = {
+    year,
+    month,
+    day,
+    title,
+    author,
+    averageRating,
+    isbn13,
+    pages,
+    imageURL,
+    // reviewWidget: grDataByID[27].elements,
+    description,
+    popularShelves,
+  };
+
+  return usefulData;
+};
+
 module.exports = {
   organizeBookData,
   addReviewData,
+  addReviewData2,
 };
