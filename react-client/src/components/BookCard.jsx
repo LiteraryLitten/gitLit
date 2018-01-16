@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import classnames from 'classnames';
+// import classnames from 'classnames';
 import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
-import Collapse from 'material-ui/transitions/Collapse';
+// import Collapse from 'material-ui/transitions/Collapse';
 import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 import red from 'material-ui/colors/red';
 import FavoriteIcon from 'material-ui-icons/Favorite';
-import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
+// import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
 import Divider from 'material-ui/Divider';
-import renderHTML from 'react-render-html';
+// import renderHTML from 'react-render-html';
 
 import PopUp from './PopUp.jsx';
 import Rating from './Rating.jsx';
@@ -114,11 +114,11 @@ class BookCard extends React.Component {
 
           <Divider light />
           <CardContent>
-          <Typography component="p">
-            {this.state.book.genres.map(genre => (
-                genre[0].toUpperCase() + genre.slice(1) + ' '
+            <Typography component="p">
+              {this.state.book.genres.map(genre => (
+                `${genre[0].toUpperCase() + genre.slice(1)} `
             ))}
-          </Typography>
+            </Typography>
           </CardContent>
 
           <Divider light />

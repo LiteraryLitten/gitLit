@@ -119,7 +119,16 @@ module.exports = {
     });
   },
   getBestSellers: (req, res) => {
-    api.getBestBooks((data) => {
+    api.getBestBooks((err, data) => {
+      if (err) {
+        res.sendStatus(500);
+      } else {
+        res.json(data.data);
+      }
+    });
+  },
+  getBestSellers2: (req, res) => {
+    api.getBestBooks2((data) => {
       // console.log('inside handler @ 122 - cb for betSelelrs');
       // console.log(data);
       // if (err) {

@@ -47,6 +47,20 @@ const getMoreBookData = (book, cb) => {
     });
 };
 
+
+const getBestBooks = (cb) => {
+  let url = 'https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json';
+  url += `?${param({ 'api-key': NYTKey })}`;
+
+  axios.get(url)
+    .then((response) => {
+      cb(null, response);
+    })
+    .catch((error) => {
+      cb(error, null);
+    });
+};
+
 const getNYT2 = () => {
   let url = 'https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json';
   url += `?${param({ 'api-key': NYTKey })}`;
@@ -55,10 +69,14 @@ const getNYT2 = () => {
   );
 };
 
-const getBestBooks = (cb) => {
+const getBestBooks2 = (cb) => {
   getNYT2()
     .then(searchMap)
     .then((data) => {
+      console.log('After SerachMap example book:', data[0]);
+      // console.log('');
+      cb(data[0]);
+      // data.data
       const allCleanBooks = [];
       data.forEach((one) => {
         const parseRes = convert.xml2json(one.data, { compact: true, spaces: 1 });
@@ -77,15 +95,20 @@ const getBestBooks = (cb) => {
     .catch(cb);
 };
 
-const search3 = book => (
-  console.log(book)
-  axios.get('https://www.goodreads.com/search.xml', {
-    params: {
-      q: book,
-      key: goodReadsKey,
-    },
-  })
-);
+const search3 = (book) => {
+  const { isbn13 } = book.isbns[0];
+  console.log('Searching for Book:', book.isbns);
+  console.log('');
+  // if (book.isbns.length <= 0) { console.log('ON SNAP', book); }
+  return (
+    axios.get('https://www.goodreads.com/search.xml', {
+      params: {
+        q: isbn13,
+        key: goodReadsKey,
+      },
+    })
+  );
+};
 const searchMap = (books) => {
   const promises = books.data.results.map(book => search3(book));
   return Promise.all(promises);
@@ -188,4 +211,5 @@ module.exports = {
   getMoreBookData,
   getBestBooks,
   filterByPopularShelves,
+  getBestBooks2,
 };
