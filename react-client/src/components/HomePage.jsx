@@ -58,13 +58,16 @@ class HomePage extends React.Component {
       if (book.isbns.length > 0) {
         const isbn = book.isbns[0].isbn13;
         this.props.fetch('book', isbn, (goodReads) => {
+          console.log("in Homepage line 59", goodReads);
           returnCount++;
           if (goodReads !== null) {
             const bookNYC = Array.from(book);
             book = goodReads;
             book.bookNYC = bookNYC;
+
             // book.imageURL = goodReads.imageURL;
             // book.averageRating = goodReads.averageRating;
+            // book.genres = goodReads.genres;
             updatedBooks.push(book);
           } else {
             numCount--;
