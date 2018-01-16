@@ -158,11 +158,20 @@ class ProfilePage extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        {this.renderView()}
-      </div>
-    );
+    if (this.state.profile){
+      return (
+        <div className="userProfile">
+          <User user={this.state.profile} onClick={this.changePassword.bind(this)} />
+          <button onClick={this.handleLogout} > Logout </button>
+        </div>
+      );
+    } else {
+      return (
+        <h3>
+        Login to see your profile
+        </h3>
+      );
+    }
   }
 }
 
