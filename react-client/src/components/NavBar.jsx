@@ -23,31 +23,58 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
+  button: {
+    textTransform: 'none',
+  },
 };
 
-function NavBar(props) {
-  const { classes } = props;
-  return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <MenueButton changeView={props.changeView} />
-          <Typography type="title" color="inherit" className={classes.flex}>
-            Literary Litten
-          </Typography>
+class NavBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleHomeClick = this.handleHomeClick.bind(this);
+    this.handleBookPageClick = this.handleBookPageClick.bind(this);
+  }
 
-          <Search fetch={props.fetch} handleSearch={props.handleSearch} />
-          <Login
-            description="login"
-            setUserProfile={props.setUserProfile}
-            user={props.user}
-            handleProfileClick={props.handleProfileClick}
-            handleLogout={props.handleLogout}
-          />
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+  handleHomeClick(){
+    this.props.handleMenuBarClick(null);
+  }
+
+  handleBookPageClick(){
+    this.props.handleMenuBarClick('Book');
+  }
+
+  render() {
+    const { classes } = this.props;
+    return (
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+            
+            <Button className={classes.button} color="contrast" name="Literary Litten" onClick={this.handleHomeClick}>
+              <Typography type="title" color="inherit" className={classes.flex}>
+              Literary Litten
+              </Typography>
+            </Button>
+            <Button className={classes.button} color="contrast" name="Book Page" onClick={this.handleBookPageClick}>
+              Book Page
+            </Button>
+            <Typography type="title" color="inherit" className={classes.flex}>
+                
+            </Typography>
+            
+            <Search fetch={this.props.fetch} handleSearch={this.props.handleSearch} />
+            <Login
+              description="login"
+              setUserProfile={this.props.setUserProfile}
+              user={this.props.user}
+              handleProfileClick={this.props.handleProfileClick}
+              handleLogout={this.props.handleLogout}
+            />
+          </Toolbar>
+        </AppBar>
+      </div>
+    );
+  }
 }
 
 NavBar.propTypes = {
