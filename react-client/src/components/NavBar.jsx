@@ -23,6 +23,9 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
+  button: {
+    textTransform: 'none',
+  },
 };
 
 function NavBar(props) {
@@ -32,8 +35,14 @@ function NavBar(props) {
       <AppBar position="static">
         <Toolbar>
           <MenueButton changeView={props.changeView} />
-          <Typography type="title" color="inherit" className={classes.flex}>
+          
+          <Button className={classes.button} color="contrast" label="Literary Litten">
+            <Typography type="title" color="inherit" className={classes.flex}>
             Literary Litten
+            </Typography>
+          </Button>
+          <Typography type="title" color="inherit" className={classes.flex}>
+              
           </Typography>
 
           <Search fetch={props.fetch} handleSearch={props.handleSearch} />
