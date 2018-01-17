@@ -192,7 +192,6 @@ class App extends React.Component {
         <Rating icon="heart" defaultRating={1} maxRating={3} />
 
         {/* <NavBar changeView={this.changeView} />
-=======
         <NavBar
           changeView={this.changeView}
           fetch={this.fetch}
