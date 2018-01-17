@@ -197,11 +197,6 @@ class App extends React.Component {
           handleSearch={this.handleSearch}
           setUserProfile={this.setUserProfile}
           user={this.state.userProfile}
-<<<<<<< HEAD
-          handleProfileClick={this.handleProfileClick}
-          handleLogout={this.handleLogout}
-        />
->>>>>>> user profile stored on index.jsx
         <div className="main-view">
           {this.renderView()}
         </div> */}
