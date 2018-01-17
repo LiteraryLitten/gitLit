@@ -6,11 +6,12 @@ class ProfilePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userProfile: [],
-      username: '',
-      password: '',
-      name: '',
-      loginSuccess: false,
+      userProfile: [], 
+      login: {
+        username: '',
+        password: '',
+        name: '',
+      },
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleSignup = this.handleSignup.bind(this);
@@ -26,13 +27,19 @@ class ProfilePage extends React.Component {
   }
 
   saveName(e) {
-    this.setState({ name: e.target.value });
+    const login = this.state.login;
+    login.name = e;
+    this.setState({ login });
   }
   saveUsername(e) {
-    this.setState({ username: e.target.value });
+    const login = this.state.login;
+    login.username = e;
+    this.setState({ login });
   }
   savePassword(e) {
-    this.setState({ password: e.target.value });
+    const login = this.state.login;
+    login.password = e;
+    this.setState({ login });
   }
 
   handleLogin() {
@@ -158,11 +165,19 @@ class ProfilePage extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        {this.renderView()}
-      </div>
-    );
+    if (this.props.user.name){
+      return (
+        <div className="userProfile">
+          <User user={this.props.user} onClick={this.changePassword.bind(this)} />
+        </div>
+      );
+    } else {
+      return (
+        <h3>
+        Login to see your profile
+        </h3>
+      );
+    }
   }
 }
 

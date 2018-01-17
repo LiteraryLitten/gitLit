@@ -14,12 +14,15 @@ class App extends React.Component {
     this.state = {
       view: null,
       items: [],
-      userProfile: { username: 'Dust-Off' },
+      userProfile: {},
       selectedBook: {},
     };
     this.changeView = this.changeView.bind(this);
     this.submitReview = this.submitReview.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.setUserProfile = this.setUserProfile.bind(this);
+    this.handleProfileClick = this.handleProfileClick.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
   //
   //componentDidMount() {
@@ -91,6 +94,28 @@ class App extends React.Component {
     });
   }
 
+  setUserProfile(user) {
+    this.setState({ userProfile: user }, function() { this.renderView(); });
+  }
+
+  handleLogout() {
+    this.setState({ userProfile: {} });
+  }
+
+  changePassword() {
+    // render a text box
+    // go to server > db
+    // edit pw field in db
+    // return new user object
+    // rerender page
+
+  }
+
+  handleProfileClick() {
+    this.setState({ view: 'Profile' });
+    this.renderView();
+  }
+
   renderView() {
     if (this.state.view === 'Book') {
       return (
@@ -106,6 +131,7 @@ class App extends React.Component {
         <ProfilePage
           fetch={this.fetch}
           changeView={this.changeView}
+          user={this.state.userProfile}
         />
       );
     } else if (this.state.view === 'Search') {
@@ -130,7 +156,15 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <NavBar changeView={this.changeView} fetch={this.fetch} handleSearch={this.handleSearch} />
+        <NavBar
+          changeView={this.changeView}
+          fetch={this.fetch}
+          handleSearch={this.handleSearch}
+          setUserProfile={this.setUserProfile}
+          user={this.state.userProfile}
+          handleProfileClick={this.handleProfileClick}
+          handleLogout={this.handleLogout}
+        />
         <div className="main-view">
           {this.renderView()}
         </div>

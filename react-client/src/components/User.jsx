@@ -21,7 +21,7 @@ const styles = theme => ({
   },
 });
 
-const User = props =>(
+const User = props =>{ console.log(props); return(
     <div>
     <Grid container spacing={24}>
 
@@ -74,6 +74,7 @@ const User = props =>(
   </div>
     </div>
     );
+}
 
 
 export default User;

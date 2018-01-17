@@ -37,7 +37,13 @@ function NavBar(props) {
           </Typography>
 
           <Search fetch={props.fetch} handleSearch={props.handleSearch} />
-          <Login description="login" />
+          <Login
+            description="login"
+            setUserProfile={props.setUserProfile}
+            user={props.user}
+            handleProfileClick={props.handleProfileClick}
+            handleLogout={props.handleLogout}
+          />
         </Toolbar>
       </AppBar>
     </div>
