@@ -21,6 +21,7 @@ class App extends React.Component {
     this.submitReview = this.submitReview.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.setUserProfile = this.setUserProfile.bind(this);
+    this.handleProfileClick = this.handleProfileClick.bind(this);
   }
   //
   //componentDidMount() {
@@ -92,70 +93,12 @@ class App extends React.Component {
     });
   }
 
-/****************** Login Functions Start ******************/
- /*
-    Refactor notes:
-    -Move all the save functions to Login.jsx (done)
-    -Do the ajax calls in Login.jsx
-    -Use a callback in the index.jsx handle functions to retrieve the user information from Login.jsx
-    -Save the full user profile to this.state.userProfile 
-
-  */
-
-
-  setUserProfile(user) { 
-    // $.ajax({
-    //   url: '/login',
-    //   type: 'POST',
-    //   data: JSON.stringify({
-    //     username: this.state.username,
-    //     password: this.state.password,
-    //   }),
-    //   success: (data) => {
-    //     if (data.type === 'success') {
-    //       this.setState({ userProfile: data.userProfile });
-    //     } else if (data.type === 'wrong password') {
-    //       alert('Wrong Password: Try Again');
-    //     } else {
-    //       alert ('Invalid username: Try Again');
-    //     }
-    //     this.renderView();
-    //   },
-    //   error: (err) => {
-    //     console.log('err', err);
-    //   },
-    // });
-    this.setState({ userProfile: user }, function() { this.renderView() });
+  setUserProfile(user) {
+    this.setState({ userProfile: user }, function() { this.renderView(); });
   }
 
   handleLogout() {
-    this.setState({ userProfile: [] });
-    this.renderView();
-  }
-
-  handleSignup() {
-    // $.ajax({
-    //   url: '/signup',
-    //   type: 'POST',
-    //   data: JSON.stringify({
-    //     name: this.state.name,
-    //     username: this.state.username,
-    //     password: this.state.password,
-    //     reviewedBooks: [],
-    //     favoriteBooks: [],
-    //   }),
-    //   success: (data) => {
-    //     console.log(data);
-    //     if (data.type === 'success') {
-    //       alert('User Profile Created! Login to continue');
-    //     } else{
-    //       alert('Oh no! That username is already taken. Try again!');
-    //     }
-    //   },
-    //   error: (err) => {
-    //     console.log('err', err);
-    //   },
-    // });
+    this.setState({ userProfile: {} });
   }
 
   changePassword() {
@@ -167,7 +110,10 @@ class App extends React.Component {
 
   }
 
-/****************** Login Functions End ******************/
+  handleProfileClick() {
+    this.setState({ view: 'Profile' });
+    this.renderView();
+  }
 
   renderView() {
     if (this.state.view === 'Book') {
@@ -215,6 +161,7 @@ class App extends React.Component {
           handleSearch={this.handleSearch}
           setUserProfile={this.setUserProfile}
           user={this.state.userProfile}
+          handleProfileClick={this.handleProfileClick}
         />
         <div className="main-view">
           {this.renderView()}
