@@ -56,6 +56,7 @@ const reviewSchema = new mongoose.Schema({
 const Book = mongoose.model('Book', bookSchema);
 const User = mongoose.model('User', userSchema);
 const Review = mongoose.model('Review', reviewSchema);
+const favorite = mongoose.model('Favorite', favoriteSchema);
 
 const selectAllBooks = (callback) => {
   Book.find({}, (err, items) => {
@@ -68,12 +69,14 @@ const selectAllBooks = (callback) => {
 };
 
 const findUserFavorites = (user, cb) => {
+  console.log("on line 71 in DB", user);
   const books = [];
   User.find({ username: user }).then((foundUser) => {
     const len = foundUser[0].favoriteBooks.length;
-
     foundUser[0].favoriteBooks.forEach((book) => {
-      Book.find({ isbn: book }).then((foundBook) => {
+      console.log(" on line 76", book);
+      Book.find({ isbn13: book }).then((foundBook) => {
+        console.log("on line 77", foundBook);
         books.push(foundBook);
       }).then(() => {
         if (books.length === len) {
@@ -194,6 +197,68 @@ const saveReview = (review, cb) => {
   });
 };
 
+
+
+const findFavorite = (favorite, cb) => {
+  favorite.findOne({ idNameNumber: review }, (err, item) => {
+    if (err) {
+      cb(err, null);
+    } else {
+      cb(null, item);
+    }
+  });
+};
+
+const saveFavorite = (favorite, cb) => {
+  console.log(" on line 201  in db", favorite);
+
+  const favoriteID = `${favorite.username}${favorite.isbn13}`;
+  findReview(favoriteID, (err, data) => {
+    if (err) {
+      console.log('ERR on Database line 206');
+      console.log(err);
+      cb(err, null);
+    } else if (data) {
+      console.log('Success on database favorite look up line 210');
+      console.log(data);
+
+      if (favorite.favorite.length > 0) {
+        updatedFavorite = favorite.favorite;
+        console.log(updatedFavorite);
+      } else {
+       // updatedFavorite = data.text;
+      }
+
+      if (review.rating > 0) {
+        updatedRating = review.rating;
+      } else {
+        updatedRating = data.rating;
+      }
+
+      Review.update({ idNameNumber: reviewID }, {
+        text: updatedReview,
+        rating: updatedRating,
+      }, (errUpdate, dataUpdate) => {
+        cb(errUpdate, dataUpdate);
+      });
+    } else {
+      console.log('add NEW DB @ 184', review);
+      const newReview = new Review({
+        idNameNumber: reviewID,
+        user: review.user,
+        isbn: review.isbn13,
+        text: review.review,
+        rating: review.rating,
+      });
+      newReview.save();
+      cb(null, data);
+    }
+  });
+};
+
+
+
+
 module.exports = {
   selectAllBooks,
   findUserFavorites,
@@ -204,4 +269,5 @@ module.exports = {
   save,
   saveReview,
   findReview,
+  saveFavorite,
 };

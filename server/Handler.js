@@ -62,6 +62,7 @@ module.exports = {
     });
   },
   postLogin: (req, res) => {
+    console.log(" in handler on line 62", req);
     let loginData = {};
     req.on('data', (chunk) => {
       loginData = JSON.parse(chunk.toString());
@@ -90,7 +91,7 @@ module.exports = {
               res.json(loginData);
             });
           }
-        }       
+        }
       });
     });
   },
@@ -159,7 +160,7 @@ module.exports = {
               // cleanBook.imageURL = book.small_image_url._cdata;
               // cleanBook.description = book.description._cdata;
               // cleanBook.genres = [];
- 
+
               allBooks[i] = book;
               count ++;
               //console.log(book);
@@ -213,4 +214,9 @@ module.exports = {
       }
     });
   }
+  postFavorites: (req, res) => {
+     db.saveFavorite(req.body, (err, data) => {
+      res.json([err, data]);
+    });
+  },
 };

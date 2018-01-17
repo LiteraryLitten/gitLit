@@ -25,7 +25,7 @@ class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    console.log('mouted');
+    console.log('mounted');
     this.getBestSellersBooks();
     this.setState({
       loading: true,
