@@ -9,6 +9,7 @@ import Dialog, {
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import renderHTML from 'react-render-html';
 import TextField from 'material-ui/TextField';
+import $ from 'jquery';
 
 
 class Login extends React.Component {
@@ -16,17 +17,94 @@ class Login extends React.Component {
     super(props);
     this.state = {
       open: false,
-      description: "test",
+      login: {
+        name: '',
+        username: '',
+        password: '',
+      },
     };
     this.handleClickOpen = this.handleClickOpen.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleSignup = this.handleSignup.bind(this);
+    this.saveName = this.saveName.bind(this);
+    this.saveUsername = this.saveUsername.bind(this);
+    this.savePassword = this.savePassword.bind(this);
+  }
+
+  saveName(e) {
+    const login = this.state.login;
+    login.name = e.target.value;
+    this.setState({ login });
+  }
+
+  saveUsername(e) {
+    const login = this.state.login;
+    login.username = e.target.value;
+    this.setState({ login });
+  }
+
+  savePassword(e) {
+    const login = this.state.login;
+    login.password = e.target.value;
+    this.setState({ login });
   }
 
   handleClickOpen() {
     this.setState({ open: true });
   }
 
-  handleClose() {
+  handleLogin() {
+    $.ajax({
+      url: '/login',
+      type: 'POST',
+      data: JSON.stringify({
+        username: this.state.login.username,
+        password: this.state.login.password,
+      }),
+      success: (data) => {
+        if (data.type === 'success') {
+          this.setState({ userProfile: data.userProfile });
+        } else if (data.type === 'wrong password') {
+          alert('Wrong Password: Try Again');
+        } else {
+          alert ('Invalid username: Try Again');
+        }
+        //this.renderView();
+        this.props.setUserProfile(this.state.userProfile);
+      },
+      error: (err) => {
+        console.log('err', err);
+      },
+    });
+    this.setState({ open: false });
+  }
+
+  handleSignup() {
+    $.ajax({
+      url: '/signup',
+      type: 'POST',
+      data: JSON.stringify({
+        name: this.state.login.name,
+        username: this.state.login.username,
+        password: this.state.login.password,
+        reviewedBooks: [],
+        favoriteBooks: [],
+      }),
+      success: (data) => {
+        console.log(data);
+        if (data.type === 'success') {
+          alert('User Profile Created! Login to continue');
+          this.setState({ open: false });
+        } else{
+          alert('Oh no! That username is already taken. Try again!');
+          this.setState({ open: false });
+        }
+      },
+      error: (err) => {
+        console.log('err', err);
+        this.setState({ open: false });
+      },
+    });
     this.setState({ open: false });
   }
 
@@ -52,6 +130,7 @@ class Login extends React.Component {
               id="username"
               label="username"
               type="string"
+              onChange={this.saveUsername}
             />
             <TextField
               autoFocus
@@ -59,10 +138,11 @@ class Login extends React.Component {
               id="login-password"
               label="password"
               type="password"
+              onChange={this.savePassword}
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.handleLogin} color="primary">
               Login
             </Button>
           </DialogActions>
@@ -76,13 +156,15 @@ class Login extends React.Component {
               id="name"
               label="name"
               type="string"
+              onChange={this.saveName}
             />
             <TextField
               autoFocus
               margin="dense"
               id="username"
               label="username"
-              type="string"
+              type="string" 
+              onChange={this.saveUsername}
             />
             <TextField
               autoFocus
@@ -90,10 +172,11 @@ class Login extends React.Component {
               id="signup-password"
               label="password"
               type="password"
+              onChange={this.savePassword}
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.handleSignup} color="primary">
               Signup
             </Button>
           </DialogActions>
