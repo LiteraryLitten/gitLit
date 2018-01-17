@@ -22,6 +22,7 @@ class App extends React.Component {
     this.handleSearch = this.handleSearch.bind(this);
     this.setUserProfile = this.setUserProfile.bind(this);
     this.handleProfileClick = this.handleProfileClick.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
   //
   //componentDidMount() {
@@ -162,6 +163,7 @@ class App extends React.Component {
           setUserProfile={this.setUserProfile}
           user={this.state.userProfile}
           handleProfileClick={this.handleProfileClick}
+          handleLogout={this.handleLogout}
         />
         <div className="main-view">
           {this.renderView()}

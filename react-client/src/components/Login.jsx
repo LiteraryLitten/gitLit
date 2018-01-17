@@ -30,6 +30,7 @@ class Login extends React.Component {
     this.saveUsername = this.saveUsername.bind(this);
     this.savePassword = this.savePassword.bind(this);
     this.onNameClick = this.onNameClick.bind(this);
+    this.onLogoutClick = this.onLogoutClick.bind(this);
   }
 
   saveName(e) {
@@ -113,11 +114,16 @@ class Login extends React.Component {
     this.props.handleProfileClick();
   }
 
+  onLogoutClick() {
+    this.props.handleLogout();
+  }
+
   render() {
     if (this.props.user.name) {
       return (
         <div>
             <Button color="contrast" onClick={this.onNameClick}>{this.props.user.name}</Button>
+            <Button color="contrast" onClick={this.onLogoutClick}>Logout</Button>
         </div>
       );
     } else {
