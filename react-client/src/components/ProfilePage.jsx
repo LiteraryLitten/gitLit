@@ -165,10 +165,10 @@ class ProfilePage extends React.Component {
   }
 
   render() {
-    if (this.state.userProfile.length !== 0){
+    if (this.props.user.name){
       return (
         <div className="userProfile">
-          <User user={this.state.profile} onClick={this.changePassword.bind(this)} />
+          <User user={this.props.user} onClick={this.changePassword.bind(this)} />
           <button onClick={this.handleLogout} > Logout </button>
         </div>
       );

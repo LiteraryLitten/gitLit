@@ -109,11 +109,10 @@ class Login extends React.Component {
   }
 
   render() {
-    console.log("in render", this.props);
     if (this.props.user.name) {
       return (
         <div>
-            <Button color="contrast">My Profile</Button>
+            <Button color="contrast">{this.props.user.name}</Button>
         </div>
       );
     } else {

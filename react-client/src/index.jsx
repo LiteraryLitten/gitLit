@@ -184,7 +184,7 @@ class App extends React.Component {
         <ProfilePage
           fetch={this.fetch}
           changeView={this.changeView}
-          user={this.state.user}
+          user={this.state.userProfile}
         />
       );
     } else if (this.state.view === 'Search') {
