@@ -42,6 +42,7 @@ function NavBar(props) {
             setUserProfile={props.setUserProfile}
             user={props.user}
             handleProfileClick={props.handleProfileClick}
+            handleLogout={props.handleLogout}
           />
         </Toolbar>
       </AppBar>
