@@ -49,7 +49,7 @@ class NavBar extends React.Component {
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
-            
+
             <Button className={classes.button} color="contrast" name="Literary Litten" onClick={this.handleHomeClick}>
               <Typography type="title" color="inherit" className={classes.flex}>
               Literary Litten
@@ -59,9 +59,9 @@ class NavBar extends React.Component {
               Book Page
             </Button>
             <Typography type="title" color="inherit" className={classes.flex}>
-                
+
             </Typography>
-            
+
             <Search fetch={this.props.fetch} handleSearch={this.props.handleSearch} />
             <Login
               description="login"
