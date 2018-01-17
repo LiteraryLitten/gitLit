@@ -14,12 +14,13 @@ class App extends React.Component {
     this.state = {
       view: null,
       items: [],
-      userProfile: { username: 'Dust-Off' },
+      userProfile: {},
       selectedBook: {},
     };
     this.changeView = this.changeView.bind(this);
     this.submitReview = this.submitReview.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.setUserProfile = this.setUserProfile.bind(this);
   }
   //
   //componentDidMount() {
@@ -124,7 +125,7 @@ class App extends React.Component {
     //     console.log('err', err);
     //   },
     // });
-    console.log("USER: ", user);
+    this.setState({ userProfile: user }, function() { this.renderView() });
   }
 
   handleLogout() {
@@ -183,6 +184,7 @@ class App extends React.Component {
         <ProfilePage
           fetch={this.fetch}
           changeView={this.changeView}
+          user={this.state.user}
         />
       );
     } else if (this.state.view === 'Search') {
@@ -212,6 +214,7 @@ class App extends React.Component {
           fetch={this.fetch}
           handleSearch={this.handleSearch}
           setUserProfile={this.setUserProfile}
+          user={this.state.userProfile}
         />
         <div className="main-view">
           {this.renderView()}
