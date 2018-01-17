@@ -23,6 +23,7 @@ class App extends React.Component {
     this.setUserProfile = this.setUserProfile.bind(this);
     this.handleProfileClick = this.handleProfileClick.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.handleMenuBarClick = this.handleMenuBarClick.bind(this);
   }
   //
   //componentDidMount() {
@@ -57,6 +58,11 @@ class App extends React.Component {
     this.setState({
       view: choice,
     });
+  }
+
+  handleMenuBarClick(e) {
+    this.setState({ view: e });
+    this.renderView();
   }
 
   submitReview(review, isbn13, rating) {
@@ -143,14 +149,15 @@ class App extends React.Component {
           searchResults={this.state.searchResults}
         />
       );
-    }
-    return (
-      <HomePage
-        changeView={this.changeView}
-        fetch={this.fetch}
-        view={this.state.view}
-      />
-    );
+    } 
+      return (
+        <HomePage
+          changeView={this.changeView}
+          fetch={this.fetch}
+          view={this.state.view}
+        />
+      );
+    
   }
 
   render() {
@@ -164,6 +171,7 @@ class App extends React.Component {
           user={this.state.userProfile}
           handleProfileClick={this.handleProfileClick}
           handleLogout={this.handleLogout}
+          handleMenuBarClick={this.handleMenuBarClick}
         />
         <div className="main-view">
           {this.renderView()}
