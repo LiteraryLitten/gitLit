@@ -44,7 +44,9 @@ function NavBar(props) {
           <Typography type="title" color="inherit" className={classes.flex}>
               
           </Typography>
-
+          <Button className={classes.button} color="contrast" label="Book Page">
+            Book Page
+          </Button>
           <Search fetch={props.fetch} handleSearch={props.handleSearch} />
           <Login
             description="login"
