@@ -188,7 +188,6 @@ class App extends React.Component {
   render() {
     return (
       <div>
-<<<<<<< HEAD
         <Rating icon="heart" defaultRating={1} maxRating={3} />
 
         {/* <NavBar changeView={this.changeView} />
@@ -198,6 +197,7 @@ class App extends React.Component {
           handleSearch={this.handleSearch}
           setUserProfile={this.setUserProfile}
           user={this.state.userProfile}
+<<<<<<< HEAD
           handleProfileClick={this.handleProfileClick}
           handleLogout={this.handleLogout}
         />
