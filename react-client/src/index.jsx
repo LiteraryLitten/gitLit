@@ -21,6 +21,7 @@ class App extends React.Component {
     this.submitReview = this.submitReview.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.setUserProfile = this.setUserProfile.bind(this);
+    this.handleProfileClick = this.handleProfileClick.bind(this);
   }
   //
   //componentDidMount() {
@@ -129,33 +130,7 @@ class App extends React.Component {
   }
 
   handleLogout() {
-    this.setState({ userProfile: [] });
-    this.renderView();
-  }
-
-  handleSignup() {
-    // $.ajax({
-    //   url: '/signup',
-    //   type: 'POST',
-    //   data: JSON.stringify({
-    //     name: this.state.name,
-    //     username: this.state.username,
-    //     password: this.state.password,
-    //     reviewedBooks: [],
-    //     favoriteBooks: [],
-    //   }),
-    //   success: (data) => {
-    //     console.log(data);
-    //     if (data.type === 'success') {
-    //       alert('User Profile Created! Login to continue');
-    //     } else{
-    //       alert('Oh no! That username is already taken. Try again!');
-    //     }
-    //   },
-    //   error: (err) => {
-    //     console.log('err', err);
-    //   },
-    // });
+    this.setState({ userProfile: {} });
   }
 
   changePassword() {
@@ -167,7 +142,10 @@ class App extends React.Component {
 
   }
 
-/****************** Login Functions End ******************/
+  handleProfileClick() {
+    this.setState({ view: 'Profile' });
+    this.renderView();
+  }
 
   renderView() {
     if (this.state.view === 'Book') {
@@ -220,6 +198,7 @@ class App extends React.Component {
           handleSearch={this.handleSearch}
           setUserProfile={this.setUserProfile}
           user={this.state.userProfile}
+          handleProfileClick={this.handleProfileClick}
         />
 >>>>>>> user profile stored on index.jsx
         <div className="main-view">

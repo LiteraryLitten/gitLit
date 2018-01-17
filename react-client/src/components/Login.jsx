@@ -29,6 +29,7 @@ class Login extends React.Component {
     this.saveName = this.saveName.bind(this);
     this.saveUsername = this.saveUsername.bind(this);
     this.savePassword = this.savePassword.bind(this);
+    this.onNameClick = this.onNameClick.bind(this);
   }
 
   saveName(e) {
@@ -108,11 +109,15 @@ class Login extends React.Component {
     this.setState({ open: false });
   }
 
+  onNameClick() {
+    this.props.handleProfileClick();
+  }
+
   render() {
     if (this.props.user.name) {
       return (
         <div>
-            <Button color="contrast">{this.props.user.name}</Button>
+            <Button color="contrast" onClick={this.onNameClick}>{this.props.user.name}</Button>
         </div>
       );
     } else {
