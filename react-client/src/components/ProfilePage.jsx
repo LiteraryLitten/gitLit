@@ -169,7 +169,6 @@ class ProfilePage extends React.Component {
       return (
         <div className="userProfile">
           <User user={this.props.user} onClick={this.changePassword.bind(this)} />
-          <button onClick={this.handleLogout} > Logout </button>
         </div>
       );
     } else {
