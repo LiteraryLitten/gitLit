@@ -8,7 +8,6 @@ import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import Dialog from 'material-ui/Dialog';
 import MenuIcon from 'material-ui-icons/Menu';
-import MenueButton from './MenueButton.jsx';
 import Search from './Search.jsx';
 import Login from './Login.jsx';
 

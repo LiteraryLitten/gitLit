@@ -14,9 +14,9 @@ class App extends React.Component {
     this.state = {
       view: null,
       items: [],
-      // userProfile: {},
+      userProfile: {},
       // sample user to build bookshelf:
-      userProfile: {_id: "5a600b8f933faf4309c439cc", name: "Mishall", username: "Mish", password: "test", favoriteBooks: [9780399169274, 9780307951526]},
+      // userProfile: {_id: "5a600b8f933faf4309c439cc", name: "Mishall", username: "Mish", password: "test", favoriteBooks: [9780399169274, 9780307951526]},
       selectedBook: {},
     };
     this.changeView = this.changeView.bind(this);
@@ -112,11 +112,6 @@ class App extends React.Component {
   }
 
   changePassword() {
-    // render a text box
-    // go to server > db
-    // edit pw field in db
-    // return new user object
-    // rerender page
 
   }
 

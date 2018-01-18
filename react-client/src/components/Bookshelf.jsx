@@ -1,5 +1,13 @@
 import React from 'react';
-import BookCard from './BookCard.jsx';
+import BookShelfCard from './BookShelfCard.jsx';
+import { withStyles } from 'material-ui/styles';
+import Grid from 'material-ui/Grid';
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+  },
+});
 
 class Bookshelf extends React.Component {
   constructor (props) {
@@ -31,17 +39,20 @@ class Bookshelf extends React.Component {
     return (
       <div>
         <h4>Books</h4>
-        {this.state.bookObjects.map((book) => {
-          return(
+        <Grid
+          container
+          justify="center"
+        >
+          {this.state.bookObjects.map(book => (
             <div>
-            <BookCard
-              book={book}
-              key={book.isbn13}
-              changeView={this.props.changeView}
-            />
+              <BookShelfCard
+                book={book}
+                key={book.isbn13}
+                changeView={this.props.changeView}
+              />
             </div>
-          )
-        })}
+            ))}
+        </Grid>
       </div>
     );
   }
@@ -55,7 +66,7 @@ class Bookshelf extends React.Component {
 }
 
 
-export default Bookshelf;
+export default withStyles(styles)(Bookshelf);
 
 /***
 <BookCard
