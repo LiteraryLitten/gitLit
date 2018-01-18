@@ -80,7 +80,6 @@ class BookCard extends React.Component {
     console.log('on line 63 @ class bookcard', this.props.user);
     // this.addtoFavorites = this.addtoFavorites.bind(this);
     // console.log(" this.props.")
-  }
 
   componentDidMount() {
     let str = this.props.book.description;
