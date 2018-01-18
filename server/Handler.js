@@ -165,7 +165,6 @@ module.exports = {
               // cleanBook.imageURL = book.small_image_url._cdata;
               // cleanBook.description = book.description._cdata;
               // cleanBook.genres = [];
-
               allBooks[i] = book;
               count ++;
               //console.log(book);
