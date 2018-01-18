@@ -25,7 +25,7 @@ const searchBook = (book, cb) => {
       cb(null, books);
     })
     .catch((error) => {
-      // console.log('here on line 20');// , error);
+      console.log('here on line 20');// , error);
       cb(error, null);
     });
 };

@@ -30,9 +30,10 @@ class SearchPage extends React.Component {
           author: result.best_book.author.name._text,
           imageURL: result.best_book.image_url._text,
           description: 'NA',
-          genre: 'NA',
+          genres: ['NA'],
         };
-        return (<BookCard book={book} />);
+        // return (<BookCard book={book} />);
+        return (book);
       });
       //get the necessary book data
       //send it to BookCard
@@ -40,7 +41,8 @@ class SearchPage extends React.Component {
   }
 
   render() {
-    const searchCards = [];
+    var searchCards = [];
+
     if(this.props.searchResults) {
       console.log(this.props.searchResults);
       this.props.searchResults.forEach((result) => {
@@ -49,19 +51,26 @@ class SearchPage extends React.Component {
           author: result.best_book.author.name._text,
           imageURL: result.best_book.image_url._text,
           description: 'NA',
-          genre: 'NA',
+          genres: ['none'],
         };
         searchCards.push(book);
       });
       return (
       <div>
         <h2>SEARCH RESULTS</h2> <br />
-        {searchCards.map((book) =>(
-          <BookCard book={book} />
-        ))}
+        <Grid
+          container
+          justify="center"
+        >
+          {searchCards.map((book) =>(
+            <BookCard key={book.title} book={book} changeView={this.props.changeView}/>
+            // <span key={book.title}>{JSON.stringify(book)}</span>
+          ))}
+        </Grid>
       </div>
     );
     }
+
     return (
       <div>
         <h2>LOADING SEARCH RESULTS</h2> <br />

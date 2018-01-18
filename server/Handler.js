@@ -131,6 +131,7 @@ module.exports = {
     const { title } = req.params;
     api.searchBook(title, (err, searchResults) => {
       if (err) {
+        // console.log(err);
         res.sendStatus(500);
       } else {
         // const parsResults = searchResults.map((book) => {
