@@ -82,12 +82,13 @@ class Login extends React.Component {
         }
         //this.renderView();
         this.props.setUserProfile(this.state.userProfile);
+        this.setState({ open: false });
       },
       error: (err) => {
         console.log('err', err);
       },
     });
-    this.setState({ open: false });
+    
   }
 
   handleSignup() {
@@ -105,17 +106,14 @@ class Login extends React.Component {
         console.log(data);
         if (data.type === 'success') {
           alert('User Profile Created! Login to continue');
-          this.setState({ open: false });
         } else{
           alert('Oh no! That username is already taken. Try again!');
-          //this.setState({ open: false });
         }
       },
       error: (err) => {
         console.log('err', err);
       },
     });
-    this.setState({ open: false });
   }
 
   onNameClick() {
@@ -127,9 +125,7 @@ class Login extends React.Component {
   }
 
   render() {
-    // THE BUG IS ON THIS LINE:
-    // MISH: change truth statement to work if both, there isnt a user || no name
-    if (this.props.user && this.props.user.name) {
+    if (this.props.user.hasOwnProperty('username')) {
       return (
         <div>
             <Button color="contrast" onClick={this.onNameClick}>{this.props.user.name}</Button>
@@ -141,7 +137,7 @@ class Login extends React.Component {
         <div>
 
             <Button color="contrast" onClick={this.handleClickOpen}>Login</Button>
-          {/* <Button onClick={this.handleClickOpen}>Open alert dialog</Button> */}
+
           <Dialog
             open={this.state.open}
             onClose={this.handleClose}
