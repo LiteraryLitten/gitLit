@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
+import axios from 'axios';
 
 import ProfilePage from './components/ProfilePage.jsx';
 import BookPage from './components/BookPage.jsx';
@@ -16,10 +17,12 @@ class App extends React.Component {
       items: [],
       userProfile: { username: 'Dust-Off' },
       selectedBook: {},
+      proreviews: [],
     };
     this.changeView = this.changeView.bind(this);
     this.submitReview = this.submitReview.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.getProReviews = this.getProReviews.bind(this);
   }
   //
   //componentDidMount() {
@@ -29,6 +32,17 @@ class App extends React.Component {
     //     userProfile: user,
     //   });
     // });
+
+  getProReviews(isbn, callback) {
+      axios.get(`/proreviews/${isbn}`)
+      .then((response) => {
+        console.log(response);
+        callback(response);
+      })
+      .catch((error) => {
+        console.log('ProReviews are not received', error);
+      });
+  }
 
   fetch(thing, id, cb) {
     $.ajax({
@@ -123,6 +137,7 @@ class App extends React.Component {
         changeView={this.changeView}
         fetch={this.fetch}
         view={this.state.view}
+        getProReviews={this.getProReviews}
       />
     );
   }

@@ -138,6 +138,7 @@ module.exports = {
       if (err) {
         res.sendStatus(500);
       } else {
+        console.log('lara get request', data.book.critic_reviews);
         res.json(data.book.critic_reviews);
       }
     });

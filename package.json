@@ -38,6 +38,7 @@
     "react-dom": "^15.4.2",
     "react-popper": "^0.7.5",
     "react-render-html": "^0.6.0",
+    "react-router": "^4.2.0",
     "xml-js": "^1.6.2"
   }
 }
