@@ -12,6 +12,7 @@ import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
 import Divider from 'material-ui/Divider';
 import renderHTML from 'react-render-html';
+import axios from 'axios';
 
 import PopUp from './PopUp.jsx';
 import Rating from './Rating.jsx';
@@ -51,13 +52,29 @@ class BookCard extends React.Component {
     super(props);
     this.state = {
       book: this.props.book,
+      isbn: this.props.book.isbn13,
       expanded: false,
       rating: 0,
       description: '',
+      proreviews: [],
     };
     this.submitRank = this.submitRank.bind(this);
     this.goToBook = this.goToBook.bind(this);
     this.handleExpandClick = this.handleExpandClick.bind(this);
+    this.getProReviews = this.getProReviews.bind(this);
+  }
+
+  getProReviews() {
+    const isbn = this.state.isbn;
+    axios.get(`/proreviews/${isbn}`)
+      .then((response) => {
+        this.setState({
+          proreviews: response,
+        });
+      })
+      .catch((error) => {
+        console.log('ProReviews are not received', error);
+      });
   }
 
   componentDidMount() {
@@ -73,6 +90,7 @@ class BookCard extends React.Component {
   }
 
   goToBook() {
+    this.getProReviews();
     this.props.changeView('Book', this.state.book);
   }
 
@@ -108,11 +126,12 @@ class BookCard extends React.Component {
           <Divider light />
           <CardContent>
             <Typography component="p">
-              {this.state.description} <PopUp description={this.state.book.description} />
+              {this.state.description} {this.state.proreviews} {this.state.isbns}<PopUp description={this.state.book.description} />
             </Typography>
           </CardContent>
 
           <Divider light />
+
           <CardContent>
           <Typography component="p">
             {this.state.book.genres.map(genre => (
