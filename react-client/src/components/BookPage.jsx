@@ -160,9 +160,13 @@ class BookPage extends React.Component {
           <Grid item xs sm={7}>
             <Paper className={classes.paper}>
               {renderHTML(this.state.book.description)}
+              {this.state.proreviews}
             </Paper>
           </Grid>
 
+          <Grid>
+            <ProReviews proreviews={this.state.proreviews}/>
+          </Grid>
 
           <Grid item xs={6} sm={3} style={{ textAlign: 'right' }}>
             <Button
