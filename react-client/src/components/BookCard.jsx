@@ -13,7 +13,6 @@ import MoreVertIcon from 'material-ui-icons/MoreVert';
 import Divider from 'material-ui/Divider';
 import renderHTML from 'react-render-html';
 import axios from 'axios';
-<<<<<<< HEAD
 import $ from 'jquery';
 
 import Button from 'material-ui/Button';
@@ -23,8 +22,6 @@ import Dialog, {
   DialogContentText,
   DialogTitle,
 } from 'material-ui/Dialog';
-=======
->>>>>>> proreviews backend
 
 import PopUp from './PopUp.jsx';
 import Rating from './Rating.jsx';
@@ -68,18 +65,13 @@ class BookCard extends React.Component {
       expanded: false,
       rating: 0,
       description: '',
-<<<<<<< HEAD
       user: this.props.userProfile,
       liked: false,
       thing: 0,
       popUp: false,
-=======
-      proreviews: [],
->>>>>>> proreviews backend
     };
     this.goToBook = this.goToBook.bind(this);
     this.handleExpandClick = this.handleExpandClick.bind(this);
-<<<<<<< HEAD
     this.addtoFavorites = this.addtoFavorites.bind(this);
     this.toggleFavorite = this.toggleFavorite.bind(this);
     this.popUpClick = this.popUpClick.bind(this);
@@ -88,22 +80,6 @@ class BookCard extends React.Component {
     console.log('on line 63 @ class bookcard', this.props.user);
     // this.addtoFavorites = this.addtoFavorites.bind(this);
     // console.log(" this.props.")
-=======
-    this.getProReviews = this.getProReviews.bind(this);
-  }
-
-  getProReviews() {
-    const isbn = this.state.isbn;
-    axios.get(`/proreviews/${isbn}`)
-      .then((response) => {
-        this.setState({
-          proreviews: response,
-        });
-      })
-      .catch((error) => {
-        console.log('ProReviews are not received', error);
-      });
->>>>>>> proreviews backend
   }
 
   componentDidMount() {
@@ -120,17 +96,12 @@ class BookCard extends React.Component {
   }
 
   goToBook() {
-<<<<<<< HEAD
     this.props.getProReviews(this.state.isbn, (response) => {
       let book = this.state.book;
       book.proreviews = response.data;
       console.log(book.proreviews);
       this.props.changeView('Book', book);
     });
-=======
-    this.getProReviews();
-    this.props.changeView('Book', this.state.book);
->>>>>>> proreviews backend
   }
 
   handleExpandClick() {
@@ -239,12 +210,8 @@ class BookCard extends React.Component {
             style={{ cursor: 'pointer' }}
           >
             <Typography component="p">
-<<<<<<< HEAD
               {this.state.description}
               {this.popUpShow()}
-=======
-              {this.state.description} {this.state.proreviews} {this.state.isbns}<PopUp description={this.state.book.description} />
->>>>>>> proreviews backend
             </Typography>
           </CardContent>
 

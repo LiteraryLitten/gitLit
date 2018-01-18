@@ -40,7 +40,11 @@
     "react-popper": "^0.7.5",
     "react-render-html": "^0.6.0",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "react-swipeable-views": "^0.12.12",
+=======
+    "react-router": "^4.2.0",
+>>>>>>> Pro reviews fetuare is complete
 =======
     "react-router": "^4.2.0",
 >>>>>>> Pro reviews fetuare is complete

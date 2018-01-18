@@ -214,7 +214,6 @@ module.exports = {
       if (err) {
         res.sendStatus(500);
       } else {
-<<<<<<< HEAD
         console.log('lara get request', data.book.critic_reviews);
         res.json(data.book.critic_reviews);
       }
@@ -235,10 +234,4 @@ module.exports = {
       res.json(reviews);
     });
   },
-=======
-        res.json(data.book.critic_reviews);
-      }
-    });
-  }
->>>>>>> proreviews backend
 };

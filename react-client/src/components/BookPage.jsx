@@ -8,28 +8,11 @@ import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import Rating from './Rating.jsx';
-<<<<<<< HEAD
 // import ProReviewsCard from './ProReviewsCard.jsx';
 import ReviewPanel from './ReviewPanel';
 // import UserReviewCard from './UserReviewCard';
 
 const axios = require('axios');
-=======
-import ProReviews from './ProReviews.jsx';
-
-
-// import { withStyles } from 'material-ui/styles';
-
-
-// const styles = theme => ({
-//   root: theme.mixins.gutters({
-//     paddingTop: 16,
-//     paddingBottom: 16,
-//     marginTop: theme.spacing.unit * 3,
-//   }),
-// });
-
->>>>>>> proreviews backend
 
 const styles = theme => ({
   root: {
@@ -72,12 +55,8 @@ class BookPage extends React.Component {
       proreviews: [],
       typeReview: '',
       rating: 0,
-<<<<<<< HEAD
       pro: false,
       userReviews: [],
-=======
-      proreviews: []
->>>>>>> proreviews backend
     };
     this.submitRating = this.submitRating.bind(this);
     this.enterReview = this.enterReview.bind(this);
@@ -187,14 +166,6 @@ class BookPage extends React.Component {
           </Grid>
 
 
-<<<<<<< HEAD
-=======
-          <Grid>
-            <ProReviews proreviews={this.state.proreviews}/>
-          </Grid>
-
-
->>>>>>> proreviews backend
           <Grid item xs={6} sm={3} style={{ textAlign: 'right' }}>
             <Button
               raised
