@@ -67,7 +67,6 @@ class App extends React.Component {
         console.log('ProReviews are not received', error);
       });
   }
-
   
 
   getProReviews(isbn, callback) {
