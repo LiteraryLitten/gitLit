@@ -1,13 +1,11 @@
 const mongoose = require('mongoose');
-
 mongoose.connect('mongodb://localhost/lit');
-
 const db = mongoose.connection;
 
 // db.dropDatabase();
 // mongoose.connect('mongodb://localhost/lit');
 
-db.on('error', () => {
+db.on('error', function() {
   console.log('mongoose connection error');
 });
 
