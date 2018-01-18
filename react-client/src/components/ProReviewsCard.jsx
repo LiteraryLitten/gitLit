@@ -66,7 +66,6 @@ class ProReviewsCard extends React.Component {
 
   render() {
     const { classes } = this.props;
-
     return (
       <Card
         className={classes.card}

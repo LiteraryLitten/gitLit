@@ -50,6 +50,7 @@ class BookPage extends React.Component {
         pages: '',
         popularShelves: '',
         isbn13: 0,
+        proreviews: [],
       },
       proreviews: [],
       typeReview: '',
@@ -164,9 +165,12 @@ class BookPage extends React.Component {
             </Paper>
           </Grid>
 
+<<<<<<< HEAD
           <Grid>
             <ProReviews proreviews={this.state.proreviews}/>
           </Grid>
+=======
+>>>>>>> Pro reviews fetuare is complete
 
           <Grid item xs={6} sm={3} style={{ textAlign: 'right' }}>
             <Button
