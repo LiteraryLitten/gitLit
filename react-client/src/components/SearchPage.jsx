@@ -15,29 +15,28 @@ const styles = theme => ({
 class SearchPage extends React.Component {
   constructor(props) {
     super(props);
-    this.renderPage = this.renderPage;
+    this.state = {
+      searchResults: [],
+    }
   }
 
   componentDidMount() {
+    this.setState({ searchResults: this.props.searchResults });
   }
 
-  renderPage(){
-    if(this.props.searchResults) {
-      console.log(this.props.searchResults);
-      this.props.searchResults.forEach((result) => {
-        const book = {
-          title: result.best_book.title._text,
-          author: result.best_book.author.name._text,
-          imageURL: result.best_book.image_url._text,
-          description: 'NA',
-          genres: ['NA'],
-        };
-        // return (<BookCard book={book} />);
-        return (book);
-      });
-      //get the necessary book data
-      //send it to BookCard
-    }
+
+  buildBook (book) {
+    const cleanBook = {};
+    cleanBook.year = book.publication_year._text;
+    cleanBook.month = book.publication_month._text;
+    cleanBook.title = book.title._cdata;
+    //cleanBook.author = /*book.authors.author.name._text || */ book.authors.author[0].name._text;
+    cleanBook.averageRating = book.average_rating._text;
+    cleanBook.isbn13 = book.isbn13._cdata;
+    cleanBook.imageURL = book.small_image_url._cdata;
+    cleanBook.description = book.description._cdata;
+    cleanBook.genres = [];
+    return cleanBook;
   }
 
   render() {
@@ -46,14 +45,9 @@ class SearchPage extends React.Component {
     if(this.props.searchResults) {
       console.log(this.props.searchResults);
       this.props.searchResults.forEach((result) => {
-        const book = {
-          title: result.best_book.title._text,
-          author: result.best_book.author.name._text,
-          imageURL: result.best_book.image_url._text,
-          description: 'NA',
-          genres: ['none'],
-        };
-        searchCards.push(book);
+        if(result !== null) {
+          searchCards.push(this.buildBook(result));
+        }
       });
       return (
       <div>
