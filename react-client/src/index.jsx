@@ -14,7 +14,9 @@ class App extends React.Component {
     this.state = {
       view: null,
       items: [],
-      userProfile: {},
+      // userProfile: {},
+      // sample user to build bookshelf:
+      userProfile: {_id: "5a600b8f933faf4309c439cc", name: "Mishall", username: "Mish", password: "test", favoriteBooks: [9780399169274, 9780307951526]},
       selectedBook: {},
     };
     this.changeView = this.changeView.bind(this);
@@ -101,7 +103,8 @@ class App extends React.Component {
   }
 
   setUserProfile(user) {
-    this.setState({ userProfile: user }, function() { this.renderView(); });
+    this.setState({ userProfile: user }, function() { console.log(this.state.userProfile); this.renderView(); });
+
   }
 
   handleLogout() {

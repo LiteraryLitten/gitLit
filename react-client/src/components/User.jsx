@@ -66,7 +66,7 @@ const User = props =>(
               My Bookshelf
             </h2>
             <Paper >  
-              <Bookshelf book={props.favoriteBooks} />
+              <Bookshelf books={props.user.favoriteBooks} fetch={props.fetch} changeView={props.changeView} />
             </Paper>
           </Grid>
         </Grid>
