@@ -4,6 +4,10 @@ const convert = require('xml-js');
 const { goodReadsKey } = require('./apiKeys.js');
 const { NYTKey } = require('./apiKeys.js');
 const { iDreambooksKey } = require('./apiKeys.js');
+<<<<<<< HEAD
+=======
+const apiKeys = require('./apiKeys.js');
+>>>>>>> proreviews backend
 const param = require('jquery-param');
 
 const searchBook = (book, cb) => {
@@ -142,6 +146,7 @@ const filterByPopularShelves = (book) => {
 const getReviewsiDreams = (isbn, cb) => {
   axios.get(`http://idreambooks.com/api/books/reviews.json?q=${isbn}&key=${iDreambooksKey}`, {
     params: {
+<<<<<<< HEAD
       q: isbn,
       key: iDreambooksKey,
     },
@@ -157,6 +162,8 @@ const getReviewsiDreams = (isbn, cb) => {
 const getReviewsiDreams = (isbn, cb) => {
   axios.get(`http://idreambooks.com/api/books/reviews.json?q=${isbn}&key=${iDreambooksKey}`, {
     params: {
+=======
+>>>>>>> proreviews backend
       q: isbn, 
       key: iDreambooksKey,
     },
