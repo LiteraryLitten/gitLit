@@ -50,6 +50,7 @@ class BookPage extends React.Component {
         pages: '',
         popularShelves: '',
         isbn13: 0,
+        proreviews: [],
       },
       proreviews: [],
       typeReview: '',
