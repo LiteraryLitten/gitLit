@@ -57,6 +57,7 @@ class BookPage extends React.Component {
       rating: 0,
       pro: false,
       userReviews: [],
+
     };
     this.submitRating = this.submitRating.bind(this);
     this.enterReview = this.enterReview.bind(this);
