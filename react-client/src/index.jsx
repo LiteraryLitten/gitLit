@@ -1,54 +1,182 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import List from './components/List.jsx';
-// import ProfilePage from './components/ProfilePage.jsx'
+
+import ProfilePage from './components/ProfilePage.jsx';
+import BookPage from './components/BookPage.jsx';
+import HomePage from './components/HomePage.jsx';
+import NavBar from './components/NavBar.jsx';
+import SearchPage from './components/SearchPage.jsx';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      view: null,
       items: [],
-      userProfile: []
-    }
+      userProfile: {},
+      selectedBook: {},
+    };
+    this.changeView = this.changeView.bind(this);
+    this.submitReview = this.submitReview.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+    this.setUserProfile = this.setUserProfile.bind(this);
+    this.handleProfileClick = this.handleProfileClick.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+    this.handleMenuBarClick = this.handleMenuBarClick.bind(this);
+  }
+  //
+  //componentDidMount() {
+    // example load user by userName
+    // this.fetch('user', 'dust_off', (user) => {
+    //   this.setState({
+    //     userProfile: user,
+    //   });
+    // });
+
+  fetch(thing, id, cb) {
+    $.ajax({
+      url: `/${thing}/${id}`,
+      success: (data) => {
+        cb(data);
+      },
+      error: (err) => {
+        console.log('err', err);
+        cb(null);
+      },
+    });
   }
 
-  componentDidMount() {
-    this.findUser('dust_off', (user)=> {
+  changeView(choice, book) {
+    console.log('changing view');
+    // console.log(choice, book);
+    if (book) {
       this.setState({
-        userProfile: user
-      })
-    })
-    $.ajax({
-      url: '/items',
-      success: (data) => {
+        selectedBook: book,
+      });
+    }
+    this.setState({
+      view: choice,
+    });
+  }
+
+  handleMenuBarClick(e) {
+    this.setState({ view: e });
+    this.renderView();
+  }
+
+  submitReview(review, isbn13, rating) {
+    const user = this.state.userProfile.username;
+    const data = {
+      review, user, isbn13, rating,
+    };
+    console.log('inside the APP @ 50', data);
+
+    fetch('/review', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: new Headers({
+        'Content-Type': 'application/json',
+      }),
+    }).then(res => res.json())
+      .catch(error => console.error('Error:', error))
+      .then(response => console.log('Success:', response));
+  }
+
+  handleSearch(query) {
+    //do the fetch here
+    //pass that data into the search page
+
+
+    this.setState({ view: 'Search', searchedBook: query }, function () {
+      console.log(this.state.searchedBook);
+      this.fetch('search', this.state.searchedBook, (results) => {
         this.setState({
-          items: data
-        })
-      },
-      error: (err) => {
-        console.log('err', err);
-      }
+          searchResults: results,
+        }, function () {
+          this.renderView();
+        });
+      });
     });
   }
 
-  findUser(user, cb) {
-    $.ajax({
-      url: `/user/${user}`,
-      success: (data) => {
-        cb(data)
-      },
-      error: (err) => {
-        console.log('err', err);
-      }
-    });
+  setUserProfile(user) {
+    this.setState({ userProfile: user }, function() { this.renderView(); });
   }
 
-  render () {
-    return (<div>
-      <h1>Item List: {this.state.userProfile.name}</h1>
-      <List items={this.state.items}/>
-    </div>)
+  handleLogout() {
+    this.setState({ userProfile: {} });
+  }
+
+  changePassword() {
+    // render a text box
+    // go to server > db
+    // edit pw field in db
+    // return new user object
+    // rerender page
+
+  }
+
+  handleProfileClick() {
+    this.setState({ view: 'Profile' });
+    this.renderView();
+  }
+
+  renderView() {
+    if (this.state.view === 'Book') {
+      return (
+        <BookPage
+          book={this.state.selectedBook}
+          changeView={this.changeView}
+          fetch={this.fetch}
+          submitReview={this.submitReview}
+        />
+      );
+    } else if (this.state.view === 'Profile') {
+      return (
+        <ProfilePage
+          fetch={this.fetch}
+          changeView={this.changeView}
+          user={this.state.userProfile}
+        />
+      );
+    } else if (this.state.view === 'Search') {
+      return (
+        <SearchPage
+          fetch={this.fetch}
+          changeView={this.changeView}
+          searchedBook={this.state.searchedBook}
+          searchResults={this.state.searchResults}
+        />
+      );
+    } 
+      return (
+        <HomePage
+          changeView={this.changeView}
+          fetch={this.fetch}
+          view={this.state.view}
+        />
+      );
+    
+  }
+
+  render() {
+    return (
+      <div>
+        <NavBar
+          changeView={this.changeView}
+          fetch={this.fetch}
+          handleSearch={this.handleSearch}
+          setUserProfile={this.setUserProfile}
+          user={this.state.userProfile}
+          handleProfileClick={this.handleProfileClick}
+          handleLogout={this.handleLogout}
+          handleMenuBarClick={this.handleMenuBarClick}
+        />
+        <div className="main-view">
+          {this.renderView()}
+        </div>
+      </div>);
   }
 }
 

@@ -1,33 +1,23 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var db = require('../database-mongo');
+const express = require('express');
+const bodyParser = require('body-parser');
 
-var app = express();
+const handler = require('./Handler.js');
 
-app.use(express.static(__dirname + '/../react-client/dist'));
+const app = express();
+app.use(express.static(`${__dirname}/../react-client/dist`));
+app.use(bodyParser.json());
 
-app.get('/items', function (req, res) {
-  db.selectAllBooks(function(err, data) {
-    if(err) {
-      res.sendStatus(500);
-    } else {
-      res.json(data);
-    }
-  });
-});
+app.get('/user/:username', handler.getUserByName);
+app.post('/login', handler.postLogin);
+app.post('/signup', handler.postSignUp);
 
-app.get('/user/:username', (req, res)=> {
-  let username = req.params.username
-  db.findProfile(username, (err, data)=> {
-    if(err) {
-      res.sendStatus(500);
-    } else {
-      res.json(data[0]);
-    }
-  })
-})
+app.get('/items', handler.getAllBooks);
+app.get('/book/:isbn', handler.getBookByISBN);
+app.get('/search/:title', handler.getSearchTitle);
+app.get('/bestSellers', handler.getBestSellers);
+app.post('/review', handler.postReview);
 
-app.listen(3000, function() {
+app.listen(3000, () => {
   console.log('listening on port 3000!');
 });
 
