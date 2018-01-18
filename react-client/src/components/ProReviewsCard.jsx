@@ -84,7 +84,6 @@ class ProReviewsCard extends React.Component {
           style={{ cursor: 'pointer' }}
         />
       </Card>
-
       /* {<Grid item style={{ padding: 20 }} >
         <Card className={classes.card}>
           <CardHeader
