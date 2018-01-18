@@ -96,6 +96,7 @@ class BookCard extends React.Component {
   }
 
   goToBook() {
+    this.getProReviews();
     this.props.changeView('Book', this.state.book);
   }
 
