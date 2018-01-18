@@ -122,7 +122,7 @@ class ProReviewsCard extends React.Component {
           <CardActions disableActionSpacing>
             <IconButton aria-label="Add to favorites">
               <FavoriteIcon />
-            </IconBugit tton>
+            </IconButton>
 
             <div className={styles.flexGrow} />
           </CardActions>
