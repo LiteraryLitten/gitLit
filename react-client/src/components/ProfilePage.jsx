@@ -168,7 +168,7 @@ class ProfilePage extends React.Component {
     if (this.props.user.name){
       return (
         <div className="userProfile">
-          <User user={this.props.user} onClick={this.changePassword.bind(this)} />
+          <User user={this.props.user} onClick={this.changePassword.bind(this)} fetch={this.props.fetch} changeView={this.props.changeView} />
         </div>
       );
     } else {

@@ -25,7 +25,7 @@ const User = props =>(
     <div>
     <Grid container spacing={24}>
 
-          <Grid item xs={12} sm={6} className='UserPic'>
+          <Grid item xs={8} sm={5} className='UserPic'>
             <h2>Your Profile</h2>
             <Paper >
 
@@ -61,12 +61,12 @@ const User = props =>(
             </Paper>
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={16} sm={7}>
             <h2>
               My Bookshelf
             </h2>
             <Paper >  
-              <Bookshelf book={props.favoriteBooks} />
+              <Bookshelf books={props.user.favoriteBooks} fetch={props.fetch} changeView={props.changeView} />
             </Paper>
           </Grid>
         </Grid>
