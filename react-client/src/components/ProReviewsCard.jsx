@@ -81,7 +81,7 @@ class ProReviewsCard extends React.Component {
               }
             title={this.props.review.source}
             subheader={this.props.review.review_date}
-            style={{ cursor: 'pointer' }}
+            
           />
           <Divider light />
           <CardContent>
@@ -94,8 +94,8 @@ class ProReviewsCard extends React.Component {
 
           <CardContent>
             
-            <Typography component="p">
-              {this.props.review.review_link}
+            <Typography component="a" href={this.props.review.review_link} target='_blank'>
+              Read full article
             </Typography>
             
 
@@ -106,7 +106,7 @@ class ProReviewsCard extends React.Component {
           <CardActions disableActionSpacing>
             <IconButton aria-label="Add to favorites">
               <FavoriteIcon />
-            </IconButton>
+            </IconBugit tton>
 
             <div className={styles.flexGrow} />
           </CardActions>
