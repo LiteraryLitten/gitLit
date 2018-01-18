@@ -8,7 +8,6 @@ import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import Dialog from 'material-ui/Dialog';
 import MenuIcon from 'material-ui-icons/Menu';
-import MenueButton from './MenueButton.jsx';
 import Search from './Search.jsx';
 import Login from './Login.jsx';
 
@@ -26,6 +25,10 @@ const styles = {
   button: {
     textTransform: 'none',
   },
+  dark:   { backgroundColor: '#caa052' },
+  def: { background: '#ffd180' },
+  light:   { background: '#ffffb1' },
+  text:    { color: '#FFFFFF' },
 };
 
 class NavBar extends React.Component {
@@ -47,7 +50,7 @@ class NavBar extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="static" style={styles.dark}>
           <Toolbar>
             
             <Button className={classes.button} color="contrast" name="Literary Litten" onClick={this.handleHomeClick}>
