@@ -212,6 +212,7 @@ class BookCard extends React.Component {
             <Typography component="p">
               {this.state.description}
               {this.popUpShow()}
+
             </Typography>
           </CardContent>
 
