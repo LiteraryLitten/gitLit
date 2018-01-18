@@ -21,6 +21,7 @@ app.get('/book/:isbn', handler.getBookByISBN);
 app.get('/search/:title', handler.getSearchTitle);
 app.get('/bestSellers', handler.getBestSellers);
 app.post('/review', handler.postReview);
+app.get('/proreviews/:isbn', handler.getProReviews);
 
 // app.get('/rate/:isbn/:rating', (req, res) => {
 //   // !!!!!!!!!!!!!!

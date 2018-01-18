@@ -133,4 +133,13 @@ module.exports = {
       res.json([err, data]);
     });
   },
+  getProReviews: (req, res) => {
+    api.getReviewsiDreams(req.params.isbn, (err, data) => {
+      if (err) {
+        res.sendStatus(500);
+      } else {
+        res.json(data.book.critic_reviews);
+      }
+    });
+  }
 };

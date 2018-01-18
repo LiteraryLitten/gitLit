@@ -28,6 +28,8 @@ const bookSchema = mongoose.Schema({
   popularShelves: [String],
   isbn13: String,
   genres: String,
+  proreviews: [Object],
+  prorating: Number,
   // reviewWidget: [String]
 });
 
