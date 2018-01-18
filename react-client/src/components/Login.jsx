@@ -6,23 +6,23 @@ import Dialog, {
   DialogContentText,
   DialogTitle,
 } from 'material-ui/Dialog';
+import Slide from 'material-ui/transitions/Slide';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import renderHTML from 'react-render-html';
 import TextField from 'material-ui/TextField';
 import $ from 'jquery';
 
+function Transition(props) {
+  return <Slide direction="down" {...props} />;
+}
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
-      signup: {
-        name: '',
-        username: '',
-        password: '',
-      },
       login: {
+        name: '',
         username: '',
         password: '',
       },
@@ -31,46 +31,37 @@ class Login extends React.Component {
     this.handleLogin = this.handleLogin.bind(this);
     this.handleSignup = this.handleSignup.bind(this);
     this.saveName = this.saveName.bind(this);
-    this.saveLoginUsername = this.saveLoginUsername.bind(this);
-    this.saveLoginPassword = this.saveLoginPassword.bind(this);
-    this.saveSignupUsername = this.saveSignupUsername.bind(this);
-    this.saveSignupPassword = this.saveSignupPassword.bind(this);
+    this.saveUsername = this.saveUsername.bind(this);
+    this.savePassword = this.savePassword.bind(this);
     this.onNameClick = this.onNameClick.bind(this);
     this.onLogoutClick = this.onLogoutClick.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
   saveName(e) {
-    const signup = this.state.signup;
-    signup.name = e.target.value;
-    this.setState({ signup });
+    const login = this.state.login;
+    login.name = e.target.value;
+    this.setState({ login });
   }
 
-  saveLoginUsername(e) {
+  saveUsername(e) {
     const login = this.state.login;
     login.username = e.target.value;
     this.setState({ login });
   }
 
-  saveSignupUsername(e) {
-    const signup = this.state.signup;
-    signup.username = e.target.value;
-    this.setState({ signup });
-  }
-
-  saveLoginPassword(e) {
+  savePassword(e) {
     const login = this.state.login;
     login.password = e.target.value;
     this.setState({ login });
   }
 
-  saveSignupPassword(e) {
-    const signup = this.state.signup;
-    signup.password = e.target.value;
-    this.setState({ signup });
-  }
-
   handleClickOpen() {
     this.setState({ open: true });
+  }
+
+  handleClose() {
+    this.setState({ open: false });
   }
 
   handleLogin() {
@@ -104,9 +95,9 @@ class Login extends React.Component {
       url: '/signup',
       type: 'POST',
       data: JSON.stringify({
-        name: this.state.signup.name,
-        username: this.state.signup.username,
-        password: this.state.signup.password,
+        name: this.state.login.name,
+        username: this.state.login.username,
+        password: this.state.login.password,
         reviewedBooks: [],
         favoriteBooks: [],
       }),
@@ -117,12 +108,11 @@ class Login extends React.Component {
           this.setState({ open: false });
         } else{
           alert('Oh no! That username is already taken. Try again!');
-          this.setState({ open: false });
+          //this.setState({ open: false });
         }
       },
       error: (err) => {
         console.log('err', err);
-        this.setState({ open: false });
       },
     });
     this.setState({ open: false });
@@ -137,7 +127,9 @@ class Login extends React.Component {
   }
 
   render() {
-    if (this.props.user.name) {
+    // THE BUG IS ON THIS LINE:
+    // MISH: change truth statement to work if both, there isnt a user || no name
+    if (this.props.user && this.props.user.name) {
       return (
         <div>
             <Button color="contrast" onClick={this.onNameClick}>{this.props.user.name}</Button>
@@ -154,6 +146,7 @@ class Login extends React.Component {
             open={this.state.open}
             onClose={this.handleClose}
             aria-labelledby="form-dialog-title"
+            transition={Transition}
           >
             <DialogTitle id="form-dialog-title">Login/Signup</DialogTitle>
             <DialogContent>
@@ -166,7 +159,7 @@ class Login extends React.Component {
                 id="username"
                 label="username"
                 type="string"
-                onChange={this.saveLoginUsername}
+                onChange={this.saveUsername}
               />
               <TextField
                 autoFocus
@@ -174,7 +167,7 @@ class Login extends React.Component {
                 id="login-password"
                 label="password"
                 type="password"
-                onChange={this.saveLoginPassword}
+                onChange={this.savePassword}
               />
             </DialogContent>
             <DialogActions>
@@ -200,7 +193,7 @@ class Login extends React.Component {
                 id="username"
                 label="username"
                 type="string" 
-                onChange={this.saveSignupUsername}
+                onChange={this.saveUsername}
               />
               <TextField
                 autoFocus
@@ -208,7 +201,7 @@ class Login extends React.Component {
                 id="signup-password"
                 label="password"
                 type="password"
-                onChange={this.saveSignupPassword}
+                onChange={this.savePassword}
               />
             </DialogContent>
             <DialogActions>
@@ -220,6 +213,13 @@ class Login extends React.Component {
         </div>
       );
     }
+
+
+
+
+
+
+      
   }
 }
 
