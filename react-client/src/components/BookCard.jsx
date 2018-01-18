@@ -56,25 +56,11 @@ class BookCard extends React.Component {
       expanded: false,
       rating: 0,
       description: '',
-      proreviews: [],
+
     };
     this.submitRank = this.submitRank.bind(this);
     this.goToBook = this.goToBook.bind(this);
     this.handleExpandClick = this.handleExpandClick.bind(this);
-    this.getProReviews = this.getProReviews.bind(this);
-  }
-
-  getProReviews() {
-    const isbn = this.state.isbn;
-    axios.get(`/proreviews/${isbn}`)
-      .then((response) => {
-        this.setState({
-          proreviews: response,
-        });
-      })
-      .catch((error) => {
-        console.log('ProReviews are not received', error);
-      });
   }
 
   componentDidMount() {
@@ -90,8 +76,12 @@ class BookCard extends React.Component {
   }
 
   goToBook() {
-    this.getProReviews();
-    this.props.changeView('Book', this.state.book);
+    this.props.getProReviews(this.state.isbn, (response) => {
+      let book = this.state.book;
+      book.proreviews = response.data;
+      console.log(book.proreviews);
+      this.props.changeView('Book', book);
+    });
   }
 
   handleExpandClick() {
@@ -126,7 +116,7 @@ class BookCard extends React.Component {
           <Divider light />
           <CardContent>
             <Typography component="p">
-              {this.state.description} {this.state.proreviews} {this.state.isbns}<PopUp description={this.state.book.description} />
+              {this.state.description} 
             </Typography>
           </CardContent>
 

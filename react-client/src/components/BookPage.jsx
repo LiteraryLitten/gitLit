@@ -8,19 +8,7 @@ import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import Rating from './Rating.jsx';
-import ProReviews from './ProReviews.jsx';
-
-
-// import { withStyles } from 'material-ui/styles';
-
-
-// const styles = theme => ({
-//   root: theme.mixins.gutters({
-//     paddingTop: 16,
-//     paddingBottom: 16,
-//     marginTop: theme.spacing.unit * 3,
-//   }),
-// });
+import ProReviewsCard from './ProReviewsCard.jsx';
 
 
 const styles = theme => ({
@@ -59,10 +47,11 @@ class BookPage extends React.Component {
         pages: '',
         popularShelves: '',
         isbn13: 0,
+        proreviews: [],
       },
       typeReview: '',
       rating: 0,
-      proreviews: []
+
     };
     this.submitRating = this.submitRating.bind(this);
     this.enterReview = this.enterReview.bind(this);
@@ -140,11 +129,6 @@ class BookPage extends React.Component {
           </Grid>
 
 
-          <Grid>
-            <ProReviews proreviews={this.state.proreviews}/>
-          </Grid>
-
-
           <Grid item xs={6} sm={3} style={{ textAlign: 'right' }}>
             <Button
               raised
@@ -172,6 +156,13 @@ class BookPage extends React.Component {
               />
 
             </Paper>
+
+            <Paper>
+              {this.state.book.proreviews.map((review, index) =>
+                <ProReviewsCard review={review} key={index} />)}  
+
+            </Paper>
+
           </Grid>
           <Grid item xs={12} sm={12} />
         </Grid>
