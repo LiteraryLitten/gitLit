@@ -25,7 +25,6 @@ const bookSchema = mongoose.Schema({
   imageURL: String,
   pages: String,
   popularShelves: [String],
-<<<<<<< HEAD
   proreviews: [Object],
   prorating: Number,
   isbn13: {
@@ -38,13 +37,6 @@ const bookSchema = mongoose.Schema({
     unique: true,
   },
   genres: [String],
-=======
-  isbn13: String,
-  genres: String,
-  proreviews: [Object],
-  prorating: Number,
-  // reviewWidget: [String]
->>>>>>> proreviews backend
 });
 
 const userSchema = new mongoose.Schema({
