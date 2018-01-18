@@ -96,8 +96,12 @@ class BookCard extends React.Component {
   }
 
   goToBook() {
-    this.getProReviews();
-    this.props.changeView('Book', this.state.book);
+    this.props.getProReviews(this.state.isbn, (response) => {
+      let book = this.state.book;
+      book.proreviews = response.data;
+      console.log(book.proreviews);
+      this.props.changeView('Book', book);
+    });
   }
 
   handleExpandClick() {
