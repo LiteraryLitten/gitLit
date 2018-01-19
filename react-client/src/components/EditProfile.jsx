@@ -83,7 +83,6 @@ class EditProfile extends React.Component {
       })
   }
 
-
   render() {
     
       return (
@@ -99,7 +98,9 @@ class EditProfile extends React.Component {
             <DialogTitle id="form-dialog-title">Edit Profile</DialogTitle>
             <DialogContent>
               <DialogContentText>
+
                 Edit your name/username
+
               </DialogContentText>
               <TextField
                 autoFocus
