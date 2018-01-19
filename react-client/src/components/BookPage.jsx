@@ -8,6 +8,9 @@ import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import Rating from './Rating.jsx';
+import ProReviewsCard from './ProReviewsCard.jsx';
+
+const axios = require('axios');
 
 const styles = theme => ({
   root: {
@@ -46,12 +49,16 @@ class BookPage extends React.Component {
         popularShelves: '',
         isbn13: 0,
       },
+      proreviews: [],
       typeReview: '',
       rating: 0,
+
     };
     this.submitRating = this.submitRating.bind(this);
     this.enterReview = this.enterReview.bind(this);
     this.passReview = this.passReview.bind(this);
+    this.loadUserReviews = this.loadUserReviews.bind(this);
+    this.loadProReviews = this.loadProReviews.bind(this);
   }
 
   componentDidMount() {
@@ -70,6 +77,16 @@ class BookPage extends React.Component {
         });
       });
     }
+    this.loadUserReviews();
+  }
+
+  loadProReviews () {
+    this.props.getProReviews(this.props.book.isbn13, (response) => {
+      let book = this.state.book;
+      this.setState({
+        proreviews: response.data,
+      });
+    })
   }
 
   enterReview(e) {
@@ -84,9 +101,20 @@ class BookPage extends React.Component {
   }
 
   submitRating(rating) {
+    //console.log(" on line 88 in submitRating", this.props.)
     this.setState({
       rating,
     }, this.passReview);
+
+  }
+
+  loadUserReviews() {
+    const url = `/userReviews/${this.props.book.isbn13}`;
+    axios(url)
+    .then((data) => {
+      console.log('returned to BookPage @ loadUserReviews 101-data=', data);
+    })
+    .catch(err => console.log('error when loading loadUserReviews on BookPage'));
   }
 
   render() {
@@ -120,8 +148,10 @@ class BookPage extends React.Component {
           <Grid item xs sm={7}>
             <Paper className={classes.paper}>
               {renderHTML(this.state.book.description)}
+              {this.state.proreviews}
             </Paper>
           </Grid>
+
 
           <Grid item xs={6} sm={3} style={{ textAlign: 'right' }}>
             <Button
@@ -143,13 +173,21 @@ class BookPage extends React.Component {
                 InputLabelProps={{
                     shrink: true,
                   }}
-                placeholder="Reviwe Here"
+                placeholder="Review Here"
                 fullWidth
                 margin="normal"
                 onChange={this.enterReview}
               />
 
             </Paper>
+
+            <Paper>
+              {this.state.proreviews.map((review, index) =>
+                <ProReviewsCard review={review} key={index}
+              />)}
+
+            </Paper>
+
           </Grid>
           <Grid item xs={12} sm={12} />
         </Grid>
@@ -163,3 +201,8 @@ class BookPage extends React.Component {
 // };
 
 export default withStyles(styles)(BookPage);
+
+
+              // {this.state.proreviews.map((review, index) =>
+              //   <ProReviewsCard review={review} key={index}
+              // />)}

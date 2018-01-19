@@ -6,7 +6,7 @@ class ProfilePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userProfile: [], 
+      userProfile: [],
       login: {
         username: '',
         password: '',
@@ -165,7 +165,7 @@ class ProfilePage extends React.Component {
   }
 
   render() {
-    if (this.props.user.name){
+    if (this.props.user.hasOwnProperty('name')){
       return (
         <div className="userProfile">
           <User user={this.props.user} onClick={this.changePassword.bind(this)} fetch={this.props.fetch} changeView={this.props.changeView} />

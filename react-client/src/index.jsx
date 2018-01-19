@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
+import axios from 'axios';
 
 import ProfilePage from './components/ProfilePage.jsx';
 import BookPage from './components/BookPage.jsx';
@@ -13,11 +14,13 @@ class App extends React.Component {
     super(props);
     this.state = {
       view: null,
+      // view: 'Profile',
       items: [],
-      userProfile: {},
+      // userProfile: { favoriteBooks: [], },
       // sample user to build bookshelf:
-      // userProfile: {_id: "5a600b8f933faf4309c439cc", name: "Mishall", username: "Mish", password: "test", favoriteBooks: [9780399169274, 9780307951526]},
+      userProfile: {_id: "5a600b8f933faf4309c439cc", name: "dustin", username: "dustin", password: "1111", favoriteBooks: [9780399169274, 9780307951526]},
       selectedBook: {},
+      proreviews: [],
     };
     this.changeView = this.changeView.bind(this);
     this.submitReview = this.submitReview.bind(this);
@@ -26,6 +29,8 @@ class App extends React.Component {
     this.handleProfileClick = this.handleProfileClick.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.handleMenuBarClick = this.handleMenuBarClick.bind(this);
+    this.getProReviews = this.getProReviews.bind(this);
+    this.updateUserData = this.updateUserData.bind(this);
   }
   //
   //componentDidMount() {
@@ -35,6 +40,17 @@ class App extends React.Component {
     //     userProfile: user,
     //   });
     // });
+
+  getProReviews(isbn, callback) {
+      axios.get(`/proreviews/${isbn}`)
+      .then((response) => {
+        console.log(response);
+        callback(response);
+      })
+      .catch((error) => {
+        console.log('ProReviews are not received', error);
+      });
+  }
 
   fetch(thing, id, cb) {
     $.ajax({
@@ -67,6 +83,13 @@ class App extends React.Component {
     this.renderView();
   }
 
+  updateUserData(userProfile) {
+    console.log("in updateUserData @ 64", userProfile);
+    this.setState({
+      userProfile,
+    });
+  }
+
   submitReview(review, isbn13, rating) {
     const user = this.state.userProfile.username;
     const data = {
@@ -82,7 +105,10 @@ class App extends React.Component {
       }),
     }).then(res => res.json())
       .catch(error => console.error('Error:', error))
-      .then(response => console.log('Success:', response));
+      .then(response => {
+        console.log('Success:', response);
+        this.updateUserData(response[1]);
+      });
   }
 
   handleSearch(query) {
@@ -91,7 +117,7 @@ class App extends React.Component {
 
 
     this.setState({ view: 'Search', searchedBook: query }, function () {
-      console.log(this.state.searchedBook);
+      // console.log(this.state.searchedBook);
       this.fetch('search', this.state.searchedBook, (results) => {
         this.setState({
           searchResults: results,
@@ -147,15 +173,15 @@ class App extends React.Component {
           searchResults={this.state.searchResults}
         />
       );
-    } 
-      return (
-        <HomePage
-          changeView={this.changeView}
-          fetch={this.fetch}
-          view={this.state.view}
-        />
-      );
-    
+    }
+    return (
+      <HomePage
+        changeView={this.changeView}
+        fetch={this.fetch}
+        view={this.state.view}
+        getProReviews={this.getProReviews}
+      />
+    );
   }
 
   render() {

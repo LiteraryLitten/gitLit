@@ -25,7 +25,7 @@ class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    console.log('mouted');
+    console.log('mounted');
     this.getBestSellersBooks();
     this.setState({
       loading: true,
@@ -58,6 +58,7 @@ class HomePage extends React.Component {
       if (book.isbns.length > 0) {
         const isbn = book.isbns[0].isbn13;
         this.props.fetch('book', isbn, (goodReads) => {
+          console.log(goodReads)
           // console.log("in Homepage line 59", goodReads);
           returnCount++;
           if (goodReads !== null) {
@@ -112,6 +113,7 @@ class HomePage extends React.Component {
                   book={book}
                   key={book.isbn13}
                   changeView={this.props.changeView}
+                  getProReviews={this.props.getProReviews}
                 />
             ))}
             </Grid>

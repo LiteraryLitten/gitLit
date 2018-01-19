@@ -3,7 +3,7 @@ const axios = require('axios');
 const convert = require('xml-js');
 const { goodReadsKey } = require('./apiKeys.js');
 const { NYTKey } = require('./apiKeys.js');
-const apiKeys = require('./apiKeys.js');
+const { iDreambooksKey } = require('./apiKeys.js');
 const param = require('jquery-param');
 
 const searchBook = (book, cb) => {
@@ -25,7 +25,7 @@ const searchBook = (book, cb) => {
       cb(null, books);
     })
     .catch((error) => {
-      // console.log('here on line 20');// , error);
+      console.log('here on line 20');// , error);
       cb(error, null);
     });
 };
@@ -34,6 +34,7 @@ const getMoreBookData = (book, cb) => {
   // console.log('getting more DATA');
   const id = book.best_book.id._text;
   // console.log('id = ', id);
+  // console.log('BOOK', book);
   const url = `https://www.goodreads.com/book/show/${id}?format=xml&key=${goodReadsKey}`;
   axios.get(url)
     .then((response) => {
@@ -46,6 +47,7 @@ const getMoreBookData = (book, cb) => {
       cb(error, null);
     });
 };
+
 
 const getBestBooks = (cb) => {
   let url = 'https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json';
@@ -137,9 +139,25 @@ const filterByPopularShelves = (book) => {
   return genres;
 };
 
+const getReviewsiDreams = (isbn, cb) => {
+  axios.get(`http://idreambooks.com/api/books/reviews.json?q=${isbn}&key=${iDreambooksKey}`, {
+    params: {
+      q: isbn,
+      key: iDreambooksKey,
+    },
+  })
+    .then((response) => {
+      cb(null, response.data);
+    })
+    .catch((error) => {
+      cb(error, null);
+    });
+};
+
 module.exports = {
   searchBook,
   getMoreBookData,
   getBestBooks,
   filterByPopularShelves,
+  getReviewsiDreams,
 };

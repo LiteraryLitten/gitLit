@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
 const handler = require('./Handler.js');
 
 const app = express();
@@ -16,17 +15,12 @@ app.get('/book/:isbn', handler.getBookByISBN);
 app.get('/search/:title', handler.getSearchTitle);
 app.get('/bestSellers', handler.getBestSellers);
 app.post('/review', handler.postReview);
+app.get('/proreviews/:isbn', handler.getProReviews);
+// app.get('/proreviews/:isbn', (req, res) => res.json('hi'));
+app.post('/favorites', handler.postFavorites);
+app.get('/userReviews/:isbn13', handler.getUserReviews);
 
 app.listen(3000, () => {
   console.log('listening on port 3000!');
 });
 
-var logger = (err, data) => {
-  console.log('');
-  console.log('');
-  console.log(err, data);
-}
-var user = 'dust_off'
-
-db.findUserFavorites(user, logger);
-db.findUserReviews(user, logger)
