@@ -29,6 +29,8 @@ import ProReviews from './ProReviews.jsx';
 // });
 
 import ProReviewsCard from './ProReviewsCard.jsx';
+// import {Tabs, Tab} from 'material-ui/Tabs';
+
 
 
 const styles = theme => ({

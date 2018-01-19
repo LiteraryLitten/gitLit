@@ -109,6 +109,7 @@ class ProReviewsCard extends React.Component {
 
             <Typography component="a" href={this.props.review.review_link} target="_blank">
               Read full review
+
             </Typography>
 
           </CardContent>
@@ -118,7 +119,8 @@ class ProReviewsCard extends React.Component {
           <CardActions disableActionSpacing>
             <IconButton aria-label="Add to favorites">
               <FavoriteIcon />
-            </IconBugit tton>
+
+            </IconButton>
 
             <div className={styles.flexGrow} />
           </CardActions>
