@@ -116,7 +116,7 @@ class BookCard extends React.Component {
           <Divider light />
           <CardContent>
             <Typography component="p">
-              {this.state.description} 
+              {this.state.description} <PopUp description={this.state.book.description} />
             </Typography>
           </CardContent>
 
