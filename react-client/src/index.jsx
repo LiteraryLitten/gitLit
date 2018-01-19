@@ -12,12 +12,12 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // view: null,
-      view: 'Profile',
+      view: null,
+      // view: 'Profile',
       items: [],
-      // userProfile: {},
+      userProfile: {},
       // sample user to build bookshelf:
-      userProfile: {_id: "5a600b8f933faf4309c439cc", name: "Mishall", username: "Mish", password: "test", favoriteBooks: [9780399169274, 9780307951526]},
+      // userProfile: {_id: "5a600b8f933faf4309c439cc", name: "Mishall", username: "Mish", password: "test", favoriteBooks: [9780399169274, 9780307951526]},
       selectedBook: {},
     };
     this.changeView = this.changeView.bind(this);
