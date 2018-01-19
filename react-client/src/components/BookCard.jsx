@@ -111,20 +111,16 @@ class BookCard extends React.Component {
     this.setState({ expanded: !this.state.expanded });
   }
 
-  submitRank(rating) {
-    // stuff here
-
-  }
-
   addtoFavorites() {
-    // add books object to the array of favoriteBooks in user schema and save to DB
-    alert('you clicked me');
+    // console.log(this.props.userProfile);
+    // alert('you clicked me', this.props.userProfile);
+    this.toggleFavorite();
     axios({
       method: 'post',
       url: '/favorites',
       data: {
-        username: 'Stephan',
-        isbn13: '1234567891011',
+        user: this.props.userProfile,
+        isbn13: this.state.book.isbn13,
       },
     })
       .then((response) => {
@@ -147,15 +143,6 @@ class BookCard extends React.Component {
       popUp: false,
     })
   }
-
-  // loadUserReviews() {
-  //   const url = `/userReviews/${this.state.book.isbn13}`;
-  //   axios(url)
-  //   .then((data) => {
-  //     console.log('returned data', data);
-  //   })
-  //   .catch(err => console.log('error when loading reviews'));
-  // }
 
   popUpShow() {
     if(this.state.popUp) {

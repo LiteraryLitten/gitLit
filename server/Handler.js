@@ -218,7 +218,7 @@ module.exports = {
         res.json(data.book.critic_reviews);
       }
     });
-  }
+  },
   postFavorites: (req, res) => {
      db.saveFavorite(req.body, (err, data) => {
       res.json([err, data]);

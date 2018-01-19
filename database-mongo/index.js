@@ -63,7 +63,7 @@ const reviewSchema = new mongoose.Schema({
 const Book = mongoose.model('Book', bookSchema);
 const User = mongoose.model('User', userSchema);
 const Review = mongoose.model('Review', reviewSchema);
-const favorite = mongoose.model('Favorite', favoriteSchema);
+
 
 const selectAllBooks = (callback) => {
   Book.find({}, (err, items) => {
