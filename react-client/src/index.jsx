@@ -72,6 +72,8 @@ class App extends React.Component {
       });
   }
 
+  
+
   getProReviews(isbn, callback) {
       axios.get(`/proreviews/${isbn}`)
       .then((response) => {
