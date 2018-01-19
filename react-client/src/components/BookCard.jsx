@@ -12,6 +12,7 @@ import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
 import Divider from 'material-ui/Divider';
 import renderHTML from 'react-render-html';
+import axios from 'axios';
 
 import PopUp from './PopUp.jsx';
 import Rating from './Rating.jsx';
@@ -51,9 +52,11 @@ class BookCard extends React.Component {
     super(props);
     this.state = {
       book: this.props.book,
+      isbn: this.props.book.isbn13,
       expanded: false,
       rating: 0,
       description: '',
+
     };
     this.submitRank = this.submitRank.bind(this);
     this.goToBook = this.goToBook.bind(this);
@@ -73,7 +76,12 @@ class BookCard extends React.Component {
   }
 
   goToBook() {
-    this.props.changeView('Book', this.state.book);
+    this.props.getProReviews(this.state.isbn, (response) => {
+      let book = this.state.book;
+      book.proreviews = response.data;
+      console.log(book.proreviews);
+      this.props.changeView('Book', book);
+    });
   }
 
   handleExpandClick() {
@@ -113,6 +121,7 @@ class BookCard extends React.Component {
           </CardContent>
 
           <Divider light />
+
           <CardContent>
           <Typography component="p">
             {this.state.book.genres.map(genre => (
