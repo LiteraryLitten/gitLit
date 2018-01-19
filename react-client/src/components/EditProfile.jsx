@@ -101,6 +101,9 @@ class EditProfile extends React.Component {
   // }
 
 
+
+
+
   render() {
     
       return (
@@ -130,7 +133,7 @@ class EditProfile extends React.Component {
                 autoFocus
                 margin="dense"
                 id="login-password"
-                label="Username"
+                label="Ussername"
                 type="string"
                 // onChange={this.saveLoginPassword}
               />
