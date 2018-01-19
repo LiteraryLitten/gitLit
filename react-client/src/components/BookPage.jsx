@@ -14,25 +14,6 @@ import ReviewPanel from './ReviewPanel';
 
 const axios = require('axios');
 
-import ProReviews from './ProReviews.jsx';
-
-
-// import { withStyles } from 'material-ui/styles';
-
-
-// const styles = theme => ({
-//   root: theme.mixins.gutters({
-//     paddingTop: 16,
-//     paddingBottom: 16,
-//     marginTop: theme.spacing.unit * 3,
-//   }),
-// });
-
-import ProReviewsCard from './ProReviewsCard.jsx';
-// import {Tabs, Tab} from 'material-ui/Tabs';
-
-
-
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -69,7 +50,6 @@ class BookPage extends React.Component {
         pages: '',
         popularShelves: '',
         isbn13: 0,
-        proreviews: [],
       },
       proreviews: [],
       typeReview: '',
@@ -178,17 +158,12 @@ class BookPage extends React.Component {
               </span>
             </Typography>
           </Grid>
-
           <Grid item xs sm={7}>
             <Paper className={classes.paper}>
               {renderHTML(this.state.book.description)}
-              {this.state.proreviews}
             </Paper>
           </Grid>
 
-          <Grid>
-            <ProReviews proreviews={this.state.proreviews}/>
-          </Grid>
 
           <Grid item xs={6} sm={3} style={{ textAlign: 'right' }}>
             <Button
