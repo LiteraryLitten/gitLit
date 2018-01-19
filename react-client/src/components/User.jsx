@@ -45,7 +45,7 @@ const User = props =>(
                   </span>
                   
                   <EditProfile />
-
+                  
                 </Grid>
                 
               </Grid>
