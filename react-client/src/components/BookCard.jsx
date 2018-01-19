@@ -80,6 +80,7 @@ class BookCard extends React.Component {
     console.log('on line 63 @ class bookcard', this.props.user);
     // this.addtoFavorites = this.addtoFavorites.bind(this);
     // console.log(" this.props.")
+  }
 
   componentDidMount() {
     let str = this.props.book.description;
@@ -95,7 +96,12 @@ class BookCard extends React.Component {
   }
 
   goToBook() {
-    this.props.changeView('Book', this.state.book);
+    this.props.getProReviews(this.state.isbn, (response) => {
+      let book = this.state.book;
+      book.proreviews = response.data;
+      console.log(book.proreviews);
+      this.props.changeView('Book', book);
+    });
   }
 
   handleExpandClick() {
