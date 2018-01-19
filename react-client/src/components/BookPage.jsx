@@ -159,6 +159,7 @@ class BookPage extends React.Component {
               </span>
             </Typography>
           </Grid>
+
           <Grid item xs sm={7}>
             <Paper className={classes.paper}>
               {renderHTML(this.state.book.description)}
