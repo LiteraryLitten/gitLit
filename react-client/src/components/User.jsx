@@ -44,7 +44,7 @@ const User = props =>(
                   </span>
                   <Button 
                   raised
-                  onClick={props.changePassword} >
+                  onClick={props.editProfile} >
                   Edit Profile
                   </Button> <br />
                 </Grid>
