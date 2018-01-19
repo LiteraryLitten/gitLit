@@ -69,66 +69,66 @@ class ProReviewsCard extends React.Component {
     const { classes } = this.props;
 
     return (
-      // <Card
-      //   className={classes.card}
-      //   onClick={() => window.open(this.props.review.review_link, '_blank')}
-      // >
-      //   <CardHeader
-      //     avatar={
-      //       <img
-      //         src={this.props.review.source_logo}
-      //         alt=""
-      //         style={{ height: '100px' }}
-      //       />
+      <Card
+        className={classes.card}
+        onClick={() => window.open(this.props.review.review_link, '_blank')}
+      >
+        <CardHeader
+          avatar={
+            <img
+              src={this.props.review.source_logo}
+              alt=""
+              style={{ height: '100px' }}
+            />
+              }
+          title={this.props.review.source}
+          subheader={this.props.review.snippet}
+          style={{ cursor: 'pointer' }}
+        />
+      </Card>
+
+      // <Grid item style={{ padding: 20 }} >
+      //   <Card className={classes.card}>
+      //     <CardHeader
+      //       avatar={
+      //         <img src={this.props.review.source_logo} alt="" />
       //         }
-      //     title={this.props.review.source}
-      //     subheader={this.props.review.snippet}
-      //     style={{ cursor: 'pointer' }}
-      //   />
-      // </Card>
-
-      <Grid item style={{ padding: 20 }} >
-        <Card className={classes.card}>
-          <CardHeader
-            avatar={
-              <img src={this.props.review.source_logo} alt="" />
-              }
-            action={
-              <IconButton>
-                <MoreVertIcon />
-              </IconButton>
-              }
-            title={this.props.review.source}
-            subheader={this.props.review.review_date}
-          />
-          <Divider light />
-          <CardContent>
-            <Typography component="p">
-              {this.props.review.snippet}
-            </Typography>
-          </CardContent>
-
-          <Divider light />
-
-          <CardContent>
-
-            <Typography component="a" href={this.props.review.review_link} target="_blank">
-              Read full review
-            </Typography>
-
-          </CardContent>
-
-          <Divider light />
-
-          <CardActions disableActionSpacing>
-            <IconButton aria-label="Add to favorites">
-              <FavoriteIcon />
-            </IconButton>
-
-            <div className={styles.flexGrow} />
-          </CardActions>
-        </Card>
-      </Grid>
+      //       action={
+      //         <IconButton>
+      //           <MoreVertIcon />
+      //         </IconButton>
+      //         }
+      //       title={this.props.review.source}
+      //       subheader={this.props.review.review_date}
+      //     />
+      //     <Divider light />
+      //     <CardContent>
+      //       <Typography component="p">
+      //         {this.props.review.snippet}
+      //       </Typography>
+      //     </CardContent>
+      //
+      //     <Divider light />
+      //
+      //     <CardContent>
+      //
+      //       <Typography component="a" href={this.props.review.review_link} target="_blank">
+      //         Read full review
+      //       </Typography>
+      //
+      //     </CardContent>
+      //
+      //     <Divider light />
+      //
+      //     <CardActions disableActionSpacing>
+      //       <IconButton aria-label="Add to favorites">
+      //         <FavoriteIcon />
+      //       </IconButton>
+      //
+      //       <div className={styles.flexGrow} />
+      //     </CardActions>
+      //   </Card>
+      // </Grid>
     );
   }
 }
