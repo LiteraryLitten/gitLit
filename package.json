@@ -41,6 +41,7 @@
     "react-render-html": "^0.6.0",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "react-swipeable-views": "^0.12.12",
 =======
     "react-router": "^4.2.0",
@@ -48,6 +49,8 @@
 =======
     "react-router": "^4.2.0",
 >>>>>>> Pro reviews fetuare is complete
+=======
+>>>>>>> insluded PopUp
     "xml-js": "^1.6.2"
   }
 }
