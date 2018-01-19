@@ -16,14 +16,9 @@ class App extends React.Component {
       view: null,
       // view: 'Profile',
       items: [],
-      // userProfile: { favoriteBooks: [], },
+      userProfile: {},
       // sample user to build bookshelf:
-      userProfile: {
-        name: 'user',
-        username: 'user',
-        favoriteBooks: [9780399169274],
-        reviewedBooks: [9780399169274],
-      },
+      // userProfile: {_id: "5a600b8f933faf4309c439cc", name: "Mishall", username: "Mish", password: "test", favoriteBooks: [9780399169274, 9780307951526]},
       selectedBook: {},
       proreviews: [],
     };
