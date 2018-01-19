@@ -26,7 +26,7 @@ const searchBook = (book, cb) => {
       cb(null, books);
     })
     .catch((error) => {
-      // console.log('here on line 20');// , error);
+      console.log('here on line 20');// , error);
       cb(error, null);
     });
 };
@@ -35,6 +35,7 @@ const getMoreBookData = (book, cb) => {
   // console.log('getting more DATA');
   const id = book.best_book.id._text;
   // console.log('id = ', id);
+  // console.log('BOOK', book);
   const url = `https://www.goodreads.com/book/show/${id}?format=xml&key=${goodReadsKey}`;
   axios.get(url)
     .then((response) => {
@@ -47,6 +48,7 @@ const getMoreBookData = (book, cb) => {
       cb(error, null);
     });
 };
+
 
 const getBestBooks = (cb) => {
   let url = 'https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json';

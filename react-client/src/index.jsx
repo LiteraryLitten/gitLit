@@ -14,6 +14,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       view: null,
+      // view: 'Profile',
       items: [],
       userProfile: {},
       // sample user to build bookshelf:
@@ -105,7 +106,7 @@ class App extends React.Component {
 
 
     this.setState({ view: 'Search', searchedBook: query }, function () {
-      console.log(this.state.searchedBook);
+      // console.log(this.state.searchedBook);
       this.fetch('search', this.state.searchedBook, (results) => {
         this.setState({
           searchResults: results,
