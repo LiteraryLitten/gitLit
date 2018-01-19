@@ -8,6 +8,8 @@ import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import Rating from './Rating.jsx';
+import ProReviewsCard from './ProReviewsCard.jsx';
+
 
 const styles = theme => ({
   root: {
@@ -45,9 +47,11 @@ class BookPage extends React.Component {
         pages: '',
         popularShelves: '',
         isbn13: 0,
+        proreviews: [],
       },
       typeReview: '',
       rating: 0,
+
     };
     this.submitRating = this.submitRating.bind(this);
     this.enterReview = this.enterReview.bind(this);
@@ -120,8 +124,10 @@ class BookPage extends React.Component {
           <Grid item xs sm={7}>
             <Paper className={classes.paper}>
               {renderHTML(this.state.book.description)}
+              {this.state.proreviews}
             </Paper>
           </Grid>
+
 
           <Grid item xs={6} sm={3} style={{ textAlign: 'right' }}>
             <Button
@@ -150,6 +156,13 @@ class BookPage extends React.Component {
               />
 
             </Paper>
+
+            <Paper>
+              {this.state.book.proreviews.map((review, index) =>
+                <ProReviewsCard review={review} key={index} />)}  
+
+            </Paper>
+
           </Grid>
           <Grid item xs={12} sm={12} />
         </Grid>

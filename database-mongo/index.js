@@ -25,7 +25,9 @@ const bookSchema = mongoose.Schema({
   pages: String,
   popularShelves: [String],
   isbn13: String,
-  genres: [String],
+  genres: String,
+  proreviews: [Object],
+  prorating: Number,
   // reviewWidget: [String]
 });
 
