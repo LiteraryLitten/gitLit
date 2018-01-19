@@ -211,9 +211,10 @@ module.exports = {
   getProReviews: (req, res) => {
     api.getReviewsiDreams(req.params.isbn, (err, data) => {
       if (err) {
+        console.log(err);
         res.sendStatus(500);
       } else {
-        console.log('lara get request', data.book.critic_reviews);
+        // console.log('lara get request', data.book.critic_reviews);
         res.json(data.book.critic_reviews);
       }
     });

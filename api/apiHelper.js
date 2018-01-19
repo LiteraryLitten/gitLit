@@ -154,20 +154,20 @@ const getReviewsiDreams = (isbn, cb) => {
     });
 };
 
-const getReviewsiDreams = (isbn, cb) => {
-  axios.get(`http://idreambooks.com/api/books/reviews.json?q=${isbn}&key=${iDreambooksKey}`, {
-    params: {
-      q: isbn, 
-      key: iDreambooksKey,
-    },
-  })
-    .then((response) => {
-      cb(null, response.data);
-    })
-    .catch((error) => {
-      cb(error, null);
-    });
-}
+// const getReviewsiDreams = (isbn, cb) => {
+//   axios.get(`http://idreambooks.com/api/books/reviews.json?q=${isbn}&key=${iDreambooksKey}`, {
+//     params: {
+//       q: isbn, 
+//       key: iDreambooksKey,
+//     },
+//   })
+//     .then((response) => {
+//       cb(null, response.data);
+//     })
+//     .catch((error) => {
+//       cb(error, null);
+//     });
+// }
 
 module.exports = {
   searchBook,

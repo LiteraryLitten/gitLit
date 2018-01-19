@@ -16,9 +16,14 @@ class App extends React.Component {
       view: null,
       // view: 'Profile',
       items: [],
-      userProfile: {},
+      // userProfile: { favoriteBooks: [], },
       // sample user to build bookshelf:
-      // userProfile: {_id: "5a600b8f933faf4309c439cc", name: "Mishall", username: "Mish", password: "test", favoriteBooks: [9780399169274, 9780307951526]},
+      userProfile: {
+        name: 'user',
+        username: 'user',
+        favoriteBooks: [9780399169274],
+        reviewedBooks: [9780399169274],
+      },
       selectedBook: {},
       proreviews: [],
     };
@@ -45,28 +50,6 @@ class App extends React.Component {
     axios.get(`/proreviews/${isbn}`)
       .then((response) => {
         // console.log(response);
-        callback(response);
-      })
-      .catch((error) => {
-        console.log('ProReviews are not received', error);
-      });
-  }
-
-  getProReviews(isbn, callback) {
-      axios.get(`/proreviews/${isbn}`)
-      .then((response) => {
-        console.log(response);
-        callback(response);
-      })
-      .catch((error) => {
-        console.log('ProReviews are not received', error);
-      });
-  }
-
-  getProReviews(isbn, callback) {
-      axios.get(`/proreviews/${isbn}`)
-      .then((response) => {
-        console.log(response);
         callback(response);
       })
       .catch((error) => {
