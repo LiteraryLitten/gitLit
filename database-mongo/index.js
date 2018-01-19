@@ -24,11 +24,18 @@ const bookSchema = mongoose.Schema({
   imageURL: String,
   pages: String,
   popularShelves: [String],
-  isbn13: String,
-  genres: String,
   proreviews: [Object],
   prorating: Number,
-  // reviewWidget: [String]
+  isbn13: {
+    type: Number,
+    unique: true,
+    required: true,
+  },
+  goodReadsId: {
+    type: Number,
+    unique: true,
+  },
+  genres: [String],
 });
 
 const userSchema = new mongoose.Schema({
@@ -48,7 +55,7 @@ const userSchema = new mongoose.Schema({
 const reviewSchema = new mongoose.Schema({
   idNameNumber: String,
   user: String,
-  isbn: Number,
+  isbn13: Number,
   text: String,
   rating: Number,
 });
@@ -118,8 +125,13 @@ const findBook = (book, cb) => {
   // console.log('findBook is working with:', book);
   const pattern = new RegExp('^\\d{10,13}$');
   if ((book.length === 10 || book.length === 13) && pattern.test(book)) {
-    // console.log('its an ISBN?');
-    Book.find({ isbn: book }).exec(cb);
+    // console.log('its an ISBN?', book);
+    // Book.findOne({isbn13: `${book}`}).exec((err, results) => {
+    //   console.log('findBook @ 121');
+    //   console.log('err', err );
+    //   console.log('data', results);
+    // })
+    Book.findOne({ isbn13: `${book}` }).exec(cb);
   } else {
     Book.find({ title: book }).exec(cb);
   }
@@ -158,12 +170,11 @@ const saveReview = (review, cb) => {
   findReview(reviewID, (err, data) => {
     if (err) {
       console.log('ERR on Database line 156');
-      console.log(err);
+      // console.log(err);
       cb(err, null);
     } else if (data) {
-      console.log('Success on databae review look up line 160');
-      console.log(data);
-
+      console.log('Success on database review look up line 160');
+      // console.log(data);
       if (review.review.length > 0) {
         updatedReview = review.review;
       } else {
@@ -180,84 +191,100 @@ const saveReview = (review, cb) => {
         text: updatedReview,
         rating: updatedRating,
       }, (errUpdate, dataUpdate) => {
-        cb(errUpdate, dataUpdate);
+        cb(errUpdate, null);
       });
     } else {
-      console.log('add NEW DB @ 184', review);
-      const newReview = new Review({
-        idNameNumber: reviewID,
-        user: review.user,
-        isbn: review.isbn13,
-        text: review.review,
-        rating: review.rating,
+      trackUserReviews(review.user, review.isbn13, (userProfile) => {
+        console.log('add NEW DB @ 184', 'review');
+        const newReview = new Review({
+          idNameNumber: reviewID,
+          user: review.user,
+          isbn13: review.isbn13,
+          text: review.review,
+          rating: review.rating,
+        });
+        newReview.save();
+        cb(null, userProfile);
       });
-      newReview.save();
-      cb(null, data);
     }
   });
 };
 
 
-
-const findFavorite = (favorite, cb) => {
-  favorite.findOne({ idNameNumber: review }, (err, item) => {
+const trackUserReviews = (user, isbn13, cb) => {
+  //update the user.reviewedBooks with the isbn
+ // console.log('isbn13:', isbn13);
+  let updateReviewedBooks = [];
+  User.findOne({ username: `${user}` }).exec((err, userProfile) => {
     if (err) {
-      cb(err, null);
+      console.log('trackUserReviews had a problem @ db 221');
     } else {
-      cb(null, item);
+      console.log('on line 218 in trackUserReviews', userProfile);
+      updateReviewedBooks = userProfile.reviewedBooks;
+      updateReviewedBooks.push(isbn13);
     }
+    // console.log('new updateReviewedBooks', updateReviewedBooks);
+    User.update( {username: `${user}`}, {
+      reviewedBooks: updateReviewedBooks,
+    }, (errUpdate, userProfileUpdate) => {
+      userProfile.reviewedBooks = updateReviewedBooks;
+      // console.log('results @ line 230: user profile = ', userProfile);
+      cb(userProfile);
+    });
   });
 };
 
-const saveFavorite = (favorite, cb) => {
-  console.log(" on line 201  in db", favorite);
+const saveFavorite = (userObject, cb) => {
+  const { user, isbn13 } = userObject;
+  // console.log('on line 201  @ db.saveFavorite', user, isbn13);
 
-  const favoriteID = `${favorite.username}${favorite.isbn13}`;
-  findReview(favoriteID, (err, data) => {
-    if (err) {
-      console.log('ERR on Database line 206');
-      console.log(err);
-      cb(err, null);
-    } else if (data) {
-      console.log('Success on database favorite look up line 210');
-      console.log(data);
+  const updatedFavoriteBooks = user.favoriteBooks;
+  // console.log('before', updatedFavoriteBooks.length);
 
-      if (favorite.favorite.length > 0) {
-        updatedFavorite = favorite.favorite;
-        console.log(updatedFavorite);
-      } else {
-       // updatedFavorite = data.text;
+  let removed = false;
+
+  if (updatedFavoriteBooks.length > 0) {
+    updatedFavoriteBooks.forEach((isbn, index) => {
+      // console.log('');
+      // console.log('are they equal?:', isbn, isbn13, isbn - isbn13);
+      if (isbn - isbn13 === 0) {
+        // console.log('then remove it');
+        removed = true;
+        updatedFavoriteBooks.splice(index, 1);
+        // console.log('DURING', updatedFavoriteBooks.length);
       }
-
-      if (review.rating > 0) {
-        updatedRating = review.rating;
-      } else {
-        updatedRating = data.rating;
-      }
-
-      Review.update({ idNameNumber: reviewID }, {
-        text: updatedReview,
-        rating: updatedRating,
-      }, (errUpdate, dataUpdate) => {
-        cb(errUpdate, dataUpdate);
-      });
-    } else {
-      console.log('add NEW DB @ 184', review);
-      const newReview = new Review({
-        idNameNumber: reviewID,
-        user: review.user,
-        isbn: review.isbn13,
-        text: review.review,
-        rating: review.rating,
-      });
-      newReview.save();
-      cb(null, data);
+    });
+    if (!removed) {
+      // console.log('   or we could add it');
+      updatedFavoriteBooks.push(isbn13);
     }
+  } else {
+    updatedFavoriteBooks.push(isbn13);
+  }
+
+  // console.log('after', updatedFavoriteBooks.length);
+
+  User.update({ username: user }, {
+    favoriteBooks: updatedFavoriteBooks,
+  }, (errUpdate, dataUpdate) => {
+    cb(errUpdate, dataUpdate);
   });
 };
 
-
-
+const findReviewsByIsbn13 = (isbn13, cb) => {
+  Review.find({ isbn13 }).exec((err, reviews) => {
+    if(err) {
+      console.log('Failed to find reviews');
+      cb(err, null);
+    }
+    if(reviews !== null) {
+      console.log('we found a review on db.findReviewsByIsbn13 @ 278', isbn13, reviews)
+    } else {
+      console.log('NOTHING db.findReviewsByIsbn13 @ 278', isbn13, reviews);
+    }
+    cb(null, reviews);
+  });
+};
 
 module.exports = {
   selectAllBooks,
@@ -270,4 +297,5 @@ module.exports = {
   saveReview,
   findReview,
   saveFavorite,
+  findReviewsByIsbn13,
 };

@@ -15,6 +15,14 @@ import renderHTML from 'react-render-html';
 import axios from 'axios';
 import $ from 'jquery';
 
+import Button from 'material-ui/Button';
+import Dialog, {
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from 'material-ui/Dialog';
+
 import PopUp from './PopUp.jsx';
 import Rating from './Rating.jsx';
 
@@ -57,12 +65,23 @@ class BookCard extends React.Component {
       expanded: false,
       rating: 0,
       description: '',
-
+      user: this.props.userProfile,
+      liked: false,
+      thing: 0,
+      popUp: false,
     };
     this.submitRank = this.submitRank.bind(this);
     this.goToBook = this.goToBook.bind(this);
     this.handleExpandClick = this.handleExpandClick.bind(this);
-    //this.addtoFavorites = this.addtoFavorites.bind(this);
+    this.addtoFavorites = this.addtoFavorites.bind(this);
+    this.updateFavorite = this.updateFavorite.bind(this);
+    this.toggleFavorite = this.toggleFavorite.bind(this);
+    this.popUpClick = this.popUpClick.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    // this.loadUserReviews = this.loadUserReviews.bind(this);
+    console.log('on line 63 @ class bookcard', this.props.user);
+    // this.addtoFavorites = this.addtoFavorites.bind(this);
+    // console.log(" this.props.")
   }
 
   componentDidMount() {
@@ -75,6 +94,7 @@ class BookCard extends React.Component {
     this.setState({
       description: arrayString,
     });
+    // this.loadUserReviews();
   }
 
   goToBook() {
@@ -106,7 +126,60 @@ class BookCard extends React.Component {
         username: 'Stephan',
         isbn13: '1234567891011',
       },
+    })
+      .then((response) => {
+        const newFavs = JSON.parse(response.config.data);
+        // console.log('response.body', newFavs);
+        let user = this.props.userProfile;
+        user.favoriteBooks = response;
+        this.props.updateUserData(user)
+      });
+  }
+  popUpClick() {
+    console.log('you clicked me');
+    this.setState({
+      popUp: true,
     });
+  }
+
+  handleClose() {
+    this.setState({
+      popUp: false,
+    })
+  }
+
+  // loadUserReviews() {
+  //   const url = `/userReviews/${this.state.book.isbn13}`;
+  //   axios(url)
+  //   .then((data) => {
+  //     console.log('returned data', data);
+  //   })
+  //   .catch(err => console.log('error when loading reviews'));
+  // }
+
+  popUpShow() {
+    if(this.state.popUp) {
+      return (
+        <Dialog
+          open={this.state.popUp}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">Description</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {renderHTML(this.state.book.description)}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )
+    }
   }
 
   render() {
@@ -130,9 +203,13 @@ class BookCard extends React.Component {
             style={{ cursor: 'pointer' }}
           />
           <Divider light />
-          <CardContent>
+          <CardContent
+            onClick={this.popUpClick}
+            style={{ cursor: 'pointer' }}
+          >
             <Typography component="p">
-              {this.state.description} <PopUp description={this.state.book.description} />
+              {this.state.description}
+              {this.popUpShow()}
             </Typography>
           </CardContent>
 

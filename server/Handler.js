@@ -22,10 +22,15 @@ module.exports = {
   getBookByISBN: (req, res) => {
     const { isbn } = req.params;
     db.findBook(isbn, (err, data) => {
+
+// console.log('bookbyISBN @ 26 - data.hasOwnProperty', data.hasOwnProperty('isbn13'));
+// console.log('data', data);
+// console.log('isbn13', data.isbn13);
+
       if (err) {
         res.sendStatus(500);
-      } else if (data.length > 0) {
-        res.json(data[0]);
+      } else if (data !== null) {
+        res.json(data);
       } else {
         api.searchBook(isbn, (errAPI, searchResults) => {
           if (errAPI) {
@@ -217,6 +222,16 @@ module.exports = {
   postFavorites: (req, res) => {
      db.saveFavorite(req.body, (err, data) => {
       res.json([err, data]);
+    });
+  },
+
+  getUserReviews: (req, res) => {
+      console.log('');
+    const { isbn13 } = req.params;
+    console.log('in getUserReviews @ 177-isbn13=', isbn13);
+    db.findReviewsByIsbn13(isbn13, (err, reviews) => {
+      console.log('in getUserReviews @ 179-reviews=', reviews);
+      res.json(reviews);
     });
   },
 };

@@ -10,6 +10,7 @@ import Button from 'material-ui/Button';
 import Rating from './Rating.jsx';
 import ProReviewsCard from './ProReviewsCard.jsx';
 
+const axios = require('axios');
 
 const styles = theme => ({
   root: {
@@ -56,6 +57,7 @@ class BookPage extends React.Component {
     this.submitRating = this.submitRating.bind(this);
     this.enterReview = this.enterReview.bind(this);
     this.passReview = this.passReview.bind(this);
+    this.loadUserReviews = this.loadUserReviews.bind(this);
   }
 
   componentDidMount() {
@@ -74,6 +76,7 @@ class BookPage extends React.Component {
         });
       });
     }
+    this.loadUserReviews();
   }
 
   enterReview(e) {
@@ -88,9 +91,20 @@ class BookPage extends React.Component {
   }
 
   submitRating(rating) {
+    //console.log(" on line 88 in submitRating", this.props.)
     this.setState({
       rating,
     }, this.passReview);
+
+  }
+
+  loadUserReviews() {
+    const url = `/userReviews/${this.props.book.isbn13}`;
+    axios(url)
+    .then((data) => {
+      console.log('returned to BookPage @ loadUserReviews 101-data=', data);
+    })
+    .catch(err => console.log('error when loading loadUserReviews on BookPage'));
   }
 
   render() {
@@ -149,7 +163,7 @@ class BookPage extends React.Component {
                 InputLabelProps={{
                     shrink: true,
                   }}
-                placeholder="Reviwe Here"
+                placeholder="Review Here"
                 fullWidth
                 margin="normal"
                 onChange={this.enterReview}
@@ -159,7 +173,7 @@ class BookPage extends React.Component {
 
             <Paper>
               {this.state.book.proreviews.map((review, index) =>
-                <ProReviewsCard review={review} key={index} />)}  
+                <ProReviewsCard review={review} key={index} />)}
 
             </Paper>
 

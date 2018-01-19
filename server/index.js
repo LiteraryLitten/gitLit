@@ -17,6 +17,7 @@ app.get('/bestSellers', handler.getBestSellers);
 app.post('/review', handler.postReview);
 app.get('/proreviews/:isbn', handler.getProReviews);
 app.post('/favorites', handler.postFavorites);
+app.get('/userReviews/:isbn13', handler.getUserReviews);
 
 app.listen(3000, () => {
   console.log('listening on port 3000!');

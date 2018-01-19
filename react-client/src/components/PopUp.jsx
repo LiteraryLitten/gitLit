@@ -14,7 +14,7 @@ class PopUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
+      open: this.props.popUp,
       description: this.props.description,
     };
     this.handleClickOpen = this.handleClickOpen.bind(this);
@@ -32,7 +32,7 @@ class PopUp extends React.Component {
   render() {
     return (
       <div>
-        <ExpandMoreIcon onClick={this.handleClickOpen} />
+        {/*<ExpandMoreIcon onClick={this.handleClickOpen} />*/}
         {/* <Button onClick={this.handleClickOpen}>Open alert dialog</Button> */}
         <Dialog
           open={this.state.open}

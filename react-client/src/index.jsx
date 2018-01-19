@@ -16,9 +16,9 @@ class App extends React.Component {
       view: null,
       // view: 'Profile',
       items: [],
-      userProfile: {},
+      // userProfile: { favoriteBooks: [], },
       // sample user to build bookshelf:
-      // userProfile: {_id: "5a600b8f933faf4309c439cc", name: "Mishall", username: "Mish", password: "test", favoriteBooks: [9780399169274, 9780307951526]},
+      userProfile: {_id: "5a600b8f933faf4309c439cc", name: "dustin", username: "dustin", password: "1111", favoriteBooks: [9780399169274, 9780307951526]},
       selectedBook: {},
       proreviews: [],
     };
@@ -30,6 +30,7 @@ class App extends React.Component {
     this.handleLogout = this.handleLogout.bind(this);
     this.handleMenuBarClick = this.handleMenuBarClick.bind(this);
     this.getProReviews = this.getProReviews.bind(this);
+    this.updateUserData = this.updateUserData.bind(this);
   }
   //
   //componentDidMount() {
@@ -82,6 +83,13 @@ class App extends React.Component {
     this.renderView();
   }
 
+  updateUserData(userProfile) {
+    console.log("in updateUserData @ 64", userProfile);
+    this.setState({
+      userProfile,
+    });
+  }
+
   submitReview(review, isbn13, rating) {
     const user = this.state.userProfile.username;
     const data = {
@@ -97,7 +105,10 @@ class App extends React.Component {
       }),
     }).then(res => res.json())
       .catch(error => console.error('Error:', error))
-      .then(response => console.log('Success:', response));
+      .then(response => {
+        console.log('Success:', response);
+        this.updateUserData(response[1]);
+      });
   }
 
   handleSearch(query) {
