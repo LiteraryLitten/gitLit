@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
+
 mongoose.connect('mongodb://localhost/lit');
 const db = mongoose.connection;
 
 // db.dropDatabase();
 // mongoose.connect('mongodb://localhost/lit');
 
-db.on('error', function() {
+db.on('error', () => {
   console.log('mongoose connection error');
 });
 
@@ -76,14 +77,14 @@ const selectAllBooks = (callback) => {
 };
 
 const findUserFavorites = (user, cb) => {
-  console.log("on line 71 in DB", user);
+  console.log('on line 71 in DB', user);
   const books = [];
   User.find({ username: user }).then((foundUser) => {
     const len = foundUser[0].favoriteBooks.length;
     foundUser[0].favoriteBooks.forEach((book) => {
-      console.log(" on line 76", book);
+      console.log(' on line 76', book);
       Book.find({ isbn13: book }).then((foundBook) => {
-        console.log("on line 77", foundBook);
+        console.log('on line 77', foundBook);
         books.push(foundBook);
       }).then(() => {
         if (books.length === len) {
@@ -212,8 +213,8 @@ const saveReview = (review, cb) => {
 
 
 const trackUserReviews = (user, isbn13, cb) => {
-  //update the user.reviewedBooks with the isbn
- // console.log('isbn13:', isbn13);
+  // update the user.reviewedBooks with the isbn
+  // console.log('isbn13:', isbn13);
   let updateReviewedBooks = [];
   User.findOne({ username: `${user}` }).exec((err, userProfile) => {
     if (err) {
@@ -224,7 +225,7 @@ const trackUserReviews = (user, isbn13, cb) => {
       updateReviewedBooks.push(isbn13);
     }
     // console.log('new updateReviewedBooks', updateReviewedBooks);
-    User.update( {username: `${user}`}, {
+    User.update({ username: `${user}` }, {
       reviewedBooks: updateReviewedBooks,
     }, (errUpdate, userProfileUpdate) => {
       userProfile.reviewedBooks = updateReviewedBooks;
@@ -273,12 +274,12 @@ const saveFavorite = (userObject, cb) => {
 
 const findReviewsByIsbn13 = (isbn13, cb) => {
   Review.find({ isbn13 }).exec((err, reviews) => {
-    if(err) {
+    if (err) {
       console.log('Failed to find reviews');
       cb(err, null);
     }
-    if(reviews !== null) {
-      console.log('we found a review on db.findReviewsByIsbn13 @ 278', isbn13, reviews)
+    if (reviews !== null) {
+      console.log('we found a review on db.findReviewsByIsbn13 @ 278', isbn13, reviews);
     } else {
       console.log('NOTHING db.findReviewsByIsbn13 @ 278', isbn13, reviews);
     }
@@ -299,3 +300,24 @@ module.exports = {
   saveFavorite,
   findReviewsByIsbn13,
 };
+
+
+// const newProfile = new User({
+//   name: 'user',
+//   username: 'user',
+//   password: '$2a$10$U6y59bjPoNKXeVUlZk89..115Jubpr4Ax/1DuEND659gJLMfStv/S',
+//   favoriteBooks: [9780399169274],
+//   reviewedBooks: [9780399169274],
+// });
+//
+// newProfile.save();
+//
+// const newReview = new Review({
+//   idNameNumber: 'user9780399169274',
+//   user: 'user',
+//   isbn13: 9780399169274,
+//   text: 'This is a review.',
+//   rating: 5,
+// });
+//
+// newReview.save();

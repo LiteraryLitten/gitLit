@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
@@ -8,7 +8,9 @@ import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import Rating from './Rating.jsx';
-import ProReviewsCard from './ProReviewsCard.jsx';
+// import ProReviewsCard from './ProReviewsCard.jsx';
+import ReviewPanel from './ReviewPanel';
+// import UserReviewCard from './UserReviewCard';
 
 const axios = require('axios');
 
@@ -52,13 +54,16 @@ class BookPage extends React.Component {
       proreviews: [],
       typeReview: '',
       rating: 0,
-
+      pro: false,
+      userReviews: [],
     };
     this.submitRating = this.submitRating.bind(this);
     this.enterReview = this.enterReview.bind(this);
     this.passReview = this.passReview.bind(this);
     this.loadUserReviews = this.loadUserReviews.bind(this);
     this.loadProReviews = this.loadProReviews.bind(this);
+    console.log('');
+    console.log('BookPage props =', this.props);
   }
 
   componentDidMount() {
@@ -78,15 +83,19 @@ class BookPage extends React.Component {
       });
     }
     this.loadUserReviews();
+    this.loadProReviews();
   }
 
-  loadProReviews () {
+  loadProReviews() {
+    console.log('proReviews are trying to mount');
     this.props.getProReviews(this.props.book.isbn13, (response) => {
-      let book = this.state.book;
+      console.log('ProREview response bookPage @ 87', response);
+      // const book = this.state.book;
       this.setState({
         proreviews: response.data,
+        pro: true,
       });
-    })
+    });
   }
 
   enterReview(e) {
@@ -101,20 +110,23 @@ class BookPage extends React.Component {
   }
 
   submitRating(rating) {
-    //console.log(" on line 88 in submitRating", this.props.)
+    // console.log(" on line 88 in submitRating", this.props.)
     this.setState({
       rating,
     }, this.passReview);
-
   }
 
   loadUserReviews() {
     const url = `/userReviews/${this.props.book.isbn13}`;
+    console.log('   -BookPage is loading UserReviews with', url);
     axios(url)
-    .then((data) => {
-      console.log('returned to BookPage @ loadUserReviews 101-data=', data);
-    })
-    .catch(err => console.log('error when loading loadUserReviews on BookPage'));
+      .then((data) => {
+        console.log('returned to BookPage @ loadUserReviews 124-data=', data);
+        this.setState({
+          userReviews: data.data,
+        });
+      })
+      .catch(err => console.log('error when loading loadUserReviews on BookPage'));
   }
 
   render() {
@@ -148,7 +160,6 @@ class BookPage extends React.Component {
           <Grid item xs sm={7}>
             <Paper className={classes.paper}>
               {renderHTML(this.state.book.description)}
-              {this.state.proreviews}
             </Paper>
           </Grid>
 
@@ -182,9 +193,12 @@ class BookPage extends React.Component {
             </Paper>
 
             <Paper>
-              {this.state.proreviews.map((review, index) =>
-                <ProReviewsCard review={review} key={index}
-              />)}
+
+              <ReviewPanel
+                proReviews={this.state.proreviews}
+                userReviews={this.state.userReviews}
+                book={this.props.book}
+              />
 
             </Paper>
 
@@ -201,8 +215,3 @@ class BookPage extends React.Component {
 // };
 
 export default withStyles(styles)(BookPage);
-
-
-              // {this.state.proreviews.map((review, index) =>
-              //   <ProReviewsCard review={review} key={index}
-              // />)}
