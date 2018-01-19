@@ -55,7 +55,7 @@ class Search extends React.Component {
         <Button
           raised
           dense
-          color="contrast"
+          color="default"
           className={classes.button}
           disabled={this.state.query.length < 1}
           onClick={this.handleSubmit}
