@@ -70,11 +70,9 @@ class BookCard extends React.Component {
       thing: 0,
       popUp: false,
     };
-    this.submitRank = this.submitRank.bind(this);
     this.goToBook = this.goToBook.bind(this);
     this.handleExpandClick = this.handleExpandClick.bind(this);
     this.addtoFavorites = this.addtoFavorites.bind(this);
-    this.updateFavorite = this.updateFavorite.bind(this);
     this.toggleFavorite = this.toggleFavorite.bind(this);
     this.popUpClick = this.popUpClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -98,17 +96,28 @@ class BookCard extends React.Component {
   }
 
   goToBook() {
-    this.props.getProReviews(this.state.isbn, (response) => {
-      let book = this.state.book;
-      book.proreviews = response.data;
-      console.log(book.proreviews);
-      this.props.changeView('Book', book);
-    });
+    this.props.changeView('Book', this.state.book);
   }
 
   handleExpandClick() {
     console.log('expand');
     this.setState({ expanded: !this.state.expanded });
+  }
+
+  updateFavorite() {
+    if (this.props.userProfile.favoriteBooks.length > 0 && !this.state.liked) {
+      this.props.userProfile.favoriteBooks.forEach((isbn13) => {
+        if (isbn13 - this.state.book.isbn13 === 0) {
+          this.setState({
+            liked: true,
+          }, () => { this.setState({ thing: Math.random() }); });
+        }
+      });
+    }
+  }
+
+  toggleFavorite() {
+    this.setState({ liked: !this.state.liked});
   }
 
   addtoFavorites() {
@@ -131,6 +140,7 @@ class BookCard extends React.Component {
         this.props.updateUserData(user)
       });
   }
+
   popUpClick() {
     console.log('you clicked me');
     this.setState({

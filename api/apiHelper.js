@@ -4,7 +4,6 @@ const convert = require('xml-js');
 const { goodReadsKey } = require('./apiKeys.js');
 const { NYTKey } = require('./apiKeys.js');
 const { iDreambooksKey } = require('./apiKeys.js');
-const apiKeys = require('./apiKeys.js');
 const param = require('jquery-param');
 
 const searchBook = (book, cb) => {
@@ -143,7 +142,7 @@ const filterByPopularShelves = (book) => {
 const getReviewsiDreams = (isbn, cb) => {
   axios.get(`http://idreambooks.com/api/books/reviews.json?q=${isbn}&key=${iDreambooksKey}`, {
     params: {
-      q: isbn, 
+      q: isbn,
       key: iDreambooksKey,
     },
   })
@@ -153,7 +152,7 @@ const getReviewsiDreams = (isbn, cb) => {
     .catch((error) => {
       cb(error, null);
     });
-}
+};
 
 module.exports = {
   searchBook,

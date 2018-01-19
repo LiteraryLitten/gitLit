@@ -48,8 +48,8 @@ class BookPage extends React.Component {
         pages: '',
         popularShelves: '',
         isbn13: 0,
-        proreviews: [],
       },
+      proreviews: [],
       typeReview: '',
       rating: 0,
 
@@ -58,6 +58,7 @@ class BookPage extends React.Component {
     this.enterReview = this.enterReview.bind(this);
     this.passReview = this.passReview.bind(this);
     this.loadUserReviews = this.loadUserReviews.bind(this);
+    this.loadProReviews = this.loadProReviews.bind(this);
   }
 
   componentDidMount() {
@@ -77,6 +78,15 @@ class BookPage extends React.Component {
       });
     }
     this.loadUserReviews();
+  }
+
+  loadProReviews () {
+    this.props.getProReviews(this.props.book.isbn13, (response) => {
+      let book = this.state.book;
+      this.setState({
+        proreviews: response.data,
+      });
+    })
   }
 
   enterReview(e) {
@@ -172,8 +182,9 @@ class BookPage extends React.Component {
             </Paper>
 
             <Paper>
-              {this.state.book.proreviews.map((review, index) =>
-                <ProReviewsCard review={review} key={index} />)}
+              {this.state.proreviews.map((review, index) =>
+                <ProReviewsCard review={review} key={index}
+              />)}
 
             </Paper>
 
@@ -190,3 +201,8 @@ class BookPage extends React.Component {
 // };
 
 export default withStyles(styles)(BookPage);
+
+
+              // {this.state.proreviews.map((review, index) =>
+              //   <ProReviewsCard review={review} key={index}
+              // />)}
