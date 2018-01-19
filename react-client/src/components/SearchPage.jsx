@@ -33,9 +33,11 @@ class SearchPage extends React.Component {
     //cleanBook.author = /*book.authors.author.name._text || */ book.authors.author[0].name._text;
     cleanBook.averageRating = book.average_rating._text;
     cleanBook.isbn13 = book.isbn13._cdata;
-    cleanBook.imageURL = book.small_image_url._cdata;
+    cleanBook.imageURL = book.small_image_url._text;
     cleanBook.description = book.description._cdata;
     cleanBook.genres = [];
+    console.log(book);
+    console.log(cleanBook);
     return cleanBook;
   }
 
