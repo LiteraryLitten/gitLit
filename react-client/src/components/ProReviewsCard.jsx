@@ -69,25 +69,25 @@ class ProReviewsCard extends React.Component {
     const { classes } = this.props;
 
     return (
-      <Card
-        className={classes.card}
-        onClick={() => window.open(this.props.review.review_link, '_blank')}
-      >
-        <CardHeader
-          avatar={
-            <img
-              src={this.props.review.source_logo}
-              alt=""
-              style={{ height: '100px' }}
-            />
-              }
-          title={this.props.review.source}
-          subheader={this.props.review.snippet}
-          style={{ cursor: 'pointer' }}
-        />
-      </Card>
+      // <Card
+      //   className={classes.card}
+      //   onClick={() => window.open(this.props.review.review_link, '_blank')}
+      // >
+      //   <CardHeader
+      //     avatar={
+      //       <img
+      //         src={this.props.review.source_logo}
+      //         alt=""
+      //         style={{ height: '100px' }}
+      //       />
+      //         }
+      //     title={this.props.review.source}
+      //     subheader={this.props.review.snippet}
+      //     style={{ cursor: 'pointer' }}
+      //   />
+      // </Card>
 
-      {/* <Grid item style={{ padding: 20 }} >
+      <Grid item style={{ padding: 20 }} >
         <Card className={classes.card}>
           <CardHeader
             avatar={
@@ -128,7 +128,7 @@ class ProReviewsCard extends React.Component {
             <div className={styles.flexGrow} />
           </CardActions>
         </Card>
-      </Grid> */}
+      </Grid>
     );
   }
 }
