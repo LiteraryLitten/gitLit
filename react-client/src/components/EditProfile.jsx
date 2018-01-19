@@ -17,26 +17,21 @@ class EditProfile extends React.Component {
     super(props);
     this.state = {
       open: false,
-      signup: {
+      user: {
         name: '',
         username: '',
-        password: '',
-      },
-      login: {
-        username: '',
-        password: '',
       },
     };
     this.handleClickOpen = this.handleClickOpen.bind(this);
-    this.handleLogin = this.handleLogin.bind(this);
-    this.handleSignup = this.handleSignup.bind(this);
-    this.saveName = this.saveName.bind(this);
-    this.saveLoginUsername = this.saveLoginUsername.bind(this);
-    this.saveLoginPassword = this.saveLoginPassword.bind(this);
-    this.saveSignupUsername = this.saveSignupUsername.bind(this);
-    this.saveSignupPassword = this.saveSignupPassword.bind(this);
-    this.onNameClick = this.onNameClick.bind(this);
-    this.onLogoutClick = this.onLogoutClick.bind(this);
+    // this.handleLogin = this.handleLogin.bind(this);
+    // this.handleSignup = this.handleSignup.bind(this);
+    // this.saveName = this.saveName.bind(this);
+    // this.saveLoginUsername = this.saveLoginUsername.bind(this);
+    // this.saveLoginPassword = this.saveLoginPassword.bind(this);
+    // this.saveSignupUsername = this.saveSignupUsername.bind(this);
+    // this.saveSignupPassword = this.saveSignupPassword.bind(this);
+    // this.onNameClick = this.onNameClick.bind(this);
+    // this.onLogoutClick = this.onLogoutClick.bind(this);
   }
 
   saveName(e) {
@@ -45,120 +40,109 @@ class EditProfile extends React.Component {
     this.setState({ signup });
   }
 
-  saveLoginUsername(e) {
-    const login = this.state.login;
+  saveUsername(e) {
+    const username = this.state.username;
     login.username = e.target.value;
     this.setState({ login });
   }
 
-  saveSignupUsername(e) {
-    const signup = this.state.signup;
-    signup.username = e.target.value;
-    this.setState({ signup });
-  }
+  // saveSignupUsername(e) {
+  //   const signup = this.state.signup;
+  //   signup.username = e.target.value;
+  //   this.setState({ signup });
+  // }
 
-  saveLoginPassword(e) {
-    const login = this.state.login;
-    login.password = e.target.value;
-    this.setState({ login });
-  }
+  // saveLoginPassword(e) {
+  //   const login = this.state.login;
+  //   login.password = e.target.value;
+  //   this.setState({ login });
+  // }
 
-  saveSignupPassword(e) {
-    const signup = this.state.signup;
-    signup.password = e.target.value;
-    this.setState({ signup });
-  }
+  // saveSignupPassword(e) {
+  //   const signup = this.state.signup;
+  //   signup.password = e.target.value;
+  //   this.setState({ signup });
+  // }
 
   handleClickOpen() {
     this.setState({ open: true });
   }
 
-  handleLogin() {
-    $.ajax({
-      url: '/login',
-      type: 'POST',
-      data: JSON.stringify({
-        username: this.state.login.username,
-        password: this.state.login.password,
-      }),
-      success: (data) => {
-        if (data.type === 'success') {
-          this.setState({ userProfile: data.userProfile });
-        } else if (data.type === 'wrong password') {
-          alert('Wrong Password: Try Again');
-        } else {
-          alert ('Invalid username: Try Again');
-        }
-        //this.renderView();
-        this.props.setUserProfile(this.state.userProfile);
-        this.setState({ open: false });
-      },
-      error: (err) => {
-        console.log('err', err);
-      },
-    });
+  // handleLogin() {
+  //   $.ajax({
+  //     url: '/login',
+  //     type: 'POST',
+  //     data: JSON.stringify({
+  //       username: this.state.login.username,
+  //       password: this.state.login.password,
+  //     }),
+  //     success: (data) => {
+  //       if (data.type === 'success') {
+  //         this.setState({ userProfile: data.userProfile });
+  //       } else if (data.type === 'wrong password') {
+  //         alert('Wrong Password: Try Again');
+  //       } else {
+  //         alert ('Invalid username: Try Again');
+  //       }
+  //       //this.renderView();
+  //       this.props.setUserProfile(this.state.userProfile);
+  //       this.setState({ open: false });
+  //     },
+  //     error: (err) => {
+  //       console.log('err', err);
+  //     },
+  //   });
     
-  }
+  // }
 
 
-  onNameClick() {
-    this.props.handleProfileClick();
-  }
+  // onNameClick() {
+  //   this.props.handleProfileClick();
+  // }
 
-  onLogoutClick() {
-    this.props.handleLogout();
-  }
 
   render() {
-    if (this.props.user.hasOwnProperty('username')) {
-      return (
-        <div>
-            <Button color="contrast" onClick={this.onNameClick}>{this.props.user.name}</Button>
-            <Button color="contrast" onClick={this.onLogoutClick}>Logout</Button>
-        </div>
-      );
-    } else {
+    
       return (
         <div>
 
-            <Button color="contrast" onClick={this.handleClickOpen}>Login</Button>
+            <Button  onClick={this.handleClickOpen}>Edit Profile</Button>
 
           <Dialog
             open={this.state.open}
             onClose={this.handleClose}
             aria-labelledby="form-dialog-title"
           >
-            <DialogTitle id="form-dialog-title">Login/Signup</DialogTitle>
+            <DialogTitle id="form-dialog-title">Edit Profile</DialogTitle>
             <DialogContent>
               <DialogContentText>
-                Log In
+                Edit name/username
               </DialogContentText>
               <TextField
                 autoFocus
                 margin="dense"
-                id="username"
-                label="username"
+                id="name"
+                label="Name"
                 type="string"
-                onChange={this.saveLoginUsername}
+                // onChange={this.saveLoginUsername}
               />
               <TextField
                 autoFocus
                 margin="dense"
                 id="login-password"
-                label="password"
-                type="password"
-                onChange={this.saveLoginPassword}
+                label="Username"
+                type="string"
+                // onChange={this.saveLoginPassword}
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={this.handleLogin} color="primary">
+              <Button onClick={this.handleEditProfile} color="primary">
                 Edit Profile
               </Button>
             </DialogActions>
           </Dialog>
         </div>
       );
-    }
   }
 }
 
