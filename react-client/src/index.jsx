@@ -18,7 +18,12 @@ class App extends React.Component {
       items: [],
       // userProfile: { favoriteBooks: [], },
       // sample user to build bookshelf:
-      userProfile: {_id: "5a600b8f933faf4309c439cc", name: "dustin", username: "dustin", password: "1111", favoriteBooks: [9780399169274, 9780307951526]},
+      userProfile: {
+        name: 'user',
+        username: 'user',
+        favoriteBooks: [9780399169274],
+        reviewedBooks: [9780399169274],
+      },
       selectedBook: {},
       proreviews: [],
     };
@@ -33,18 +38,18 @@ class App extends React.Component {
     this.updateUserData = this.updateUserData.bind(this);
   }
   //
-  //componentDidMount() {
-    // example load user by userName
-    // this.fetch('user', 'dust_off', (user) => {
-    //   this.setState({
-    //     userProfile: user,
-    //   });
-    // });
+  // componentDidMount() {
+  // example load user by userName
+  // this.fetch('user', 'dust_off', (user) => {
+  //   this.setState({
+  //     userProfile: user,
+  //   });
+  // });
 
   getProReviews(isbn, callback) {
-      axios.get(`/proreviews/${isbn}`)
+    axios.get(`/proreviews/${isbn}`)
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         callback(response);
       })
       .catch((error) => {
@@ -84,7 +89,7 @@ class App extends React.Component {
   }
 
   updateUserData(userProfile) {
-    console.log("in updateUserData @ 64", userProfile);
+    console.log('in updateUserData @ 64', userProfile);
     this.setState({
       userProfile,
     });
@@ -95,7 +100,7 @@ class App extends React.Component {
     const data = {
       review, user, isbn13, rating,
     };
-    console.log('inside the APP @ 50', data);
+    // console.log('inside the APP @ 50', data);
 
     fetch('/review', {
       method: 'POST',
@@ -105,15 +110,15 @@ class App extends React.Component {
       }),
     }).then(res => res.json())
       .catch(error => console.error('Error:', error))
-      .then(response => {
-        console.log('Success:', response);
+      .then((response) => {
+        // console.log('Success:', response);
         this.updateUserData(response[1]);
       });
   }
 
   handleSearch(query) {
-    //do the fetch here
-    //pass that data into the search page
+    // do the fetch here
+    // pass that data into the search page
 
 
     this.setState({ view: 'Search', searchedBook: query }, function () {
@@ -129,8 +134,7 @@ class App extends React.Component {
   }
 
   setUserProfile(user) {
-    this.setState({ userProfile: user }, function() { console.log(this.state.userProfile); this.renderView(); });
-
+    this.setState({ userProfile: user }, function () { console.log(this.state.userProfile); this.renderView(); });
   }
 
   handleLogout() {
@@ -154,6 +158,7 @@ class App extends React.Component {
           changeView={this.changeView}
           fetch={this.fetch}
           submitReview={this.submitReview}
+          getProReviews={this.getProReviews}
         />
       );
     } else if (this.state.view === 'Profile') {
