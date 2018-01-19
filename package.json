@@ -45,9 +45,5 @@
     "react-render-html": "^0.6.0",
     "react-swipeable-views": "^0.12.12",
     "xml-js": "^1.6.2"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/LiteraryLitten/Master"
-  },
+  }
 }
