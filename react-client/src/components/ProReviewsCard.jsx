@@ -127,7 +127,7 @@ class ProReviewsCard extends React.Component {
             <div className={styles.flexGrow} />
           </CardActions>
         </Card>
-      </Grid> }*/
+      </Grid> } */
     );
   }
 }
