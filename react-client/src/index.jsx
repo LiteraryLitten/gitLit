@@ -37,14 +37,6 @@ class App extends React.Component {
     this.getProReviews = this.getProReviews.bind(this);
     this.updateUserData = this.updateUserData.bind(this);
   }
-  //
-  // componentDidMount() {
-  // example load user by userName
-  // this.fetch('user', 'dust_off', (user) => {
-  //   this.setState({
-  //     userProfile: user,
-  //   });
-  // });
 
   getProReviews(isbn, callback) {
     axios.get(`/proreviews/${isbn}`)
@@ -202,6 +194,7 @@ class App extends React.Component {
           handleLogout={this.handleLogout}
           handleMenuBarClick={this.handleMenuBarClick}
         />
+        <div style={{ padding: '35px', width: '100%' }} />
         <div className="main-view">
           {this.renderView()}
         </div>
