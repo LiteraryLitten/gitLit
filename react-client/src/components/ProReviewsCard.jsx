@@ -7,7 +7,6 @@ import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 import red from 'material-ui/colors/red';
-import FavoriteIcon from 'material-ui-icons/Favorite';
 // import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
 import Divider from 'material-ui/Divider';
@@ -87,7 +86,7 @@ class ProReviewsCard extends React.Component {
         />
       </Card>
 
-      {/* <Grid item style={{ padding: 20 }} >
+      /* {<Grid item style={{ padding: 20 }} >
         <Card className={classes.card}>
           <CardHeader
             avatar={
@@ -128,7 +127,7 @@ class ProReviewsCard extends React.Component {
             <div className={styles.flexGrow} />
           </CardActions>
         </Card>
-      </Grid> */}
+      </Grid> }*/
     );
   }
 }
