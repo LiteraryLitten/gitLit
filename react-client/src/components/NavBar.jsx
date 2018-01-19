@@ -50,7 +50,7 @@ class NavBar extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <AppBar position="static" style={styles.dark}>
+        <AppBar position="fixed" style={styles.dark}>
           <Toolbar>
             
             <Button className={classes.button} color="contrast" name="Literary Litten" onClick={this.handleHomeClick}>
