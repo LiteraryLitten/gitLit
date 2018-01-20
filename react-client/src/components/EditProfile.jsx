@@ -18,6 +18,7 @@ class EditProfile extends React.Component {
     this.state = {
       open: false,
       user: {
+        currentUser: this.props.currentUser,
         name: '',
         username: '',
       },
@@ -27,12 +28,24 @@ class EditProfile extends React.Component {
     this.saveName = this.saveName.bind(this);
     this.saveUsername = this.saveUsername.bind(this);
     this.handleEditProfile = this.handleEditProfile.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  // setCurrentUser() {
+  //   this.setState({
+  //     currentUser: this.props.currentUser,
+  //   })
+  //   console.log('CURRENT USER ON THE EDIT PROFILE', this.props.currentUser);
+  // }
+
+  handleClick() {
+    this.handleEditProfile();
+    this.handleClose();
   }
 
   saveName(e) {
     const user = this.state.user;
     user.name = e.target.value;
-    // console.log(user.name);
     this.setState({ user });
   }
 
@@ -51,10 +64,12 @@ class EditProfile extends React.Component {
   }
 
   handleEditProfile() {
+    console.log(this.state.user.currentUser)
     axios({
       method: 'put',
       url: '/editprofile',
       data: {
+        currentUser: this.state.user.currentUser,
         user: this.state.user.name,
         username: this.state.user.username, 
       }
@@ -104,7 +119,7 @@ class EditProfile extends React.Component {
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={this.handleEditProfile} color="primary">
+              <Button onClick={() => this.handleClick()} color="primary">
                 Edit Profile
               </Button>
             </DialogActions>

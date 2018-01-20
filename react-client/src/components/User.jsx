@@ -44,8 +44,8 @@ const User = props =>(
                     Username : <br /> {props.user.username} <br />
                   </span>
                   
-                  <EditProfile />
-                  
+                  <EditProfile currentUser={props.user.name} setUserProfile={props.setUserProfile} />
+                
                 </Grid>
                 
               </Grid>

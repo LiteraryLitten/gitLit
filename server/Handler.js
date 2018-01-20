@@ -235,7 +235,7 @@ module.exports = {
   },
   editProfile: (req, res) => {
     console.log(req.body.user);
-    db.editProfile(req.body.user, req.body.username, (err, data) => {
+    db.editProfile(req.body.currentUser, req.body.user, req.body.username, (err, data) => {
       if (err) {
         res.sendStatus(500);
       } else {

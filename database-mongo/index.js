@@ -288,10 +288,9 @@ const findReviewsByIsbn13 = (isbn13, cb) => {
   });
 };
 
-const editProfile = (name, username, cb) => {
-  name = `${name}`;
-  username = `${username}`;
-  User.update({ name: name }, { name: name, username: username }).exec(
+const editProfile = (currentUser, name, username, cb) => {
+  console.log(currentUser);
+  User.update({ name: `${currentUser}` }, { name: `${name}`, username: `${username}` }).exec(
     (err, data) => {
       console.log(data);
       cb(err, data);
