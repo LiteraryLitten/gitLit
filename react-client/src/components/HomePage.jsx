@@ -3,6 +3,7 @@ import $ from 'jquery';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import { CircularProgress } from 'material-ui/Progress';
+import Paper from 'material-ui/Paper';
 
 import BookCard from './BookCard.jsx';
 
@@ -126,7 +127,9 @@ class HomePage extends React.Component {
 
     return (
       <div>
-        <h1 style={{ textAlign: 'center', backgroundColor: 'lightgrey' }}> Best Sellers </h1>
+        <Paper >
+          <h1 style={{ textAlign: 'center', backgroundColor: '#efd669' }}> Best Sellers </h1>
+        </Paper>
         {this.state.loading
           ?
             <div style={{ textAlign: 'center' }}>
