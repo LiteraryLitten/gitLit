@@ -83,25 +83,6 @@ class EditProfile extends React.Component {
       })
   }
 
-  handleEditProfile() {
-    axios({
-      method: 'put',
-      url: '/editprofile',
-      data: {
-        user: this.state.user.name,
-        username: this.state.user.username, 
-      }
-    })
-      .then((response) => {
-        alert('Your Profile has been updated');
-        console.log('Profile is updated');
-      })
-      .catch((error) => {
-        console.log('There is an error', error);
-      })
-  }
-
-
   render() {
     
       return (
