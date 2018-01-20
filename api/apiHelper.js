@@ -154,12 +154,6 @@ const getReviewsiDreams = (isbn, cb) => {
     },
   })
     .then((response) => {
-      console.log('');
-      console.log('iDream!!!');
-      console.log(response.data);
-      console.log('');
-      console.log('');
-
       cb(null, response.data);
     })
     .catch((error) => {
