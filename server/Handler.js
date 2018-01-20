@@ -241,7 +241,7 @@ module.exports = {
     // console.log("IN HANDLER getReviewsByUser");
     const { user } = req.params;
     // console.log('in getUserReviews @ 177-isbn13=', isbn13);
-    db.findReviewsByUser(user, (user, reviews) => {
+    db.findReviewsByUser(user, (err, reviews) => {
       // console.log('in getUserReviews @ 179-reviews=', reviews);
       res.json(reviews);
     });
