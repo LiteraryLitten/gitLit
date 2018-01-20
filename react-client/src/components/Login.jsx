@@ -117,7 +117,7 @@ class Login extends React.Component {
         favoriteBooks: [],
       }),
       success: (data) => {
-        console.log(data);
+        // console.log(data);
         if (data.type === 'success') {
           alert('User Profile Created! Login to continue');
         } else{

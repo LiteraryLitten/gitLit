@@ -303,7 +303,7 @@ const findReviewsByIsbn13 = (isbn13, cb) => {
       cb(err, null);
     }
     if (reviews !== null) {
-      console.log('we found a review on db.findReviewsByIsbn13 @ 278', isbn13, reviews);
+      // console.log('we found a review on db.findReviewsByIsbn13 @ 278', isbn13, reviews);
     } else {
       console.log('NOTHING db.findReviewsByIsbn13 @ 278', isbn13, reviews);
     }

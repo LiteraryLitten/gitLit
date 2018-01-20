@@ -60,9 +60,7 @@ const User = props =>(
               My Reviews
             </Typography>
             <br />
-            <Paper >  
               <Reviewshelf books={props.user.reviewedBooks} fetch={props.fetch} changeView={props.changeView} user={props.user} key='reviews'/>
-            </Paper>
           </Grid>
 
           <Grid item xs={12} sm={6}>
