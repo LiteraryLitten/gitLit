@@ -287,6 +287,21 @@ const findReviewsByIsbn13 = (isbn13, cb) => {
   });
 };
 
+const findReviewsByUser = (user, cb) => {
+  Review.find({ user }).exec((err, reviews) => {
+    if (err) {
+      console.log('Failed to find reviews');
+      cb(err, null);
+    }
+    if (reviews !== null) {
+      // console.log('we found a review on db.findReviewsByaUser @ 297', user, reviews);
+    } else {
+      console.log('NOTHING db.findReviewsByUser @299', user, reviews);
+    }
+    cb(null, reviews);
+  });
+};
+
 module.exports = {
   selectAllBooks,
   findUserFavorites,
@@ -299,6 +314,7 @@ module.exports = {
   findReview,
   saveFavorite,
   findReviewsByIsbn13,
+  findReviewsByUser
 };
 
 

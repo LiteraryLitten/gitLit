@@ -20,7 +20,7 @@ import Grid from 'material-ui/Grid';
 
 const styles = theme => ({
   card: {
-    maxWidth: 300,
+    width: 400,
     // height: 200,
   },
   media: {
@@ -46,7 +46,7 @@ const styles = theme => ({
   },
 });
 
-class BookShelfCard extends React.Component {
+class ReviewShelfCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -54,22 +54,25 @@ class BookShelfCard extends React.Component {
       expanded: false,
       rating: 0,
       description: '',
+      review : 'testaggdgadfgfdsgfdsgdsfg',
     };
-    this.submitRank = this.submitRank.bind(this);
+    // this.submitRank = this.submitRank.bind(this);
     this.goToBook = this.goToBook.bind(this);
     this.handleExpandClick = this.handleExpandClick.bind(this);
+    // this.attachReview = this.attachReview.bind(this);
   }
 
   componentDidMount() {
-    let str = this.props.book.description;
-    str = str.replace(/<br>/gi, '\n');
-    str = str.replace(/<p.*>/gi, '\n');
-    str = str.replace(/<a.*href="(.*?)".*>(.*?)<\/a>/gi, ' $2 (Link->$1) ');
-    str = str.replace(/<(?:.|\s)*?>/g, '');
-    const arrayString = `${str.split(' ').join(' ').substring(0, 200)}...`;
-    this.setState({
-      description: arrayString,
+    // console.log(this.state.book);
+    this.props.allReviews.forEach((review) => {
+      // console.log(review);
+        // console.log('ISBN = ', this.state.book.isbn13, review.isbn13);
+      if (this.state.book.isbn13 === review.isbn13) {
+        // console.log(true);
+        this.setState({ review: review.text, rating: review.rating });
+      }
     });
+
   }
 
   goToBook() {
@@ -79,10 +82,6 @@ class BookShelfCard extends React.Component {
   handleExpandClick() {
     console.log('expand');
     this.setState({ expanded: !this.state.expanded });
-  }
-
-  submitRank(rating) {
-    // stuff here
   }
 
   render() {
@@ -97,7 +96,14 @@ class BookShelfCard extends React.Component {
               }
             onClick={this.goToBook}
             style={{ cursor: 'pointer' }}
+            title={this.state.book.title}
+            subheader={'Your star rating: ' + this.state.rating}
           />
+          <CardContent>
+            <Typography component="p">
+              {this.state.review}
+            </Typography>
+          </CardContent>
 
         </Card>
       </Grid>
@@ -105,8 +111,8 @@ class BookShelfCard extends React.Component {
   }
 }
 
-BookShelfCard.propTypes = {
+ReviewShelfCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(BookShelfCard);
+export default withStyles(styles)(ReviewShelfCard);
