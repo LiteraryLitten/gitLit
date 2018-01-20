@@ -24,8 +24,7 @@ class SearchPage extends React.Component {
     this.setState({ searchResults: this.props.searchResults });
   }
 
-
-  buildBook(book) {
+  buildBook (book) {
     const cleanBook = {};
     cleanBook.year = book.publication_year._text;
     cleanBook.month = book.publication_month._text;

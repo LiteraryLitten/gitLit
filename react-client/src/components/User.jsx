@@ -8,6 +8,7 @@ import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import Bookshelf from './Bookshelf.jsx';
+import EditProfile from './EditProfile.jsx';
 
 const styles = theme => ({
   root: {
@@ -42,11 +43,9 @@ const User = props =>(
                   <span className='user'>
                     Username : <br /> {props.user.username} <br />
                   </span>
-                  <Button 
-                  raised
-                  onClick={props.changePassword} >
-                  Edit Profile
-                  </Button> <br />
+                  
+                  <EditProfile currentUser={props.user.name} setUserProfile={props.setUserProfile} />
+                
                 </Grid>
                 
               </Grid>
@@ -61,7 +60,7 @@ const User = props =>(
             </Paper>
           </Grid>
 
-          <Grid item xs={16} sm={7}>
+          <Grid item xs={12} sm={7}>
             <h2>
               My Bookshelf
             </h2>

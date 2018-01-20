@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+// mongoose.Promise = global.Promise;
 
 mongoose.connect('mongodb://localhost/lit');
 
@@ -310,6 +311,15 @@ const findReviewsByIsbn13 = (isbn13, cb) => {
   });
 };
 
+const editProfile = (currentUser, name, username, cb) => {
+  console.log(currentUser);
+  User.update({ name: `${currentUser}` }, { name: `${name}`, username: `${username}` }).exec(
+    (err, data) => {
+      console.log(data);
+      cb(err, data);
+    });
+};
+
 module.exports = {
   selectAllBooks,
   findUserFavorites,
@@ -322,6 +332,7 @@ module.exports = {
   findReview,
   saveFavorite,
   findReviewsByIsbn13,
+  editProfile,
 };
 
 

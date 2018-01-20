@@ -20,7 +20,7 @@ class ProfilePage extends React.Component {
     this.savePassword = this.savePassword.bind(this);
     this.renderView = this.renderView.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
-    this.changePassword = this.changePassword.bind(this);
+    this.editProfile = this.editProfile.bind(this);
   }
 
   componentDidMount() {
@@ -96,7 +96,7 @@ class ProfilePage extends React.Component {
     });
   }
 
-  changePassword() {
+  editProfile() {
     // render a text box
     // go to server > db
     // edit pw field in db
@@ -157,7 +157,7 @@ class ProfilePage extends React.Component {
       let user = this.state.userProfile;
       return (
         <div className="userProfile">
-          <User user={user} onClick={this.changePassword.bind(this)} />
+          <User user={user} onClick={this.editProfile.bind(this)} />
           <button onClick={this.handleLogout} > Logout </button>
         </div>
       );
@@ -168,7 +168,7 @@ class ProfilePage extends React.Component {
     if (this.props.user.hasOwnProperty('name')){
       return (
         <div className="userProfile">
-          <User user={this.props.user} onClick={this.changePassword.bind(this)} fetch={this.props.fetch} changeView={this.props.changeView} />
+          <User user={this.props.user} onClick={this.editProfile.bind(this)} fetch={this.props.fetch} changeView={this.props.changeView} />
         </div>
       );
     } else {

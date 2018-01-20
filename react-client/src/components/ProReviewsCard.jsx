@@ -1,20 +1,20 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-// import classNames from 'classnames';
+import classNames from 'classnames';
 import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
-// import Collapse from 'material-ui/transitions/Collapse';
+import Collapse from 'material-ui/transitions/Collapse';
 import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 import red from 'material-ui/colors/red';
 // import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
 import Divider from 'material-ui/Divider';
-// import renderHTML from 'react-render-html';
-// import PopUp from './PopUp.jsx';
-// import Rating from './Rating.jsx';
+import renderHTML from 'react-render-html';
+import PopUp from './PopUp.jsx';
+import Rating from './Rating.jsx';
 import Grid from 'material-ui/Grid';
-// import Button, { ButtonProps } from 'material-ui/Button';
+import Button, { ButtonProps } from 'material-ui/Button';
 
 const styles = theme => ({
   card: {
@@ -66,7 +66,6 @@ class ProReviewsCard extends React.Component {
 
   render() {
     const { classes } = this.props;
-
     return (
       <Card
         className={classes.card}
@@ -103,16 +102,15 @@ class ProReviewsCard extends React.Component {
           <Divider light />
           <CardContent>
             <Typography component="p">
-              {this.props.review.snippet}
+              {this.props.review.snippet} 
             </Typography>
           </CardContent>
-
-          <Divider light />
 
           <CardContent>
 
             <Typography component="a" href={this.props.review.review_link} target="_blank">
               Read full review
+
             </Typography>
 
           </CardContent>
@@ -134,3 +132,4 @@ class ProReviewsCard extends React.Component {
 
 
 export default withStyles(styles)(ProReviewsCard);
+
