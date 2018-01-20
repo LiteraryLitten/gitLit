@@ -8,10 +8,7 @@ import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import Bookshelf from './Bookshelf.jsx';
-<<<<<<< HEAD
 import EditProfile from './EditProfile.jsx';
-=======
->>>>>>> 80193413f5f94f680e1136f075e2ce06f834877e
 import Reviewshelf from './Reviewshelf.jsx';
 
 const styles = theme => ({
