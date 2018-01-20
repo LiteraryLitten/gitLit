@@ -55,7 +55,6 @@ class BookShelfCard extends React.Component {
             onClick={this.goToBook}
             style={{ cursor: 'pointer' }}
           />
-
         </Card>
       </Grid>
     );

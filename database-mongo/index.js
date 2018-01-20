@@ -6,7 +6,7 @@
 
 const mongoose = require('mongoose');
 
-const uri = 'mongodb://student:student@ds263847.mlab.com:63847/heroku_517m9tk2';
+// const uri = 'mongodb://student:student@ds263847.mlab.com:63847/heroku_517m9tk2';
 
 const options = {
   server: {
