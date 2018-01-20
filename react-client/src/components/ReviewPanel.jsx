@@ -35,7 +35,7 @@ function TabContainer(props) {
 const styles = theme => ({
   root: {
     // backgroundColor: theme.palette.background.paper,
-    width: 500,
+    width: 'auto',
     position: 'relative',
     minHeight: 200,
   },

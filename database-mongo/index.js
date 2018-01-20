@@ -2,15 +2,38 @@ const mongoose = require('mongoose');
 // mongoose.Promise = global.Promise;
 
 mongoose.connect('mongodb://localhost/lit');
+
+
+// Heroku options and URI - the xxx is the password - use the env veriables instead
+// const options = {
+//   server: {
+//     socketOptions: {
+//       keepAlive: 300000,
+//       connectTimeoutMS: 30000,
+//     },
+//   },
+//   replset: {
+//     socketOptions: {
+//       keepAlive: 300000,
+//       connectTimeoutMS: 30000,
+//     },
+//   },
+// };
+// const uri = 'mongodb://student:XXX@ds263847.mlab.com:63847/heroku_517m9tk2';
+// mongoose.connect(uri);
+
 const db = mongoose.connection;
+
+// Heroku logging
+// db.on('error', console.error.bind(console, 'connection error:'));
 
 // db.dropDatabase();
 // mongoose.connect('mongodb://localhost/lit');
 
-db.on('error', () => {
-  console.log('mongoose connection error');
-});
-
+// db.on('error', () => {
+//   console.log('mongoose connection error');
+// });
+//
 db.once('open', () => {
   console.log('mongoose connected successfully');
 });
