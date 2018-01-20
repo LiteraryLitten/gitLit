@@ -23,7 +23,7 @@ const options = {
   },
 };
 
-mongoose.connect(uri, options);
+mongoose.connect(uri);
 
 const db = mongoose.connection;
 
