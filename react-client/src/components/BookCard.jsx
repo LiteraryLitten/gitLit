@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import classnames from 'classnames';
+// import classnames from 'classnames';
 import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
-import Collapse from 'material-ui/transitions/Collapse';
+// import Collapse from 'material-ui/transitions/Collapse';
 import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 import red from 'material-ui/colors/red';
 import FavoriteIcon from 'material-ui-icons/Favorite';
-import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
+// import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
 import Divider from 'material-ui/Divider';
 import renderHTML from 'react-render-html';
 import axios from 'axios';
-import $ from 'jquery';
+// import $ from 'jquery';
 
 import Button from 'material-ui/Button';
 import Dialog, {
@@ -23,7 +23,7 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog';
 
-import PopUp from './PopUp.jsx';
+// import PopUp from './PopUp.jsx';
 import Rating from './Rating.jsx';
 
 import Grid from 'material-ui/Grid';
@@ -122,7 +122,7 @@ class BookCard extends React.Component {
   }
 
   toggleFavorite() {
-    this.setState({ liked: !this.state.liked});
+    this.setState({ liked: !this.state.liked });
   }
 
   addtoFavorites() {
@@ -140,9 +140,9 @@ class BookCard extends React.Component {
       .then((response) => {
         const newFavs = JSON.parse(response.config.data);
         // console.log('response.body', newFavs);
-        let user = this.props.userProfile;
+        const user = this.props.userProfile;
         user.favoriteBooks = response;
-        this.props.updateUserData(user)
+        this.props.updateUserData(user);
       });
   }
 
@@ -156,11 +156,11 @@ class BookCard extends React.Component {
   handleClose() {
     this.setState({
       popUp: false,
-    })
+    });
   }
 
   popUpShow() {
-    if(this.state.popUp) {
+    if (this.state.popUp) {
       return (
         <Dialog
           open={this.state.popUp}
@@ -180,7 +180,7 @@ class BookCard extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-      )
+      );
     }
   }
 
@@ -218,18 +218,18 @@ class BookCard extends React.Component {
           <Divider light />
 
           <CardContent>
-          <Typography component="p">
-            {this.state.book.genres.map(genre => (
-                genre[0].toUpperCase() + genre.slice(1) + ' '
+            <Typography component="p">
+              {this.state.book.genres.map(genre => (
+                `${genre[0].toUpperCase() + genre.slice(1)} `
             ))}
-          </Typography>
+            </Typography>
           </CardContent>
 
           <Divider light />
           <CardActions disableActionSpacing>
             <IconButton aria-label="Add to favorites" >
               <FavoriteIcon
-              onClick={this.addtoFavorites}
+                onClick={this.addtoFavorites}
               />
             </IconButton>
 
