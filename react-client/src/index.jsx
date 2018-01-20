@@ -14,7 +14,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       // view: null,
-      view: 'Profile',
+      view: null,
       items: [],
       // userProfile: { favoriteBooks: [], },
       // // sample user to build bookshelf:
