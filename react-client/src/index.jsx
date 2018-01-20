@@ -37,14 +37,6 @@ class App extends React.Component {
     this.getProReviews = this.getProReviews.bind(this);
     this.updateUserData = this.updateUserData.bind(this);
   }
-  //
-  // componentDidMount() {
-  // example load user by userName
-  // this.fetch('user', 'dust_off', (user) => {
-  //   this.setState({
-  //     userProfile: user,
-  //   });
-  // });
 
   getProReviews(isbn, callback) {
     axios.get(`/proreviews/${isbn}`)
@@ -134,7 +126,10 @@ class App extends React.Component {
   }
 
   setUserProfile(user) {
-    this.setState({ userProfile: user }, function () { console.log(this.state.userProfile); this.renderView(); });
+    this.setState({ userProfile: user }, () => {
+      console.log('Setting this.state.userProfile:', this.state.userProfile);
+      this.renderView();
+    });
   }
 
   handleLogout() {
@@ -202,6 +197,7 @@ class App extends React.Component {
           handleLogout={this.handleLogout}
           handleMenuBarClick={this.handleMenuBarClick}
         />
+        <div style={{ padding: '25px', width: '100%' }} />
         <div className="main-view">
           {this.renderView()}
         </div>
