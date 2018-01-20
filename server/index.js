@@ -20,6 +20,6 @@ app.get('/proreviews/:isbn', handler.getProReviews);
 app.post('/favorites', handler.postFavorites);
 app.get('/userReviews/:isbn13', handler.getUserReviews);
 
-app.listen(process.env.PORT, () => {
+app.listen(3000, () => {
   console.log('listening on port 3000!');
 });

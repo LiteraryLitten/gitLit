@@ -10,6 +10,5 @@ api/apiKeys.js
 npm-debug.log
 
 ## React ##
-react-client/env/config.js
-
 react-client/dist/bundle.js
+react-client/env/config.js

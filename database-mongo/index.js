@@ -1,33 +1,30 @@
-// const mongoose = require('mongoose');
-// mongoose.connect('mongodb://localhost/lit');
-// const db = mongoose.connection;
-
-// Recommended driver settings for the Mongoose 4.3.x driver.
-
 const mongoose = require('mongoose');
 
-// const uri = 'mongodb://student:student@ds263847.mlab.com:63847/heroku_517m9tk2';
+mongoose.connect('mongodb://localhost/lit');
 
-const options = {
-  server: {
-    socketOptions: {
-      keepAlive: 300000,
-      connectTimeoutMS: 30000,
-    },
-  },
-  replset: {
-    socketOptions: {
-      keepAlive: 300000,
-      connectTimeoutMS: 30000,
-    },
-  },
-};
 
-mongoose.connect(uri);
+// Heroku options and URI - the xxx is the password - use the env veriables instead
+// const options = {
+//   server: {
+//     socketOptions: {
+//       keepAlive: 300000,
+//       connectTimeoutMS: 30000,
+//     },
+//   },
+//   replset: {
+//     socketOptions: {
+//       keepAlive: 300000,
+//       connectTimeoutMS: 30000,
+//     },
+//   },
+// };
+// const uri = 'mongodb://student:XXX@ds263847.mlab.com:63847/heroku_517m9tk2';
+// mongoose.connect(uri);
 
 const db = mongoose.connection;
 
-db.on('error', console.error.bind(console, 'connection error:'));
+// Heroku logging
+// db.on('error', console.error.bind(console, 'connection error:'));
 
 // db.dropDatabase();
 // mongoose.connect('mongodb://localhost/lit');
