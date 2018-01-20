@@ -157,7 +157,7 @@ class ProfilePage extends React.Component {
       let user = this.state.userProfile;
       return (
         <div className="userProfile">
-          <User user={user} onClick={this.editProfile.bind(this)} />
+          <User user={user} setUserProfile={this.props.setUserProfile} renderView={this.renderView} onClick={this.editProfile.bind(this)} />
           <button onClick={this.handleLogout} > Logout </button>
         </div>
       );

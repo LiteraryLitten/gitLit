@@ -312,12 +312,14 @@ const findReviewsByIsbn13 = (isbn13, cb) => {
 };
 
 const editProfile = (currentUser, name, username, cb) => {
-  console.log(currentUser);
-  User.update({ name: `${currentUser}` }, { name: `${name}`, username: `${username}` }).exec(
-    (err, data) => {
-      console.log(data);
-      cb(err, data);
-    });
+  User.update({ name: `${currentUser}` }, { name: `${name}`, username: `${username}` }).exec((err, data) => {
+    User.find({ name: `${name}` }).exec(cb);
+    console.log('my data returned on db', name);
+  })
+  // User.find({ name: `${name}` }).exec((err, data) => {
+  //   console.log('my data returned on db', data);
+  //   cb(err, data);
+  // });
 };
 
 module.exports = {

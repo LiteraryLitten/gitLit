@@ -66,7 +66,7 @@ module.exports = {
     });
   },
   postLogin: (req, res) => {
-    console.log(' in handler on line 62', req);
+    // console.log(' in handler on line 62', req);
     let loginData = {};
     req.on('data', (chunk) => {
       loginData = JSON.parse(chunk.toString());
@@ -228,7 +228,6 @@ module.exports = {
     });
   },
   editProfile: (req, res) => {
-    console.log(req.body.user);
     db.editProfile(req.body.currentUser, req.body.user, req.body.username, (err, data) => {
       if (err) {
         res.sendStatus(500);

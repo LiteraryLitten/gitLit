@@ -31,6 +31,9 @@ class EditProfile extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
+  // this.props.setUserProfile(this.state.userProfile);
+
+
   // setCurrentUser() {
   //   this.setState({
   //     currentUser: this.props.currentUser,
@@ -75,6 +78,8 @@ class EditProfile extends React.Component {
       }
     })
       .then((response) => {
+        console.log('MY RESPONSE ON CLIENT', response.data);
+        // this.props.setUserProfile(response.data);
         alert('Your Profile has been updated');
         console.log('Profile is updated');
       })

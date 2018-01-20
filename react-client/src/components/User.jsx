@@ -44,7 +44,7 @@ const User = props =>(
                     Username : <br /> {props.user.username} <br />
                   </span>
                   
-                  <EditProfile currentUser={props.user.name} setUserProfile={props.setUserProfile} />
+                  <EditProfile user={props.user} renderView={props.renderView} currentUser={props.user.name} setUserProfile={props.setUserProfile} />
                 
                 </Grid>
                 

@@ -18,12 +18,13 @@ class App extends React.Component {
       items: [],
       // userProfile: { favoriteBooks: [], },
       // sample user to build bookshelf:
-      userProfile: {
-        name: 'user',
-        username: 'user',
-        favoriteBooks: [9780399169274],
-        reviewedBooks: [9780399169274],
-      },
+      // userProfile: {
+      //   name: 'user',
+      //   username: 'user',
+      //   favoriteBooks: [9780399169274],
+      //   reviewedBooks: [9780399169274],
+      // },
+      userProfile: {},
       selectedBook: {},
       proreviews: [],
     };
@@ -37,42 +38,6 @@ class App extends React.Component {
     this.getProReviews = this.getProReviews.bind(this);
     this.updateUserData = this.updateUserData.bind(this);
   }
-
-  getProReviews(isbn, callback) {
-      axios.get(`/proreviews/${isbn}`)
-      .then((response) => {
-        console.log(response);
-        callback(response);
-      })
-      .catch((error) => {
-        console.log('ProReviews are not received', error);
-      });
-  }
-
-  getProReviews(isbn, callback) {
-      axios.get(`/proreviews/${isbn}`)
-      .then((response) => {
-        console.log(response);
-        callback(response);
-      })
-      .catch((error) => {
-        console.log('ProReviews are not received', error);
-      });
-  }
-  
-
-  getProReviews(isbn, callback) {
-      axios.get(`/proreviews/${isbn}`)
-      .then((response) => {
-        console.log(response);
-        callback(response);
-      })
-      .catch((error) => {
-        console.log('ProReviews are not received', error);
-      });
-  }
-
-  
 
   getProReviews(isbn, callback) {
       axios.get(`/proreviews/${isbn}`)
@@ -198,6 +163,7 @@ class App extends React.Component {
           fetch={this.fetch}
           changeView={this.changeView}
           user={this.state.userProfile}
+          setUserProfile={this.state.setUserProfile}
         />
       );
     } else if (this.state.view === 'Search') {
