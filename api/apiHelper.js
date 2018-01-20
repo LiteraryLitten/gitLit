@@ -17,7 +17,7 @@ const searchBook = (book, cb) => {
       // console.log('here on line 20');// , response.data);
       const parseRes = convert.xml2json(response.data, { compact: true, spaces: 1 });
       const books = JSON.parse(parseRes).GoodreadsResponse.search.results.work;
-      //let theBook = books;
+      // let theBook = books;
       // if (books.length > 0) {
       //   theBook = books;
       // }
@@ -128,7 +128,7 @@ const filterByPopularShelves = (book) => {
   popShelvesWithOnlyWords.forEach((shelf) => {
     shelf.forEach((word) => {
       if (genresWhiteList.indexOf(word) > -1) {
-        if(genres.indexOf(word) === -1) {
+        if (genres.indexOf(word) === -1) {
           // console.log("here you are word:", word);
           genres.push(word);
         }
