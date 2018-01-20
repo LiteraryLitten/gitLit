@@ -224,7 +224,6 @@ module.exports = {
       res.json([err, data]);
     });
   },
-
   getUserReviews: (req, res) => {
       console.log('');
     const { isbn13 } = req.params;
@@ -232,6 +231,16 @@ module.exports = {
     db.findReviewsByIsbn13(isbn13, (err, reviews) => {
       console.log('in getUserReviews @ 179-reviews=', reviews);
       res.json(reviews);
+    });
+  },
+  editProfile: (req, res) => {
+    console.log(req.body.user);
+    db.editProfile(req.body.user, req.body.username, (err, data) => {
+      if (err) {
+        res.sendStatus(500);
+      } else {
+        res.json(data);
+      }
     });
   },
 };

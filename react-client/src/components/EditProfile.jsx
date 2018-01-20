@@ -9,7 +9,7 @@ import Dialog, {
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import renderHTML from 'react-render-html';
 import TextField from 'material-ui/TextField';
-import $ from 'jquery';
+import axios from 'axios';
 
 
 class EditProfile extends React.Component {
@@ -23,85 +23,50 @@ class EditProfile extends React.Component {
       },
     };
     this.handleClickOpen = this.handleClickOpen.bind(this);
-    // this.handleLogin = this.handleLogin.bind(this);
-    // this.handleSignup = this.handleSignup.bind(this);
-    // this.saveName = this.saveName.bind(this);
-    // this.saveLoginUsername = this.saveLoginUsername.bind(this);
-    // this.saveLoginPassword = this.saveLoginPassword.bind(this);
-    // this.saveSignupUsername = this.saveSignupUsername.bind(this);
-    // this.saveSignupPassword = this.saveSignupPassword.bind(this);
-    // this.onNameClick = this.onNameClick.bind(this);
-    // this.onLogoutClick = this.onLogoutClick.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.saveName = this.saveName.bind(this);
+    this.saveUsername = this.saveUsername.bind(this);
+    this.handleEditProfile = this.handleEditProfile.bind(this);
   }
 
   saveName(e) {
-    const signup = this.state.signup;
-    signup.name = e.target.value;
-    this.setState({ signup });
+    const user = this.state.user;
+    user.name = e.target.value;
+    // console.log(user.name);
+    this.setState({ user });
   }
 
   saveUsername(e) {
-    const username = this.state.username;
-    login.username = e.target.value;
-    this.setState({ login });
+    const username = this.state.user;
+    username.username = e.target.value;
+    this.setState({ username });
   }
-
-  // saveSignupUsername(e) {
-  //   const signup = this.state.signup;
-  //   signup.username = e.target.value;
-  //   this.setState({ signup });
-  // }
-
-  // saveLoginPassword(e) {
-  //   const login = this.state.login;
-  //   login.password = e.target.value;
-  //   this.setState({ login });
-  // }
-
-  // saveSignupPassword(e) {
-  //   const signup = this.state.signup;
-  //   signup.password = e.target.value;
-  //   this.setState({ signup });
-  // }
 
   handleClickOpen() {
     this.setState({ open: true });
   }
 
-  // handleLogin() {
-  //   $.ajax({
-  //     url: '/login',
-  //     type: 'POST',
-  //     data: JSON.stringify({
-  //       username: this.state.login.username,
-  //       password: this.state.login.password,
-  //     }),
-  //     success: (data) => {
-  //       if (data.type === 'success') {
-  //         this.setState({ userProfile: data.userProfile });
-  //       } else if (data.type === 'wrong password') {
-  //         alert('Wrong Password: Try Again');
-  //       } else {
-  //         alert ('Invalid username: Try Again');
-  //       }
-  //       //this.renderView();
-  //       this.props.setUserProfile(this.state.userProfile);
-  //       this.setState({ open: false });
-  //     },
-  //     error: (err) => {
-  //       console.log('err', err);
-  //     },
-  //   });
-    
-  // }
+  handleClose() {
+    this.setState({ open: false });
+  }
 
-
-  // onNameClick() {
-  //   this.props.handleProfileClick();
-  // }
-
-
-
+  handleEditProfile() {
+    axios({
+      method: 'put',
+      url: '/editprofile',
+      data: {
+        user: this.state.user.name,
+        username: this.state.user.username, 
+      }
+    })
+      .then((response) => {
+        alert('Your Profile has been updated');
+        console.log('Profile is updated');
+      })
+      .catch((error) => {
+        console.log('There is an error', error);
+      })
+  }
 
 
   render() {
@@ -109,7 +74,7 @@ class EditProfile extends React.Component {
       return (
         <div>
 
-            <Button  onClick={this.handleClickOpen}>Edit Profile</Button>
+            <Button raised onClick={this.handleClickOpen}>Edit Profile</Button>
 
           <Dialog
             open={this.state.open}
@@ -119,7 +84,7 @@ class EditProfile extends React.Component {
             <DialogTitle id="form-dialog-title">Edit Profile</DialogTitle>
             <DialogContent>
               <DialogContentText>
-                Edit name/username
+                Edit your name/username
               </DialogContentText>
               <TextField
                 autoFocus
@@ -127,15 +92,15 @@ class EditProfile extends React.Component {
                 id="name"
                 label="Name"
                 type="string"
-                // onChange={this.saveLoginUsername}
+                onChange={this.saveName}
               />
               <TextField
                 autoFocus
                 margin="dense"
                 id="login-password"
-                label="Ussername"
+                label="Username"
                 type="string"
-                // onChange={this.saveLoginPassword}
+                onChange={this.saveUsername}
               />
             </DialogContent>
             <DialogActions>
