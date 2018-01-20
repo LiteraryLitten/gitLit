@@ -1,15 +1,41 @@
+// const mongoose = require('mongoose');
+// mongoose.connect('mongodb://localhost/lit');
+// const db = mongoose.connection;
+
+// Recommended driver settings for the Mongoose 4.3.x driver.
+
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/lit');
+const uri = 'mongodb://student:student@ds263847.mlab.com:63847/heroku_517m9tk2';
+
+const options = {
+  server: {
+    socketOptions: {
+      keepAlive: 300000,
+      connectTimeoutMS: 30000,
+    },
+  },
+  replset: {
+    socketOptions: {
+      keepAlive: 300000,
+      connectTimeoutMS: 30000,
+    },
+  },
+};
+
+mongoose.connect(uri, options);
+
 const db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'connection error:'));
 
 // db.dropDatabase();
 // mongoose.connect('mongodb://localhost/lit');
 
-db.on('error', () => {
-  console.log('mongoose connection error');
-});
-
+// db.on('error', () => {
+//   console.log('mongoose connection error');
+// });
+//
 db.once('open', () => {
   console.log('mongoose connected successfully');
 });
