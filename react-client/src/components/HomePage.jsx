@@ -44,25 +44,25 @@ class HomePage extends React.Component {
         this.setBook(result);
       })
       .fail((err) => {
-        console.log('no gotten?');
-        throw err;
+        console.log('bestSellers fail');
+        // throw err;
       });
   }
 
   setBook(bookArray) {
-    console.log('bookArray');
-    console.log(bookArray);
+    // console.log('bookArray');
+    // console.log(bookArray);
     let returnCount = 0;
     let numCount = 0;
     const updatedBooks = [];
 
     if (Number.isInteger(bookArray[0])) {
       numCount = bookArray.length;
-      console.log(bookArray);
+      console.log('example data NYT', bookArray);
 
       bookArray.forEach((isbn) => {
         this.props.fetch('book', isbn, (goodReads) => {
-          console.log(goodReads);
+          // console.log(goodReads);
           // console.log("in Homepage line 59", goodReads);
           returnCount++;
           if (goodReads !== null) {
@@ -90,7 +90,7 @@ class HomePage extends React.Component {
         if (book.isbns.length > 0) {
           const isbn = book.isbns[0].isbn13;
           this.props.fetch('book', isbn, (goodReads) => {
-            console.log(goodReads);
+            // console.log(goodReads);
             // console.log("in Homepage line 59", goodReads);
             returnCount++;
             if (goodReads !== null) {

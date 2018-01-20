@@ -77,29 +77,31 @@ class BookCard extends React.Component {
     this.popUpClick = this.popUpClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
     // this.loadUserReviews = this.loadUserReviews.bind(this);
-    console.log('on line 63 @ class bookcard', this.props.user);
+    // console.log('on line 63 @ class bookcard', this.props.user);
     // this.addtoFavorites = this.addtoFavorites.bind(this);
     // console.log(" this.props.")
   }
 
   componentDidMount() {
-    let str = this.props.book.description;
-    str = str.replace(/<br>/gi, '\n');
-    str = str.replace(/<p.*>/gi, '\n');
-    str = str.replace(/<a.*href="(.*?)".*>(.*?)<\/a>/gi, ' $2 (Link->$1) ');
-    str = str.replace(/<(?:.|\s)*?>/g, '');
-    const arrayString = `${str.split(' ').join(' ').substring(0, 200)}...`;
-    this.setState({
-      description: arrayString,
-    });
+    if (this.props.book.description) {
+      let str = this.props.book.description;
+      str = str.replace(/<br>/gi, '\n');
+      str = str.replace(/<p.*>/gi, '\n');
+      str = str.replace(/<a.*href="(.*?)".*>(.*?)<\/a>/gi, ' $2 (Link->$1) ');
+      str = str.replace(/<(?:.|\s)*?>/g, '');
+      const arrayString = `${str.split(' ').join(' ').substring(0, 200)}...`;
+      this.setState({
+        description: arrayString,
+      });
+    }
     // this.loadUserReviews();
   }
 
   goToBook() {
     this.props.getProReviews(this.state.isbn, (response) => {
-      let book = this.state.book;
+      const book = this.state.book;
       book.proreviews = response.data;
-      console.log(book.proreviews);
+      console.log('bookCard @102-book.proreviews =', book.proreviews);
       this.props.changeView('Book', book);
     });
   }
@@ -147,7 +149,6 @@ class BookCard extends React.Component {
   }
 
   popUpClick() {
-    console.log('you clicked me');
     this.setState({
       popUp: true,
     });
@@ -160,7 +161,7 @@ class BookCard extends React.Component {
   }
 
   popUpShow() {
-    if (this.state.popUp) {
+    if (this.state.popUp && this.state.book.description) {
       return (
         <Dialog
           open={this.state.popUp}
@@ -194,17 +195,12 @@ class BookCard extends React.Component {
             avatar={
               <img src={this.state.book.imageURL} alt="" />
               }
-            action={
-              <IconButton>
-                <MoreVertIcon />
-              </IconButton>
-              }
             title={this.state.book.title}
             subheader={this.state.book.author}
             onClick={this.goToBook}
             style={{ cursor: 'pointer' }}
           />
-          <Divider light />
+          {this.state.description.length > 0 ? <Divider light /> : null}
           <CardContent
             onClick={this.popUpClick}
             style={{ cursor: 'pointer' }}
@@ -215,7 +211,9 @@ class BookCard extends React.Component {
             </Typography>
           </CardContent>
 
-          <Divider light />
+
+          {this.state.book.genres.length > 0 ? <Divider light /> : null}
+
 
           <CardContent>
             <Typography component="p">

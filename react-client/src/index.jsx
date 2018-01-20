@@ -126,7 +126,10 @@ class App extends React.Component {
   }
 
   setUserProfile(user) {
-    this.setState({ userProfile: user }, function () { console.log(this.state.userProfile); this.renderView(); });
+    this.setState({ userProfile: user }, () => {
+      console.log('Setting this.state.userProfile:', this.state.userProfile);
+      this.renderView();
+    });
   }
 
   handleLogout() {
