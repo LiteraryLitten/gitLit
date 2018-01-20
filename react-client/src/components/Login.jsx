@@ -37,6 +37,7 @@ class Login extends React.Component {
     this.saveSignupPassword = this.saveSignupPassword.bind(this);
     this.onNameClick = this.onNameClick.bind(this);
     this.onLogoutClick = this.onLogoutClick.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
   saveName(e) {
@@ -71,6 +72,10 @@ class Login extends React.Component {
 
   handleClickOpen() {
     this.setState({ open: true });
+  }
+
+  handleClose() {
+    this.setState({ open: false });
   }
 
   handleLogin() {

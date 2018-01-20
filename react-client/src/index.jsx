@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
+import axios from 'axios';
 
 import ProfilePage from './components/ProfilePage.jsx';
 import BookPage from './components/BookPage.jsx';
@@ -13,9 +14,18 @@ class App extends React.Component {
     super(props);
     this.state = {
       view: null,
+      // view: 'Profile',
       items: [],
-      userProfile: {},
+      // userProfile: { favoriteBooks: [], },
+      // sample user to build bookshelf:
+      userProfile: {
+        name: 'user',
+        username: 'user',
+        favoriteBooks: [9780399169274],
+        reviewedBooks: [9780399169274],
+      },
       selectedBook: {},
+      proreviews: [],
     };
     this.changeView = this.changeView.bind(this);
     this.submitReview = this.submitReview.bind(this);
@@ -24,15 +34,20 @@ class App extends React.Component {
     this.handleProfileClick = this.handleProfileClick.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.handleMenuBarClick = this.handleMenuBarClick.bind(this);
+    this.getProReviews = this.getProReviews.bind(this);
+    this.updateUserData = this.updateUserData.bind(this);
   }
-  //
-  //componentDidMount() {
-    // example load user by userName
-    // this.fetch('user', 'dust_off', (user) => {
-    //   this.setState({
-    //     userProfile: user,
-    //   });
-    // });
+
+  getProReviews(isbn, callback) {
+      axios.get(`/proreviews/${isbn}`)
+      .then((response) => {
+        console.log(response);
+        callback(response);
+      })
+      .catch((error) => {
+        console.log('ProReviews are not received', error);
+      });
+  }
 
   fetch(thing, id, cb) {
     $.ajax({
@@ -65,12 +80,19 @@ class App extends React.Component {
     this.renderView();
   }
 
+  updateUserData(userProfile) {
+    console.log('in updateUserData @ 64', userProfile);
+    this.setState({
+      userProfile,
+    });
+  }
+
   submitReview(review, isbn13, rating) {
     const user = this.state.userProfile.username;
     const data = {
       review, user, isbn13, rating,
     };
-    console.log('inside the APP @ 50', data);
+    // console.log('inside the APP @ 50', data);
 
     fetch('/review', {
       method: 'POST',
@@ -80,16 +102,19 @@ class App extends React.Component {
       }),
     }).then(res => res.json())
       .catch(error => console.error('Error:', error))
-      .then(response => console.log('Success:', response));
+      .then((response) => {
+        // console.log('Success:', response);
+        this.updateUserData(response[1]);
+      });
   }
 
   handleSearch(query) {
-    //do the fetch here
-    //pass that data into the search page
+    // do the fetch here
+    // pass that data into the search page
 
 
     this.setState({ view: 'Search', searchedBook: query }, function () {
-      console.log(this.state.searchedBook);
+      // console.log(this.state.searchedBook);
       this.fetch('search', this.state.searchedBook, (results) => {
         this.setState({
           searchResults: results,
@@ -101,7 +126,10 @@ class App extends React.Component {
   }
 
   setUserProfile(user) {
-    this.setState({ userProfile: user }, function() { this.renderView(); });
+    this.setState({ userProfile: user }, () => {
+      console.log('Setting this.state.userProfile:', this.state.userProfile);
+      this.renderView();
+    });
   }
 
   handleLogout() {
@@ -109,11 +137,6 @@ class App extends React.Component {
   }
 
   changePassword() {
-    // render a text box
-    // go to server > db
-    // edit pw field in db
-    // return new user object
-    // rerender page
 
   }
 
@@ -130,6 +153,7 @@ class App extends React.Component {
           changeView={this.changeView}
           fetch={this.fetch}
           submitReview={this.submitReview}
+          getProReviews={this.getProReviews}
         />
       );
     } else if (this.state.view === 'Profile') {
@@ -149,15 +173,15 @@ class App extends React.Component {
           searchResults={this.state.searchResults}
         />
       );
-    } 
-      return (
-        <HomePage
-          changeView={this.changeView}
-          fetch={this.fetch}
-          view={this.state.view}
-        />
-      );
-    
+    }
+    return (
+      <HomePage
+        changeView={this.changeView}
+        fetch={this.fetch}
+        view={this.state.view}
+        getProReviews={this.getProReviews}
+      />
+    );
   }
 
   render() {
@@ -173,6 +197,7 @@ class App extends React.Component {
           handleLogout={this.handleLogout}
           handleMenuBarClick={this.handleMenuBarClick}
         />
+        <div style={{ padding: '25px', width: '100%' }} />
         <div className="main-view">
           {this.renderView()}
         </div>
