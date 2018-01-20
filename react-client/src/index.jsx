@@ -13,17 +13,18 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: null,
-      // view: 'Profile',
+      // view: null,
+      view: 'Profile',
       items: [],
       // userProfile: { favoriteBooks: [], },
-      // sample user to build bookshelf:
-      userProfile: {
-        name: 'user',
-        username: 'user',
-        favoriteBooks: [9780399169274],
-        reviewedBooks: [9780399169274],
-      },
+      // // sample user to build bookshelf:
+      // userProfile: {
+      //   name: 'user',
+      //   username: 'user',
+      //   favoriteBooks: [9780399169274],
+      //   reviewedBooks: [9780399169274],
+      // },
+      userProfile : {},
       selectedBook: {},
       proreviews: [],
     };
