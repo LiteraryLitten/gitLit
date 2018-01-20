@@ -49,27 +49,23 @@ class HomePage extends React.Component {
   }
 
   setBook(bookArray) {
-    const books = bookArray.results;
-    let numCount = books.length;
+    console.log('bookArray');
+    console.log(bookArray);
     let returnCount = 0;
-
+    let numCount = 0;
     const updatedBooks = [];
-    books.forEach((book) => {
-      if (book.isbns.length > 0) {
-        const isbn = book.isbns[0].isbn13;
+
+    if (Number.isInteger(bookArray[0])) {
+      numCount = bookArray.length;
+      console.log(bookArray);
+
+      bookArray.forEach((isbn) => {
         this.props.fetch('book', isbn, (goodReads) => {
-          console.log(goodReads)
+          console.log(goodReads);
           // console.log("in Homepage line 59", goodReads);
           returnCount++;
           if (goodReads !== null) {
-            const bookNYC = Array.from(book);
-            book = goodReads;
-            book.bookNYC = bookNYC;
-
-            // book.imageURL = goodReads.imageURL;
-            // book.averageRating = goodReads.averageRating;
-            // book.genres = goodReads.genres;
-            updatedBooks.push(book);
+            updatedBooks.push(goodReads);
           } else {
             numCount--;
           }
@@ -84,8 +80,44 @@ class HomePage extends React.Component {
             }
           }
         });
-      }
-    });
+      });
+    } else {
+      const books = bookArray.results;
+      let numCount = books.length;
+
+      books.forEach((book) => {
+        if (book.isbns.length > 0) {
+          const isbn = book.isbns[0].isbn13;
+          this.props.fetch('book', isbn, (goodReads) => {
+            console.log(goodReads);
+            // console.log("in Homepage line 59", goodReads);
+            returnCount++;
+            if (goodReads !== null) {
+              const bookNYC = Array.from(book);
+              book = goodReads;
+              book.bookNYC = bookNYC;
+
+              // book.imageURL = goodReads.imageURL;
+              // book.averageRating = goodReads.averageRating;
+              // book.genres = goodReads.genres;
+              updatedBooks.push(book);
+            } else {
+              numCount--;
+            }
+
+            if (numCount === returnCount) {
+              // console.log(this.state.view);
+              if (this.state.view === null) {
+                this.setState({
+                  books: updatedBooks,
+                  loading: false,
+                });
+              }
+            }
+          });
+        }
+      });
+    }
   }
 
 
@@ -94,6 +126,7 @@ class HomePage extends React.Component {
 
     return (
       <div>
+        <h1 style={{ textAlign: 'center', backgroundColor: 'lightgrey' }}> Best Sellers </h1>
         {this.state.loading
           ?
             <div style={{ textAlign: 'center' }}>

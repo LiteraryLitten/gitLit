@@ -194,7 +194,7 @@ class App extends React.Component {
           handleLogout={this.handleLogout}
           handleMenuBarClick={this.handleMenuBarClick}
         />
-        <div style={{ padding: '35px', width: '100%' }} />
+        <div style={{ padding: '25px', width: '100%' }} />
         <div className="main-view">
           {this.renderView()}
         </div>
