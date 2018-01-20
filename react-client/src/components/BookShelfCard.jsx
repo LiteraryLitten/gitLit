@@ -13,7 +13,6 @@ import MoreVertIcon from 'material-ui-icons/MoreVert';
 import Divider from 'material-ui/Divider';
 import renderHTML from 'react-render-html';
 
-import PopUp from './PopUp.jsx';
 import Rating from './Rating.jsx';
 
 import Grid from 'material-ui/Grid';

@@ -11,7 +11,6 @@ import red from 'material-ui/colors/red';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
 import Divider from 'material-ui/Divider';
 import renderHTML from 'react-render-html';
-import PopUp from './PopUp.jsx';
 import Rating from './Rating.jsx';
 import Grid from 'material-ui/Grid';
 import Button, { ButtonProps } from 'material-ui/Button';
