@@ -19,7 +19,10 @@ app.get('/proreviews/:isbn', handler.getProReviews);
 // app.get('/proreviews/:isbn', (req, res) => res.json('hi'));
 app.post('/favorites', handler.postFavorites);
 app.get('/userReviews/:isbn13', handler.getUserReviews);
+<<<<<<< HEAD
 app.put('/editprofile', handler.editProfile);
+=======
+>>>>>>> 80193413f5f94f680e1136f075e2ce06f834877e
 app.get('/reviewShelf/:user', handler.getReviewsByUser);
 
 app.listen(3000, () => {

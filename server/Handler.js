@@ -66,6 +66,10 @@ module.exports = {
     });
   },
   postLogin: (req, res) => {
+<<<<<<< HEAD
+=======
+    // console.log(" in handler on line 62", req);
+>>>>>>> 80193413f5f94f680e1136f075e2ce06f834877e
     let loginData = {};
     req.on('data', (chunk) => {
       loginData = JSON.parse(chunk.toString());
