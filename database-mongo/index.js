@@ -318,6 +318,7 @@ const editProfile = (currentUser, name, username, cb) => {
       console.log(data);
       cb(err, data);
     });
+}
 
 const findReviewsByUser = (user, cb) => {
   Review.find({ user }).exec((err, reviews) => {
@@ -347,26 +348,5 @@ module.exports = {
   saveFavorite,
   findReviewsByIsbn13,
   editProfile,
-  findReviewsByUser
+  findReviewsByUser,
 };
-
-
-// const newProfile = new User({
-//   name: 'user',
-//   username: 'user',
-//   password: '$2a$10$U6y59bjPoNKXeVUlZk89..115Jubpr4Ax/1DuEND659gJLMfStv/S',
-//   favoriteBooks: [9780399169274],
-//   reviewedBooks: [9780399169274],
-// });
-//
-// newProfile.save();
-//
-// const newReview = new Review({
-//   idNameNumber: 'user9780399169274',
-//   user: 'user',
-//   isbn13: 9780399169274,
-//   text: 'This is a review.',
-//   rating: 5,
-// });
-//
-// newReview.save();
