@@ -45,43 +45,7 @@ class App extends React.Component {
   //     userProfile: user,
   //   });
   // });
-
-  getProReviews(isbn, callback) {
-    axios.get(`/proreviews/${isbn}`)
-      .then((response) => {
-        // console.log(response);
-        callback(response);
-      })
-      .catch((error) => {
-        console.log('ProReviews are not received', error);
-      });
-  }
-
-  getProReviews(isbn, callback) {
-      axios.get(`/proreviews/${isbn}`)
-      .then((response) => {
-        console.log(response);
-        callback(response);
-      })
-      .catch((error) => {
-        console.log('ProReviews are not received', error);
-      });
-  }
   
-
-  getProReviews(isbn, callback) {
-      axios.get(`/proreviews/${isbn}`)
-      .then((response) => {
-        console.log(response);
-        callback(response);
-      })
-      .catch((error) => {
-        console.log('ProReviews are not received', error);
-      });
-  }
-
-  
-
   getProReviews(isbn, callback) {
       axios.get(`/proreviews/${isbn}`)
       .then((response) => {
