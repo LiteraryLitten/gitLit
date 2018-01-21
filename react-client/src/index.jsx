@@ -83,7 +83,7 @@ class App extends React.Component {
   updateUserData(userProfile) {
     // console.log('in updateUserData @ 64', userProfile);
     this.setState({
-      userProfile: userProfile,
+      userProfile,
     });
   }
 
@@ -170,6 +170,7 @@ class App extends React.Component {
           searchResults={this.state.searchResults}
           userProfile={this.state.userProfile}
           updateUserData={this.updateUserData}
+          getProReviews={this.getProReviews}
         />
       );
     }

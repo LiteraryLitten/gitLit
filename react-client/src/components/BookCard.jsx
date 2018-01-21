@@ -110,7 +110,8 @@ class BookCard extends React.Component {
   }
 
   updateFavorite() {
-    if (this.props.userProfile.favoriteBooks.length > 0 && !this.state.liked) {
+    // if()
+    if (this.props.userProfile > 0 && !this.state.liked) {
       let found = false;
       this.props.userProfile.favoriteBooks.forEach((isbn13) => {
         if (isbn13 - this.state.book.isbn13 === 0) {
@@ -120,7 +121,7 @@ class BookCard extends React.Component {
           }, () => { this.setState({ randRender: Math.random() }); });
         }
       });
-      if (found = false) {
+      if (!found) {
         this.setState({
           liked: false,
         }, () => { this.setState({ randRender: Math.random() }); });
@@ -133,8 +134,6 @@ class BookCard extends React.Component {
   }
 
   addtoFavorites() {
-    // console.log(this.props.userProfile);
-    // alert('you clicked me', this.props.userProfile);
     this.toggleFavorite();
     const url = `/favorites/${this.props.userProfile.username}/${this.state.book.isbn13}`;
     axios(url)
