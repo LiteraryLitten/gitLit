@@ -22,6 +22,6 @@ app.get('/userReviews/:isbn13', handler.getUserReviews);
 app.put('/editprofile', handler.editProfile);
 app.get('/reviewShelf/:user', handler.getReviewsByUser);
 
-app.listen(process.env.PORT, () => {
-  console.log('listening on port 3000!');
+app.listen(3000, () => {
+  console.log('listening on port 3k!');
 });
