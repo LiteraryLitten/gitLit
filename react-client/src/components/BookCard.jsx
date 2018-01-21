@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import classnames from 'classnames';
+// import classnames from 'classnames';
 import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
-import Collapse from 'material-ui/transitions/Collapse';
+// import Collapse from 'material-ui/transitions/Collapse';
 import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 import red from 'material-ui/colors/red';
 import FavoriteIcon from 'material-ui-icons/Favorite';
-import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
+// import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
 import Divider from 'material-ui/Divider';
 import renderHTML from 'react-render-html';
 import axios from 'axios';
-import $ from 'jquery';
+// import $ from 'jquery';
 
 import Button from 'material-ui/Button';
 import Dialog, {
@@ -23,7 +23,7 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog';
 
-import PopUp from './PopUp.jsx';
+// import PopUp from './PopUp.jsx';
 import Rating from './Rating.jsx';
 
 import Grid from 'material-ui/Grid';
@@ -77,25 +77,31 @@ class BookCard extends React.Component {
     this.popUpClick = this.popUpClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.updateFavorite = this.updateFavorite.bind(this);
-    // this.loadUserReviews = this.loadUserReviews.bind(this)
   }
 
   componentDidMount() {
-    let str = this.props.book.description;
-    str = str.replace(/<br>/gi, '\n');
-    str = str.replace(/<p.*>/gi, '\n');
-    str = str.replace(/<a.*href="(.*?)".*>(.*?)<\/a>/gi, ' $2 (Link->$1) ');
-    str = str.replace(/<(?:.|\s)*?>/g, '');
-    const arrayString = `${str.split(' ').join(' ').substring(0, 200)}...`;
-    this.setState({
-      description: arrayString,
-    });
+    if (this.props.book.description) {
+      let str = this.props.book.description;
+      str = str.replace(/<br>/gi, '\n');
+      str = str.replace(/<p.*>/gi, '\n');
+      str = str.replace(/<a.*href="(.*?)".*>(.*?)<\/a>/gi, ' $2 (Link->$1) ');
+      str = str.replace(/<(?:.|\s)*?>/g, '');
+      const arrayString = `${str.split(' ').join(' ').substring(0, 200)}...`;
+      this.setState({
+        description: arrayString,
+      });
+    }
     // this.loadUserReviews();
     // this.updateFavorite();
   }
 
   goToBook() {
-    this.props.changeView('Book', this.state.book);
+    this.props.getProReviews(this.state.isbn, (response) => {
+      const book = this.state.book;
+      book.proreviews = response.data;
+      console.log('bookCard @102-book.proreviews =', book.proreviews);
+      this.props.changeView('Book', book);
+    });
   }
 
   handleExpandClick() {
@@ -123,7 +129,6 @@ class BookCard extends React.Component {
   }
 
   toggleFavorite() {
-    // this.setState({ randRender: Math.random() });
     this.setState({ liked: !this.state.liked });
   }
 
@@ -142,7 +147,6 @@ class BookCard extends React.Component {
   }
 
   popUpClick() {
-    console.log('you clicked me');
     this.setState({
       popUp: true,
     });
@@ -151,11 +155,11 @@ class BookCard extends React.Component {
   handleClose() {
     this.setState({
       popUp: false,
-    })
+    });
   }
 
   popUpShow() {
-    if(this.state.popUp) {
+    if (this.state.popUp && this.state.book.description) {
       return (
         <Dialog
           open={this.state.popUp}
@@ -175,7 +179,7 @@ class BookCard extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-      )
+      );
     }
   }
 
@@ -190,17 +194,12 @@ class BookCard extends React.Component {
             avatar={
               <img src={this.state.book.imageURL} alt="" />
               }
-            action={
-              <IconButton>
-                <MoreVertIcon />
-              </IconButton>
-              }
             title={this.state.book.title}
             subheader={this.state.book.author}
             onClick={this.goToBook}
             style={{ cursor: 'pointer' }}
           />
-          <Divider light />
+          {this.state.description.length > 0 ? <Divider light /> : null}
           <CardContent
             onClick={this.popUpClick}
             style={{ cursor: 'pointer' }}
@@ -208,17 +207,20 @@ class BookCard extends React.Component {
             <Typography component="p">
               {this.state.description}
               {this.popUpShow()}
+
             </Typography>
           </CardContent>
 
-          <Divider light />
+
+          {this.state.book.genres.length > 0 ? <Divider light /> : null}
+
 
           <CardContent>
-          <Typography component="p">
-            {this.state.book.genres.map(genre => (
-                genre[0].toUpperCase() + genre.slice(1) + ' '
+            <Typography component="p">
+              {this.state.book.genres.map(genre => (
+                `${genre[0].toUpperCase() + genre.slice(1)} `
             ))}
-          </Typography>
+            </Typography>
           </CardContent>
 
           <Divider light />

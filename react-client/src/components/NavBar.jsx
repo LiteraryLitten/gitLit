@@ -25,10 +25,12 @@ const styles = {
   button: {
     textTransform: 'none',
   },
-  dark:   { backgroundColor: '#caa052' },
+  dark: {
+    backgroundColor: '#caa052',
+  },
   def: { background: '#ffd180' },
-  light:   { background: '#ffffb1' },
-  text:    { color: '#FFFFFF' },
+  light: { background: '#ffffb1' },
+  text: { color: '#FFFFFF' },
 };
 
 class NavBar extends React.Component {
@@ -38,11 +40,11 @@ class NavBar extends React.Component {
     this.handleBookPageClick = this.handleBookPageClick.bind(this);
   }
 
-  handleHomeClick(){
+  handleHomeClick() {
     this.props.handleMenuBarClick(null);
   }
 
-  handleBookPageClick(){
+  handleBookPageClick() {
     this.props.handleMenuBarClick('Book');
   }
 
@@ -50,21 +52,19 @@ class NavBar extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <AppBar position="static" style={styles.dark}>
+        <AppBar position="fixed" style={styles.dark}>
           <Toolbar>
-            
+
             <Button className={classes.button} color="contrast" name="Literary Litten" onClick={this.handleHomeClick}>
               <Typography type="title" color="inherit" className={classes.flex}>
               Literary Litten
               </Typography>
             </Button>
-            <Button className={classes.button} color="contrast" name="Book Page" onClick={this.handleBookPageClick}>
+            {/* <Button className={classes.button} color="contrast" name="Book Page" onClick={this.handleBookPageClick}>
               Book Page
-            </Button>
-            <Typography type="title" color="inherit" className={classes.flex}>
-                
-            </Typography>
-            
+            </Button> */}
+            <Typography type="title" color="inherit" className={classes.flex} />
+
             <Search fetch={this.props.fetch} handleSearch={this.props.handleSearch} />
             <Login
               description="login"

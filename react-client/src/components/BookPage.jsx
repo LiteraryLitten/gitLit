@@ -56,6 +56,7 @@ class BookPage extends React.Component {
       rating: 0,
       pro: false,
       userReviews: [],
+
     };
     this.submitRating = this.submitRating.bind(this);
     this.enterReview = this.enterReview.bind(this);
@@ -68,7 +69,7 @@ class BookPage extends React.Component {
 
   componentDidMount() {
     if (typeof this.props.book === 'object' && this.props.book.isbn13) {
-      console.log(this.props.book.isbn13);
+      console.log('BookPage ISBN13=', this.props.book.isbn13);
       this.setState({
         book: this.props.book,
       });
@@ -118,15 +119,15 @@ class BookPage extends React.Component {
 
   loadUserReviews() {
     const url = `/userReviews/${this.props.book.isbn13}`;
-    console.log('   -BookPage is loading UserReviews with', url);
+    // console.log('   -BookPage is loading UserReviews with', url);
     axios(url)
       .then((data) => {
-        console.log('returned to BookPage @ loadUserReviews 124-data=', data);
+        console.log('   #returned to BookPage @ loadUserReviews 124-data=', data);
         this.setState({
           userReviews: data.data,
         });
       })
-      .catch(err => console.log('error when loading loadUserReviews on BookPage'));
+      .catch(err => console.log('   !error when loading loadUserReviews on BookPage'));
   }
 
   render() {
@@ -175,22 +176,7 @@ class BookPage extends React.Component {
             </Button>
           </Grid>
           <Grid item xs={12} sm={7}>
-            <Paper className={classes.paper}>
-
-              <TextField
-                multiline
-                rows={5}
-                label="Review"
-                InputLabelProps={{
-                    shrink: true,
-                  }}
-                placeholder="Review Here"
-                fullWidth
-                margin="normal"
-                onChange={this.enterReview}
-              />
-
-            </Paper>
+            
 
             <Paper>
 
@@ -198,6 +184,7 @@ class BookPage extends React.Component {
                 proReviews={this.state.proreviews}
                 userReviews={this.state.userReviews}
                 book={this.props.book}
+                enterReview={this.enterReview}
               />
 
             </Paper>

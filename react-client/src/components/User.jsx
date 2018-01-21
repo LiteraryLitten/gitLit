@@ -8,6 +8,8 @@ import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import Bookshelf from './Bookshelf.jsx';
+import EditProfile from './EditProfile.jsx';
+import Reviewshelf from './Reviewshelf.jsx';
 
 const styles = theme => ({
   root: {
@@ -25,8 +27,12 @@ const User = props =>(
     <div>
     <Grid container spacing={24}>
 
-          <Grid item xs={8} sm={5} className='UserPic'>
-            <h2>Your Profile</h2>
+          <Grid item xs={12} sm={6} className='UserPic'>
+            <br />
+            <Typography type='display1'>
+              My Profile
+            </Typography>
+            <br />
             <Paper >
 
               
@@ -42,31 +48,29 @@ const User = props =>(
                   <span className='user'>
                     Username : <br /> {props.user.username} <br />
                   </span>
-                  <Button 
-                  raised
-                  onClick={props.changePassword} >
-                  Edit Profile
-                  </Button> <br />
+                  
+                  <EditProfile currentUser={props.user.name} setUserProfile={props.setUserProfile} />
+                
                 </Grid>
                 
               </Grid>
             </Paper>
-            <h2>
+            <br />
+            <Typography type='display1'>
               My Reviews
-            </h2>
-            <Paper >  
-              <span>
-              {props.user.favoriteBooks}
-              </span>
-            </Paper>
+            </Typography>
+            <br />
+              <Reviewshelf books={props.user.reviewedBooks} fetch={props.fetch} changeView={props.changeView} user={props.user} key='reviews'/>
           </Grid>
 
-          <Grid item xs={16} sm={7}>
-            <h2>
+          <Grid item xs={12} sm={6}>
+            <br />
+            <Typography type='display1'>
               My Bookshelf
-            </h2>
+            </Typography>
+            <br />
             <Paper >  
-              <Bookshelf books={props.user.favoriteBooks} fetch={props.fetch} changeView={props.changeView} />
+              <Bookshelf books={props.user.favoriteBooks} fetch={props.fetch} changeView={props.changeView} key='liked'/>
             </Paper>
           </Grid>
         </Grid>

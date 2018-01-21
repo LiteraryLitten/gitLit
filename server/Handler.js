@@ -5,7 +5,7 @@ const api = require('../api/apiHelper.js');
 const { organizeBookData } = require('../api/apiTest.js');
 const { addReviewData } = require('../api/apiTest.js');
 const handler = require('./Handler.js');
-var bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 
 const saltRounds = 10;
 
@@ -62,7 +62,6 @@ module.exports = {
     });
   },
   postLogin: (req, res) => {
-    //console.log(" in handler on line 70", req);
     let loginData = {};
     req.on('data', (chunk) => {
       loginData = JSON.parse(chunk.toString());
@@ -73,24 +72,20 @@ module.exports = {
       db.findProfile(loginData.username, (err, data) => {
         if (err) {
           console.log(err);
+        } else if (data.length === 0) {
+          loginData.type = 'invalid username';
         } else {
-          if (data.length === 0) {
-            loginData.type = 'invalid username';
-          } else {
-            bcrypt.compare(inputPassword, data[0].password, function (errCRYPT, resCRYPT) {
-              if (errCRYPT) {
-                console.log("ERR IN POST LOGIN", errCRYPT);
-              } else {
-                if (resCRYPT) {
-                  loginData.type = 'success';
-                  loginData.userProfile = data[0];
-                } else {
-                  loginData.type = 'wrong password';
-                }
-              }
-              res.json(loginData);
-            });
-          }
+          bcrypt.compare(inputPassword, data[0].password, (errCRYPT, resCRYPT) => {
+            if (errCRYPT) {
+              console.log('ERR IN POST LOGIN', errCRYPT);
+            } else if (resCRYPT) {
+              loginData.type = 'success';
+              loginData.userProfile = data[0];
+            } else {
+              loginData.type = 'wrong password';
+            }
+            res.json(loginData);
+          });
         }
       });
     });
@@ -98,6 +93,7 @@ module.exports = {
   postSignUp: (req, res) => {
     req.on('data', (chunk) => {
       const userData = JSON.parse(chunk.toString());
+      console.log(userData);
       const pw = userData.password;
       const response = {
         type: '',
@@ -105,7 +101,7 @@ module.exports = {
       };
 
       // encryption stuff
-      bcrypt.hash(pw, saltRounds, function(err, hash) {
+      bcrypt.hash(pw, saltRounds, (err, hash) => {
         // Store hash in your password DB.
         userData.password = hash;
         // check if exists in database
@@ -124,8 +120,6 @@ module.exports = {
           }
         });
       });
-
-
     });
   },
   getSearchTitle: (req, res) => {
@@ -134,7 +128,7 @@ module.exports = {
     let count = 0;
     api.searchBook(title, (err, searchResults) => {
       if (err) {
-        console.log("ERR IN HANDLER SEARCH BOOK", err);
+        console.log('ERR IN HANDLER SEARCH BOOK', err);
         res.sendStatus(500);
       } else {
         function callAPI(i, result) {
@@ -160,21 +154,20 @@ module.exports = {
               // cleanBook.imageURL = book.small_image_url._cdata;
               // cleanBook.description = book.description._cdata;
               // cleanBook.genres = [];
-
               allBooks[i] = book;
-              count ++;
-              //console.log(book);
-              if(count === searchResults.length - 1) {
+              count++;
+              // console.log(book);
+              if (count === searchResults.length - 1) {
                 // console.log('IN SEARCH', allBooks);
                 res.json(allBooks);
               }
             }
           });
-          //do api call (err, data)
-            //if err then count ++
+          // do api call (err, data)
+          // if err then count ++
           // else allbooks[i](data)
-          //cont ++
-          //if count === reults.length then do something with the allbooks
+          // cont ++
+          // if count === reults.length then do something with the allbooks
         }
         for (let i = 0; i < searchResults.length; i++) {
           callAPI(i, searchResults[i]);
@@ -192,6 +185,7 @@ module.exports = {
   },
   getBestSellers: (req, res) => {
     api.getBestBooks((err, data) => {
+      console.log(data);
       if (err) {
         res.sendStatus(500);
       } else {
@@ -207,9 +201,10 @@ module.exports = {
   getProReviews: (req, res) => {
     api.getReviewsiDreams(req.params.isbn, (err, data) => {
       if (err) {
+        console.log(err);
         res.sendStatus(500);
       } else {
-        console.log('lara get request', data.book.critic_reviews);
+        // console.log('lara get request', data.book.critic_reviews);
         res.json(data.book.critic_reviews);
       }
     });
@@ -225,7 +220,6 @@ module.exports = {
       }
     });
   },
-
   getUserReviews: (req, res) => {
     // console.log('');
     const { isbn13 } = req.params;
@@ -235,4 +229,23 @@ module.exports = {
       res.json(reviews);
     });
   },
+  editProfile: (req, res) => {
+    console.log(req.body.user);
+    db.editProfile(req.body.currentUser, req.body.user, req.body.username, (err, data) => {
+      if (err) {
+        res.sendStatus(500);
+      } else {
+        res.json(data);
+      }
+    });
+  },
+  getReviewsByUser: (req, res) => {
+    // console.log("IN HANDLER getReviewsByUser");
+    const { user } = req.params;
+    // console.log('in getUserReviews @ 177-isbn13=', isbn13);
+    db.findReviewsByUser(user, (err, reviews) => {
+      // console.log('in getUserReviews @ 179-reviews=', reviews);
+      res.json(reviews);
+    });
+  }
 };

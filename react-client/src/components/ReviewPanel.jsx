@@ -16,6 +16,11 @@ import ProReviewsCard from './ProReviewsCard.jsx';
 import axios from 'axios';
 import UserReviewCard from './UserReviewCard';
 
+import Paper from 'material-ui/Paper';
+import Grid from 'material-ui/Grid';
+import TextField from 'material-ui/TextField';
+import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
+
 
 function TabContainer(props) {
   const { children, dir } = props;
@@ -35,7 +40,7 @@ function TabContainer(props) {
 const styles = theme => ({
   root: {
     // backgroundColor: theme.palette.background.paper,
-    width: 500,
+    width: 'auto',
     position: 'relative',
     minHeight: 200,
   },
@@ -181,7 +186,24 @@ class ReviewPanel extends React.Component {
           </TabContainer>
 
           <TabContainer dir={theme.direction}>
-            Item Three
+            <Card >
+              <CardContent>
+                <TextField
+                    multiline
+                    rows={5}
+                    label="Review"
+                    InputLabelProps={{
+                        shrink: true,
+                      }}
+                    placeholder="Review Here"
+                    fullWidth
+                    margin="normal"
+                    onChange={this.props.enterReview}
+                  />
+              </CardContent>
+            </Card >
+
+
           </TabContainer>
 
         </SwipeableViews>
