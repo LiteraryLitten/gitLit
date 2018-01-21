@@ -66,7 +66,6 @@ module.exports = {
     });
   },
   postLogin: (req, res) => {
-    console.log(' in handler on line 62', req);
     let loginData = {};
     req.on('data', (chunk) => {
       loginData = JSON.parse(chunk.toString());
@@ -98,6 +97,7 @@ module.exports = {
   postSignUp: (req, res) => {
     req.on('data', (chunk) => {
       const userData = JSON.parse(chunk.toString());
+      console.log(userData);
       const pw = userData.password;
       const response = {
         type: '',
@@ -221,9 +221,9 @@ module.exports = {
   getUserReviews: (req, res) => {
     console.log('');
     const { isbn13 } = req.params;
-    console.log('in getUserReviews @ 177-isbn13=', isbn13);
+    // console.log('in getUserReviews @ 177-isbn13=', isbn13);
     db.findReviewsByIsbn13(isbn13, (err, reviews) => {
-      console.log('in getUserReviews @ 179-reviews=', reviews);
+      // console.log('in getUserReviews @ 179-reviews=', reviews);
       res.json(reviews);
     });
   },
@@ -237,4 +237,13 @@ module.exports = {
       }
     });
   },
+  getReviewsByUser: (req, res) => {
+    // console.log("IN HANDLER getReviewsByUser");
+    const { user } = req.params;
+    // console.log('in getUserReviews @ 177-isbn13=', isbn13);
+    db.findReviewsByUser(user, (err, reviews) => {
+      // console.log('in getUserReviews @ 179-reviews=', reviews);
+      res.json(reviews);
+    });
+  }
 };

@@ -28,7 +28,7 @@ class Bookshelf extends React.Component {
   getBookData(isbn) {
     this.props.fetch('book', isbn, (book) => {
       this.setState({ bookObjects: [...this.state.bookObjects, book] }, function() {
-        console.log(this.state.bookObjects);
+        // console.log(this.state.bookObjects);
         //create a renderview
         this.renderView();
       });
@@ -38,7 +38,6 @@ class Bookshelf extends React.Component {
   renderView () {
     return (
       <div>
-        <h4>Books</h4>
         <Grid
           container
           justify="center"

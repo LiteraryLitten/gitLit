@@ -53,7 +53,7 @@ const getBestBooks = (cb) => {
   if (BEST_SELLSER_ISBN13) {
     const data = {};
     data.data = BEST_SELLSER_ISBN13;
-    console.log(data);
+    // console.log(data);
     cb(null, data);
   }
 

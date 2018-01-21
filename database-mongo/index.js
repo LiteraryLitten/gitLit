@@ -303,7 +303,7 @@ const findReviewsByIsbn13 = (isbn13, cb) => {
       cb(err, null);
     }
     if (reviews !== null) {
-      console.log('we found a review on db.findReviewsByIsbn13 @ 278', isbn13, reviews);
+      // console.log('we found a review on db.findReviewsByIsbn13 @ 278', isbn13, reviews);
     } else {
       console.log('NOTHING db.findReviewsByIsbn13 @ 278', isbn13, reviews);
     }
@@ -318,6 +318,21 @@ const editProfile = (currentUser, name, username, cb) => {
       console.log(data);
       cb(err, data);
     });
+}
+
+const findReviewsByUser = (user, cb) => {
+  Review.find({ user }).exec((err, reviews) => {
+    if (err) {
+      console.log('Failed to find reviews');
+      cb(err, null);
+    }
+    if (reviews !== null) {
+      // console.log('we found a review on db.findReviewsByaUser @ 297', user, reviews);
+    } else {
+      console.log('NOTHING db.findReviewsByUser @299', user, reviews);
+    }
+    cb(null, reviews);
+  });
 };
 
 module.exports = {
@@ -333,25 +348,6 @@ module.exports = {
   saveFavorite,
   findReviewsByIsbn13,
   editProfile,
+  findReviewsByUser,
 };
 
-
-// const newProfile = new User({
-//   name: 'user',
-//   username: 'user',
-//   password: '$2a$10$U6y59bjPoNKXeVUlZk89..115Jubpr4Ax/1DuEND659gJLMfStv/S',
-//   favoriteBooks: [9780399169274],
-//   reviewedBooks: [9780399169274],
-// });
-//
-// newProfile.save();
-//
-// const newReview = new Review({
-//   idNameNumber: 'user9780399169274',
-//   user: 'user',
-//   isbn13: 9780399169274,
-//   text: 'This is a review.',
-//   rating: 5,
-// });
-//
-// newReview.save();
