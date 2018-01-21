@@ -117,7 +117,7 @@ class Login extends React.Component {
         favoriteBooks: [],
       }),
       success: (data) => {
-        console.log(data);
+        // console.log(data);
         if (data.type === 'success') {
           alert('User Profile Created! Login to continue');
         } else{
@@ -139,7 +139,7 @@ class Login extends React.Component {
   }
 
   render() {
-    if (this.props.user.hasOwnProperty('username')) {
+    if (this.props.user && this.props.user.hasOwnProperty('username')) {
       return (
         <div>
             <Button color="contrast" onClick={this.onNameClick}>{this.props.user.name}</Button>

@@ -19,6 +19,8 @@ app.get('/proreviews/:isbn', handler.getProReviews);
 // app.get('/proreviews/:isbn', (req, res) => res.json('hi'));
 app.post('/favorites', handler.postFavorites);
 app.get('/userReviews/:isbn13', handler.getUserReviews);
+app.put('/editprofile', handler.editProfile);
+app.get('/reviewShelf/:user', handler.getReviewsByUser);
 
 app.listen(process.env.PORT, () => {
   console.log('listening on port 3000!');

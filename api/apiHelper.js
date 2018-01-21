@@ -50,6 +50,13 @@ const getMoreBookData = (book, cb) => {
 
 
 const getBestBooks = (cb) => {
+  if (BEST_SELLSER_ISBN13) {
+    const data = {};
+    data.data = BEST_SELLSER_ISBN13;
+    // console.log(data);
+    cb(null, data);
+  }
+
   let url = 'https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json';
   url += `?${param({ 'api-key': NYTKey })}`;
 
@@ -153,6 +160,30 @@ const getReviewsiDreams = (isbn, cb) => {
       cb(error, null);
     });
 };
+
+const BEST_SELLSER_ISBN13 = [
+  9780399169274,
+  9780393609394,
+  9780735210622,
+  9780385514231,
+  9780735224292,
+  9780451475343,
+  9781250130921,
+  9780812981605,
+  9780805095159,
+  9780553447439,
+  // 9781595581037,
+  9781416580515,
+  9781501181825,
+  9781501139154,
+  9780553448122,
+  9780399593482,
+  9781501176845,
+  9780425284681,
+  9780735213180,
+  9781501126062,
+];
+
 
 module.exports = {
   searchBook,

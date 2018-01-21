@@ -5,9 +5,9 @@
 node_modules/
 
 ## API keys ##
-api/goodreads.js
+api/apiKeys.js
+
+npm-debug.log
 
 ## React ##
 react-client/env/config.js
-
-npm-debug.log

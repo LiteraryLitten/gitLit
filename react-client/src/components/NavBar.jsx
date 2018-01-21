@@ -60,9 +60,9 @@ class NavBar extends React.Component {
               Literary Litten
               </Typography>
             </Button>
-            <Button className={classes.button} color="contrast" name="Book Page" onClick={this.handleBookPageClick}>
+            {/* <Button className={classes.button} color="contrast" name="Book Page" onClick={this.handleBookPageClick}>
               Book Page
-            </Button>
+            </Button> */}
             <Typography type="title" color="inherit" className={classes.flex} />
 
             <Search fetch={this.props.fetch} handleSearch={this.props.handleSearch} />

@@ -68,7 +68,7 @@ class BookPage extends React.Component {
 
   componentDidMount() {
     if (typeof this.props.book === 'object' && this.props.book.isbn13) {
-      console.log(this.props.book.isbn13);
+      console.log('BookPage ISBN13=', this.props.book.isbn13);
       this.setState({
         book: this.props.book,
       });
@@ -118,15 +118,15 @@ class BookPage extends React.Component {
 
   loadUserReviews() {
     const url = `/userReviews/${this.props.book.isbn13}`;
-    console.log('   -BookPage is loading UserReviews with', url);
+    // console.log('   -BookPage is loading UserReviews with', url);
     axios(url)
       .then((data) => {
-        console.log('returned to BookPage @ loadUserReviews 124-data=', data);
+        console.log('   #returned to BookPage @ loadUserReviews 124-data=', data);
         this.setState({
           userReviews: data.data,
         });
       })
-      .catch(err => console.log('error when loading loadUserReviews on BookPage'));
+      .catch(err => console.log('   !error when loading loadUserReviews on BookPage'));
   }
 
   render() {

@@ -13,17 +13,18 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      // view: null,
       view: null,
-      // view: 'Profile',
       items: [],
       // userProfile: { favoriteBooks: [], },
-      // sample user to build bookshelf:
-      userProfile: {
-        name: 'user',
-        username: 'user',
-        favoriteBooks: [9780399169274],
-        reviewedBooks: [9780399169274],
-      },
+      // // sample user to build bookshelf:
+      // userProfile: {
+      //   name: 'user',
+      //   username: 'user',
+      //   favoriteBooks: [9780399169274],
+      //   reviewedBooks: [9780399169274],
+      // },
+      userProfile: {},
       selectedBook: {},
       proreviews: [],
     };
@@ -41,7 +42,7 @@ class App extends React.Component {
   getProReviews(isbn, callback) {
     axios.get(`/proreviews/${isbn}`)
       .then((response) => {
-        // console.log(response);
+        console.log(response);
         callback(response);
       })
       .catch((error) => {
@@ -126,7 +127,10 @@ class App extends React.Component {
   }
 
   setUserProfile(user) {
-    this.setState({ userProfile: user }, function () { console.log(this.state.userProfile); this.renderView(); });
+    this.setState({ userProfile: user }, () => {
+      console.log('Setting this.state.userProfile:', this.state.userProfile);
+      this.renderView();
+    });
   }
 
   handleLogout() {
@@ -194,7 +198,7 @@ class App extends React.Component {
           handleLogout={this.handleLogout}
           handleMenuBarClick={this.handleMenuBarClick}
         />
-        <div style={{ padding: '35px', width: '100%' }} />
+        <div style={{ padding: '25px', width: '100%' }} />
         <div className="main-view">
           {this.renderView()}
         </div>

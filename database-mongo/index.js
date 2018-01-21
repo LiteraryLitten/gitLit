@@ -5,29 +5,33 @@
 // Recommended driver settings for the Mongoose 4.3.x driver.
 
 const mongoose = require('mongoose');
+// mongoose.Promise = global.Promise;
 
-// const uri = 'mongodb://student:student@ds263847.mlab.com:63847/heroku_517m9tk2';
+mongoose.connect('mongodb://localhost/lit');
 
-const options = {
-  server: {
-    socketOptions: {
-      keepAlive: 300000,
-      connectTimeoutMS: 30000,
-    },
-  },
-  replset: {
-    socketOptions: {
-      keepAlive: 300000,
-      connectTimeoutMS: 30000,
-    },
-  },
-};
 
-mongoose.connect(uri);
+// Heroku options and URI - the xxx is the password - use the env veriables instead
+// const options = {
+//   server: {
+//     socketOptions: {
+//       keepAlive: 300000,
+//       connectTimeoutMS: 30000,
+//     },
+//   },
+//   replset: {
+//     socketOptions: {
+//       keepAlive: 300000,
+//       connectTimeoutMS: 30000,
+//     },
+//   },
+// };
+// const uri = 'mongodb://student:XXX@ds263847.mlab.com:63847/heroku_517m9tk2';
+// mongoose.connect(uri);
 
 const db = mongoose.connection;
 
-db.on('error', console.error.bind(console, 'connection error:'));
+// Heroku logging
+// db.on('error', console.error.bind(console, 'connection error:'));
 
 // db.dropDatabase();
 // mongoose.connect('mongodb://localhost/lit');
@@ -305,9 +309,32 @@ const findReviewsByIsbn13 = (isbn13, cb) => {
       cb(err, null);
     }
     if (reviews !== null) {
-      console.log('we found a review on db.findReviewsByIsbn13 @ 278', isbn13, reviews);
+      // console.log('we found a review on db.findReviewsByIsbn13 @ 278', isbn13, reviews);
     } else {
       console.log('NOTHING db.findReviewsByIsbn13 @ 278', isbn13, reviews);
+    }
+    cb(null, reviews);
+  });
+};
+
+const editProfile = (currentUser, name, username, cb) => {
+  console.log(currentUser);
+  User.update({ name: `${currentUser}` }, { name: `${name}`, username: `${username}` }).exec((err, data) => {
+    console.log(data);
+    cb(err, data);
+  });
+};
+
+const findReviewsByUser = (user, cb) => {
+  Review.find({ user }).exec((err, reviews) => {
+    if (err) {
+      console.log('Failed to find reviews');
+      cb(err, null);
+    }
+    if (reviews !== null) {
+      // console.log('we found a review on db.findReviewsByaUser @ 297', user, reviews);
+    } else {
+      console.log('NOTHING db.findReviewsByUser @299', user, reviews);
     }
     cb(null, reviews);
   });
@@ -325,25 +352,6 @@ module.exports = {
   findReview,
   saveFavorite,
   findReviewsByIsbn13,
+  editProfile,
+  findReviewsByUser,
 };
-
-
-// const newProfile = new User({
-//   name: 'user',
-//   username: 'user',
-//   password: '$2a$10$U6y59bjPoNKXeVUlZk89..115Jubpr4Ax/1DuEND659gJLMfStv/S',
-//   favoriteBooks: [9780399169274],
-//   reviewedBooks: [9780399169274],
-// });
-//
-// newProfile.save();
-//
-// const newReview = new Review({
-//   idNameNumber: 'user9780399169274',
-//   user: 'user',
-//   isbn13: 9780399169274,
-//   text: 'This is a review.',
-//   rating: 5,
-// });
-//
-// newReview.save();
