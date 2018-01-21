@@ -16,7 +16,6 @@ app.get('/search/:title', handler.getSearchTitle);
 app.get('/bestSellers', handler.getBestSellers);
 app.post('/review', handler.postReview);
 app.get('/proreviews/:isbn', handler.getProReviews);
-// app.get('/proreviews/:isbn', (req, res) => res.json('hi'));
 app.post('/favorites', handler.postFavorites);
 app.get('/userReviews/:isbn13', handler.getUserReviews);
 app.put('/editprofile', handler.editProfile);
