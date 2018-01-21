@@ -7,7 +7,7 @@
 const mongoose = require('mongoose');
 // mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb://localhost/lit');
+// mongoose.connect('mongodb://localhost/lit');
 
 
 // Heroku options and URI - the xxx is the password - use the env veriables instead
@@ -25,8 +25,8 @@ mongoose.connect('mongodb://localhost/lit');
 //     },
 //   },
 // };
-// const uri = 'mongodb://student:XXX@ds263847.mlab.com:63847/heroku_517m9tk2';
-// mongoose.connect(uri);
+const uri = 'mongodb://student:student@ds263847.mlab.com:63847/heroku_517m9tk2';
+mongoose.connect(uri);
 
 const db = mongoose.connection;
 

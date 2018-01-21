@@ -5,7 +5,6 @@
 node_modules/
 
 ## API keys ##
-api/apiKeys.js
 
 npm-debug.log
 
