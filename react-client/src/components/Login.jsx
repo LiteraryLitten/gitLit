@@ -102,7 +102,7 @@ class Login extends React.Component {
         console.log('err', err);
       },
     });
-    
+
   }
 
   handleSignup() {
@@ -201,7 +201,7 @@ class Login extends React.Component {
                 margin="dense"
                 id="username"
                 label="username"
-                type="string" 
+                type="string"
                 onChange={this.saveSignupUsername}
               />
               <TextField
