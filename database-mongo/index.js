@@ -244,23 +244,23 @@ const saveFavorite = (user, isbn13, cb) => {
       cb(null);
     }
     profile = profile[0];
-    console.log('')
-    console.log('on line 244  @ db.saveFavorite');
-    console.log('          isbn13:        ', isbn13);
-    console.log('          USER:        ', profile);
+    //console.log('')
+    //console.log('on line 244  @ db.saveFavorite');
+    //console.log('          isbn13:        ', isbn13);
+    //console.log('          USER:        ', profile);
     const updatedFavoriteBooks = profile.favoriteBooks.slice();
     // console.log('before', updatedFavoriteBooks.length);
     let removed = false;
     if (updatedFavoriteBooks.length > 0) {
       updatedFavoriteBooks.forEach((isbn, index) => {
-        console.log(' db.saveFavorite @ 250-isbn loop:', isbn);
+      //  console.log(' db.saveFavorite @ 250-isbn loop:', isbn);
         // console.log('');
-        console.log('are they equal?:', isbn, isbn13, isbn - isbn13);
+       // console.log('are they equal?:', isbn, isbn13, isbn - isbn13);
         if (isbn - isbn13 === 0) {
-          console.log('then remove it');
+         // console.log('then remove it');
           removed = true;
           updatedFavoriteBooks.splice(index, 1);
-          console.log('in saveFavorite @ 259 removing favorite new length=', updatedFavoriteBooks);
+         // console.log('in saveFavorite @ 259 removing favorite new length=', updatedFavoriteBooks);
           profile.favoriteBooks = updatedFavoriteBooks;
         }
       });
@@ -277,7 +277,7 @@ const saveFavorite = (user, isbn13, cb) => {
     User.update({ username: profile.username }, {
       favoriteBooks: updatedFavoriteBooks,
     }, (errUpdate, dataUpdate) => {
-      console.log('on line 275 in db.saveFavoritedataUpdate will return to the Handler with', errUpdate, profile);
+      //console.log('on line 275 in db.saveFavoritedataUpdate will return to the Handler with', errUpdate, profile);
       cb(errUpdate, profile);
     });
   })

@@ -216,7 +216,7 @@ module.exports = {
   },
   postFavorites: (req, res) => {
     const { username, isbn13 } = req.params;
-    console.log('on line 223 @ handler.postFavorites-req.params =', username, isbn13); //giving an object with isbn13
+    //console.log('on line 223 @ handler.postFavorites-req.params =', username, isbn13); //giving an object with isbn13
     db.saveFavorite(username, isbn13, (err, data) => {
       if (err) {
         res.json(null);

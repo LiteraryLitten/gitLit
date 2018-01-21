@@ -91,7 +91,7 @@ class BookCard extends React.Component {
       description: arrayString,
     });
     // this.loadUserReviews();
-    this.updateFavorite();
+    // this.updateFavorite();
   }
 
   goToBook() {
@@ -180,7 +180,7 @@ class BookCard extends React.Component {
   }
 
   render() {
-    //this.updateFavorite();
+    this.updateFavorite();
     const { classes } = this.props;
 
     return (
