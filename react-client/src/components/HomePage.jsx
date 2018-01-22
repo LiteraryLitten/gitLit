@@ -5,11 +5,15 @@ import Grid from 'material-ui/Grid';
 import { CircularProgress } from 'material-ui/Progress';
 import Divider from 'material-ui/Divider';
 
-import BookCard from './BookCard';
+import Typography from 'material-ui/Typography';
+import BookCard from './BookCard.jsx';
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
+  },
+  dark: {
+    color: '#3E2723',
   },
 });
 
@@ -126,8 +130,10 @@ class HomePage extends React.Component {
 
     return (
       <div>
-        <h1 style={{ textAlign: 'center' }}> Best Sellers </h1>
-        <Divider light />
+        <br />
+        <Typography align='center' type='display1' > 
+          Today's Best Sellers
+        </Typography>
         {this.state.loading
           ?
             <div style={{ textAlign: 'center' }}>
