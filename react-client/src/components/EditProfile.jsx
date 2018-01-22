@@ -64,68 +64,68 @@ class EditProfile extends React.Component {
   }
 
   handleEditProfile() {
-    console.log(this.state.user.currentUser)
+    console.log(this.state.user.currentUser);
     axios({
       method: 'put',
       url: '/editprofile',
       data: {
         currentUser: this.state.user.currentUser,
         user: this.state.user.name,
-        username: this.state.user.username, 
-      }
+        username: this.state.user.username,
+      },
     })
       .then((response) => {
         alert('Your Profile has been updated');
         console.log('Profile is updated');
+        this.props.setUserProfile(response.data[0]);
       })
       .catch((error) => {
         console.log('There is an error', error);
-      })
+      });
   }
 
 
   render() {
-    
-      return (
-        <div>
+    return (
+      <div>
 
-            <Button raised onClick={this.handleClickOpen}>Edit Profile</Button>
+        <Button raised onClick={this.handleClickOpen}>Edit Profile</Button>
 
-          <Dialog
-            open={this.state.open}
-            onClose={this.handleClose}
-            aria-labelledby="form-dialog-title"
-          >
-            <DialogTitle id="form-dialog-title">Edit Profile</DialogTitle>
-            <DialogContent>
-              <DialogContentText>
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogTitle id="form-dialog-title">Edit Profile</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
                 Edit your name/username
-              </DialogContentText>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label="Name"
-                type="string"
-                onChange={this.saveName}
-              />
-              <TextField
-                autoFocus
-                margin="dense"
-                id="login-password"
-                label="Username"
-                type="string"
-                onChange={this.saveUsername}
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={() => this.handleClick()} color="primary">
+            </DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Name"
+              type="string"
+              onChange={this.saveName}
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="login-password"
+              label="Username"
+              type="string"
+              onChange={this.saveUsername}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => this.handleClick()} color="primary">
                 Edit Profile
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </div>
-      );
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    );
   }
 }
 

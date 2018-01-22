@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import axios from 'axios';
-import {Image} from 'cloudinary-react';
+import { Image } from 'cloudinary-react';
 import { Transformation } from 'cloudinary-react';
 
 
@@ -91,7 +91,12 @@ class App extends React.Component {
   }
 
   submitReview(review, isbn13, rating) {
-    const user = this.state.userProfile.username;
+    let user = '';
+    if (this.state.userProfile.length < 1) {
+      user = '';
+    } else {
+      user = this.state.userProfile.username;
+    }
     const data = {
       review, user, isbn13, rating,
     };
@@ -127,9 +132,11 @@ class App extends React.Component {
   }
 
   setUserProfile(user) {
+    console.log('newprofile =', user);
     this.setState({ userProfile: user }, () => {
       console.log('Setting this.state.userProfile:', this.state.userProfile);
-      this.renderView();
+      this.setState({ userProfile: user });
+      // this.renderView();
     });
   }
 
@@ -162,6 +169,7 @@ class App extends React.Component {
           changeView={this.changeView}
           userProfile={this.state.userProfile}
           updateUserData={this.updateUserData}
+          setUserProfile={this.setUserProfile}
         />
       );
     } else if (this.state.view === 'Search') {

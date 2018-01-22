@@ -221,11 +221,11 @@ module.exports = {
     });
   },
   getUserReviews: (req, res) => {
-    // console.log('');
+    console.log('');
     const { isbn13 } = req.params;
-    // console.log('in getUserReviews @ 177-isbn13=', isbn13);
+    console.log('in getUserReviews @ 177-isbn13=', isbn13);
     db.findReviewsByIsbn13(isbn13, (err, reviews) => {
-      // console.log('in getUserReviews @ 179-reviews=', reviews);
+      console.log('in getUserReviews @ 179-reviews=', reviews);
       res.json(reviews);
     });
   },

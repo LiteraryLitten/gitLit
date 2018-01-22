@@ -157,7 +157,13 @@ class ProfilePage extends React.Component {
     const user = this.state.userProfile;
     return (
       <div className="userProfile">
-        <User user={user} onClick={this.editProfile.bind(this)} />
+        <User
+          user={this.props.userProfile}
+          onClick={this.editProfile.bind(this)}
+          fetch={this.props.fetch}
+          changeView={this.props.changeView}
+          setUserProfile={this.props.setUserProfile}
+        />
         <button onClick={this.handleLogout} > Logout </button>
       </div>
     );
@@ -167,7 +173,13 @@ class ProfilePage extends React.Component {
     if (this.props.userProfile.hasOwnProperty('name')) {
       return (
         <div className="userProfile">
-          <User user={this.props.userProfile} onClick={this.editProfile.bind(this)} fetch={this.props.fetch} changeView={this.props.changeView} />
+          <User
+            user={this.props.userProfile}
+            onClick={this.editProfile.bind(this)}
+            fetch={this.props.fetch}
+            changeView={this.props.changeView}
+            setUserProfile={this.props.setUserProfile}
+          />
         </div>
       );
     }

@@ -98,9 +98,9 @@ class BookPage extends React.Component {
     // if (this.props.userProfile.length > 0) {
     this.state.userReviews.forEach((review) => {
       console.log('checking review');
-      console.log(review);
-      console.log(review.isbn13 - this.state.book.isbn13);
-      if (review.isbn13 - this.state.book.isbn13 === 0) {
+      // console.log(review);
+      console.log('#user', review.user, '#userProfile', this.props.userProfile.username);
+      if (review.user === this.props.userProfile.username) {
         console.log('setting state', review.rating);
         this.setState({
           rating: review.rating,
