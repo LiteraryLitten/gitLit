@@ -248,9 +248,9 @@ const trackUserReviews = (user, isbn13, cb) => {
   let updateReviewedBooks = [];
   User.findOne({ username: `${user}` }).exec((err, userProfile) => {
     if (err) {
-      //console.log('trackUserReviews had a problem @ db 221');
+      // console.log('trackUserReviews had a problem @ db 221');
     } else {
-     // console.log('on line 218 in trackUserReviews', userProfile);
+      // console.log('on line 218 in trackUserReviews', userProfile);
       updateReviewedBooks = userProfile.reviewedBooks;
       updateReviewedBooks.push(isbn13);
     }
@@ -269,15 +269,15 @@ const saveFavorite = (user, isbn13, cb) => {
   // console.log("on line 239 in db.saveFavorite-userObject=", userObject);
   // const { user, isbn13 } = userObject;
   findProfile(user, (err, profile) => {
-    if(err) {
-      console.log('findProfile had an error on db 243')
+    if (err) {
+      console.log('findProfile had an error on db 243');
       cb(null);
     }
     profile = profile[0];
-    //console.log('')
-    //console.log('on line 244  @ db.saveFavorite');
-    //console.log('          isbn13:        ', isbn13);
-    //console.log('          USER:        ', profile);
+    // console.log('')
+    // console.log('on line 244  @ db.saveFavorite');
+    // console.log('          isbn13:        ', isbn13);
+    // console.log('          USER:        ', profile);
     const updatedFavoriteBooks = profile.favoriteBooks.slice();
     // console.log('before', updatedFavoriteBooks.length);
     let removed = false;
@@ -285,12 +285,12 @@ const saveFavorite = (user, isbn13, cb) => {
       updatedFavoriteBooks.forEach((isbn, index) => {
       //  console.log(' db.saveFavorite @ 250-isbn loop:', isbn);
         // console.log('');
-       // console.log('are they equal?:', isbn, isbn13, isbn - isbn13);
+        // console.log('are they equal?:', isbn, isbn13, isbn - isbn13);
         if (isbn - isbn13 === 0) {
-         // console.log('then remove it');
+          // console.log('then remove it');
           removed = true;
           updatedFavoriteBooks.splice(index, 1);
-         // console.log('in saveFavorite @ 259 removing favorite new length=', updatedFavoriteBooks);
+          // console.log('in saveFavorite @ 259 removing favorite new length=', updatedFavoriteBooks);
           profile.favoriteBooks = updatedFavoriteBooks;
         }
       });
@@ -307,32 +307,31 @@ const saveFavorite = (user, isbn13, cb) => {
     User.update({ username: profile.username }, {
       favoriteBooks: updatedFavoriteBooks,
     }, (errUpdate, dataUpdate) => {
-      //console.log('on line 275 in db.saveFavoritedataUpdate will return to the Handler with', errUpdate, profile);
+      // console.log('on line 275 in db.saveFavoritedataUpdate will return to the Handler with', errUpdate, profile);
       cb(errUpdate, profile);
     });
-  })
+  });
 };
 
 const findReviewsByIsbn13 = (isbn13, cb) => {
   Review.find({ isbn13 }).exec((err, reviews) => {
     if (err) {
-      //console.log('Failed to find reviews');
+      // console.log('Failed to find reviews');
       cb(err, null);
     }
     if (reviews !== null) {
-      //console.log('we found a review on db.findReviewsByIsbn13 @ 278', isbn13, reviews);
+      // console.log('we found a review on db.findReviewsByIsbn13 @ 278', isbn13, reviews);
     } else {
-      //console.log('NOTHING db.findReviewsByIsbn13 @ 278', isbn13, reviews);
+      // console.log('NOTHING db.findReviewsByIsbn13 @ 278', isbn13, reviews);
     }
     cb(null, reviews);
   });
 };
 
 const editProfile = (currentUser, name, username, cb) => {
-  console.log(currentUser);
   User.update({ name: `${currentUser}` }, { name: `${name}`, username: `${username}` }).exec((err, data) => {
-    console.log(data);
-    cb(err, data);
+    User.find({ name: `${name}` }).exec(cb);
+    // console.log('my data returned on db', name);
   });
 };
 

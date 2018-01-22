@@ -1,8 +1,8 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
-import {Image} from 'cloudinary-react';
-import {CloudinaryContext, Transformation} from 'cloudinary-react';
+import { Image } from 'cloudinary-react';
+import { CloudinaryContext, Transformation } from 'cloudinary-react';
 
 
 const CLOUDINARY_UPLOAD_PRESET = 'wijqkahk';
@@ -25,10 +25,12 @@ class UploadProfilePicture extends React.Component {
   onImageDrop(files) {
     this.setState({
       file: files[0],
+    }, () => {
+      this.submit();
     });
   }
 
-   submit() {
+  submit() {
     const { file, uploadedFileCloudinaryUrl } = this.state;
 
     const formData = new FormData();
@@ -48,36 +50,35 @@ class UploadProfilePicture extends React.Component {
       	this.setState({
       		publicId: response.data.public_id,
       		uploadedFileCloudinaryUrl: response.data.secure_url,
-      	})
+      	});
       })
       .catch((error) => {
       	console.log('File has not been uploaded', error);
-      })
-
+      });
   }
 
   render() {
   	return (
-	  	<div>
-		      {this.state.uploadedFileCloudinaryUrl === '' ? 
-				    
-			    <div>
-				  	<Dropzone
-				      multiple={false}
-				      accept="image/*"
-				      onDrop={this.onImageDrop}>
-				      <p>Drop an image or click to select a file to upload.</p>
-				    </Dropzone>
-			      <button onClick={this.submit}>Submit</button>
-			    </div> 
+    <div>
+      {this.state.uploadedFileCloudinaryUrl === '' ?
+
+        <div>
+          <Dropzone
+            multiple={false}
+            accept="image/*"
+            onDrop={this.onImageDrop}
+          >
+            <p>Drop an image or click to select a file to upload.</p>
+          </Dropzone>
+          {/* <button onClick={this.submit}>Submit</button> */}
+        </div>
 		    :
-		      <div className="profilePicture">
-	          <img src={this.state.uploadedFileCloudinaryUrl} />
-	        </div>}
-		   </div>   
-  	)
+        <div style={{ maxWidth: '210px' }} className="profilePicture">
+          <img id="cloudPic" src={this.state.uploadedFileCloudinaryUrl} />
+        </div>}
+    </div>
+  	);
   }
- }
+}
 
 export default UploadProfilePicture;
-	        

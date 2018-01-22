@@ -63,13 +63,14 @@ class BookPage extends React.Component {
     this.passReview = this.passReview.bind(this);
     this.loadUserReviews = this.loadUserReviews.bind(this);
     this.loadProReviews = this.loadProReviews.bind(this);
+    this.mountUserRating = this.mountUserRating.bind(this);
     console.log('');
     console.log('BookPage props =', this.props);
   }
 
   componentDidMount() {
     if (typeof this.props.book === 'object' && this.props.book.isbn13) {
-      console.log('BookPage ISBN13=', this.props.book.isbn13);
+      // console.log('BookPage ISBN13=', this.props.book.isbn13);
       this.setState({
         book: this.props.book,
       });
@@ -83,14 +84,39 @@ class BookPage extends React.Component {
         });
       });
     }
+    // if (this.props.userProfile.length > 0) {
+    //   this.setState({
+    //     rating: this.props.userProfile
+    //   })
+    // }
     this.loadUserReviews();
     this.loadProReviews();
   }
 
+  mountUserRating() {
+    console.log('');
+    console.log('mountUserRating');
+    // if (this.props.userProfile.length > 0) {
+    this.state.userReviews.forEach((review) => {
+      console.log('checking review');
+      // console.log(review);
+      console.log('#user', review.user, '#userProfile', this.props.userProfile.username);
+      if (review.user === this.props.userProfile.username) {
+        console.log('setting state', review.rating);
+        this.setState({
+          rating: review.rating,
+        }, () => {
+          this.setState({ randRender: Math.random() });
+        });
+      }
+    });
+    // }
+  }
+
   loadProReviews() {
-    console.log('proReviews are trying to mount');
+    // console.log('proReviews are trying to mount');
     this.props.getProReviews(this.props.book.isbn13, (response) => {
-      console.log('ProREview response bookPage @ 87', response);
+      // console.log('ProREview response bookPage @ 87', response);
       // const book = this.state.book;
       this.setState({
         proreviews: response.data,
@@ -107,7 +133,14 @@ class BookPage extends React.Component {
 
   passReview() {
     const { isbn13 } = this.state.book;
+    const userReviews = this.state.userReviews.slice();
     this.props.submitReview(this.state.typeReview, isbn13, this.state.rating);
+    userReviews.push(this.state.typeReview);
+    this.setState({
+      typeReview: '',
+    }, () => {
+      this.loadUserReviews();
+    });
   }
 
   submitRating(rating) {
@@ -125,6 +158,8 @@ class BookPage extends React.Component {
         console.log('   #returned to BookPage @ loadUserReviews 124-data=', data);
         this.setState({
           userReviews: data.data,
+        }, () => {
+          this.mountUserRating();
         });
       })
       .catch(err => console.log('   !error when loading loadUserReviews on BookPage'));
@@ -176,7 +211,23 @@ class BookPage extends React.Component {
             </Button>
           </Grid>
           <Grid item xs={12} sm={7}>
-            
+            <Paper className={classes.paper}>
+
+              <TextField
+                multiline
+                rows={5}
+                label="Review"
+                InputLabelProps={{
+                    shrink: true,
+                  }}
+                placeholder="Review Here"
+                value={this.state.typeReview}
+                fullWidth
+                margin="normal"
+                onChange={this.enterReview}
+              />
+
+            </Paper>
 
             <Paper>
 

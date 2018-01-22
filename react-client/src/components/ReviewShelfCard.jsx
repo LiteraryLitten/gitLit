@@ -53,7 +53,7 @@ class ReviewShelfCard extends React.Component {
       expanded: false,
       rating: 0,
       description: '',
-      review : 'testaggdgadfgfdsgfdsgdsfg',
+      review: '',
     };
     // this.submitRank = this.submitRank.bind(this);
     this.goToBook = this.goToBook.bind(this);
@@ -65,13 +65,12 @@ class ReviewShelfCard extends React.Component {
     // console.log(this.state.book);
     this.props.allReviews.forEach((review) => {
       // console.log(review);
-        // console.log('ISBN = ', this.state.book.isbn13, review.isbn13);
+      // console.log('ISBN = ', this.state.book.isbn13, review.isbn13);
       if (this.state.book.isbn13 === review.isbn13) {
         // console.log(true);
         this.setState({ review: review.text, rating: review.rating });
       }
     });
-
   }
 
   goToBook() {
@@ -96,7 +95,7 @@ class ReviewShelfCard extends React.Component {
             onClick={this.goToBook}
             style={{ cursor: 'pointer' }}
             title={this.state.book.title}
-            subheader={'Your star rating: ' + this.state.rating}
+            subheader={`Your star rating: ${this.state.rating}`}
           />
           <CardContent>
             <Typography component="p">
