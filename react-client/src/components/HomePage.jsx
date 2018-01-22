@@ -3,8 +3,9 @@ import $ from 'jquery';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import { CircularProgress } from 'material-ui/Progress';
+import Divider from 'material-ui/Divider';
 
-import BookCard from './BookCard.jsx';
+import BookCard from './BookCard';
 
 const styles = theme => ({
   root: {
@@ -25,7 +26,7 @@ class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    console.log('mouted');
+   // console.log('mounted');
     this.getBestSellersBooks();
     this.setState({
       loading: true,
@@ -43,32 +44,28 @@ class HomePage extends React.Component {
         this.setBook(result);
       })
       .fail((err) => {
-        console.log('no gotten?');
-        throw err;
+        console.log('bestSellers fail');
+        // throw err;
       });
   }
 
   setBook(bookArray) {
-    const books = bookArray.results;
-    let numCount = books.length;
+    // console.log('bookArray');
+    // console.log(bookArray);
     let returnCount = 0;
-
+    let numCount = 0;
     const updatedBooks = [];
-    books.forEach((book) => {
-      if (book.isbns.length > 0) {
-        const isbn = book.isbns[0].isbn13;
+
+    if (Number.isInteger(bookArray[0])) {
+      numCount = bookArray.length;
+      console.log('example data NYT', bookArray);
+
+      bookArray.forEach((isbn) => {
         this.props.fetch('book', isbn, (goodReads) => {
           // console.log("in Homepage line 59", goodReads);
           returnCount++;
           if (goodReads !== null) {
-            const bookNYC = Array.from(book);
-            book = goodReads;
-            book.bookNYC = bookNYC;
-
-            // book.imageURL = goodReads.imageURL;
-            // book.averageRating = goodReads.averageRating;
-            // book.genres = goodReads.genres;
-            updatedBooks.push(book);
+            updatedBooks.push(goodReads);
           } else {
             numCount--;
           }
@@ -83,8 +80,44 @@ class HomePage extends React.Component {
             }
           }
         });
-      }
-    });
+      });
+    } else {
+      const books = bookArray.results;
+      let numCount = books.length;
+
+      books.forEach((book) => {
+        if (book.isbns.length > 0) {
+          const isbn = book.isbns[0].isbn13;
+          this.props.fetch('book', isbn, (goodReads) => {
+            // console.log(goodReads);
+            // console.log("in Homepage line 59", goodReads);
+            returnCount++;
+            if (goodReads !== null) {
+              const bookNYC = Array.from(book);
+              book = goodReads;
+              book.bookNYC = bookNYC;
+
+              // book.imageURL = goodReads.imageURL;
+              // book.averageRating = goodReads.averageRating;
+              // book.genres = goodReads.genres;
+              updatedBooks.push(book);
+            } else {
+              numCount--;
+            }
+
+            if (numCount === returnCount) {
+              // console.log(this.state.view);
+              if (this.state.view === null) {
+                this.setState({
+                  books: updatedBooks,
+                  loading: false,
+                });
+              }
+            }
+          });
+        }
+      });
+    }
   }
 
 
@@ -93,6 +126,8 @@ class HomePage extends React.Component {
 
     return (
       <div>
+        <h1 style={{ textAlign: 'center' }}> Best Sellers </h1>
+        <Divider light />
         {this.state.loading
           ?
             <div style={{ textAlign: 'center' }}>
@@ -112,11 +147,13 @@ class HomePage extends React.Component {
                   book={book}
                   key={book.isbn13}
                   changeView={this.props.changeView}
+                  getProReviews={this.props.getProReviews}
+                  userProfile={this.props.userProfile}
+                  updateUserData={this.props.updateUserData}
                 />
             ))}
             </Grid>
         }
-
       </div>
     );
   }

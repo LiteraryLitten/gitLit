@@ -7,7 +7,6 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
-import renderHTML from 'react-render-html';
 import TextField from 'material-ui/TextField';
 import $ from 'jquery';
 
@@ -37,6 +36,7 @@ class Login extends React.Component {
     this.saveSignupPassword = this.saveSignupPassword.bind(this);
     this.onNameClick = this.onNameClick.bind(this);
     this.onLogoutClick = this.onLogoutClick.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
   saveName(e) {
@@ -73,6 +73,10 @@ class Login extends React.Component {
     this.setState({ open: true });
   }
 
+  handleClose() {
+    this.setState({ open: false });
+  }
+
   handleLogin() {
     $.ajax({
       url: '/login',
@@ -87,9 +91,9 @@ class Login extends React.Component {
         } else if (data.type === 'wrong password') {
           alert('Wrong Password: Try Again');
         } else {
-          alert ('Invalid username: Try Again');
+          alert('Invalid username: Try Again');
         }
-        //this.renderView();
+        // this.renderView();
         this.props.setUserProfile(this.state.userProfile);
         this.setState({ open: false });
       },
@@ -97,7 +101,6 @@ class Login extends React.Component {
         console.log('err', err);
       },
     });
-    
   }
 
   handleSignup() {
@@ -112,10 +115,10 @@ class Login extends React.Component {
         favoriteBooks: [],
       }),
       success: (data) => {
-        console.log(data);
+        // console.log(data);
         if (data.type === 'success') {
           alert('User Profile Created! Login to continue');
-        } else{
+        } else {
           alert('Oh no! That username is already taken. Try again!');
         }
       },
@@ -134,89 +137,84 @@ class Login extends React.Component {
   }
 
   render() {
-    if (this.props.user.hasOwnProperty('username')) {
+    if (this.props.user && this.props.user.hasOwnProperty('username')) {
       return (
         <div>
-            <Button color="contrast" onClick={this.onNameClick}>{this.props.user.name}</Button>
-            <Button color="contrast" onClick={this.onLogoutClick}>Logout</Button>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-
-            <Button color="contrast" onClick={this.handleClickOpen}>Login</Button>
-
-          <Dialog
-            open={this.state.open}
-            onClose={this.handleClose}
-            aria-labelledby="form-dialog-title"
-          >
-            <DialogTitle id="form-dialog-title">Login/Signup</DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                Log In
-              </DialogContentText>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="username"
-                label="username"
-                type="string"
-                onChange={this.saveLoginUsername}
-              />
-              <TextField
-                autoFocus
-                margin="dense"
-                id="login-password"
-                label="password"
-                type="password"
-                onChange={this.saveLoginPassword}
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={this.handleLogin} color="primary">
-                Login
-              </Button>
-            </DialogActions>
-            <DialogContent>
-              <DialogContentText>
-                Sign Up
-              </DialogContentText>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label="name"
-                type="string"
-                onChange={this.saveName}
-              />
-              <TextField
-                autoFocus
-                margin="dense"
-                id="username"
-                label="username"
-                type="string" 
-                onChange={this.saveSignupUsername}
-              />
-              <TextField
-                autoFocus
-                margin="dense"
-                id="signup-password"
-                label="password"
-                type="password"
-                onChange={this.saveSignupPassword}
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={this.handleSignup} color="primary">
-                Signup
-              </Button>
-            </DialogActions>
-          </Dialog>
+          <Button color="contrast" onClick={this.onNameClick}>{this.props.user.name}</Button>
+          <Button color="contrast" onClick={this.onLogoutClick}>Logout</Button>
         </div>
       );
     }
+    return (
+      <div>
+
+        <Button color="contrast" onClick={this.handleClickOpen}>Login</Button>
+
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogTitle id="form-dialog-title">Login/Signup</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+                Log In
+            </DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="username"
+              label="username"
+              type="string"
+              onChange={this.saveLoginUsername}
+            />
+            <TextField
+              margin="dense"
+              id="login-password"
+              label="password"
+              type="password"
+              onChange={this.saveLoginPassword}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleLogin} color="primary">
+                Login
+            </Button>
+          </DialogActions>
+          <DialogContent>
+            <DialogContentText>
+                Sign Up
+            </DialogContentText>
+            <TextField
+              margin="dense"
+              id="name"
+              label="name"
+              type="string"
+              onChange={this.saveName}
+            />
+            <TextField
+              margin="dense"
+              id="username"
+              label="username"
+              type="string"
+              onChange={this.saveSignupUsername}
+            />
+            <TextField
+              margin="dense"
+              id="signup-password"
+              label="password"
+              type="password"
+              onChange={this.saveSignupPassword}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleSignup} color="primary">
+                Signup
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    );
   }
 }
 

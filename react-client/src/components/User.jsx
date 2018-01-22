@@ -8,6 +8,9 @@ import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import Bookshelf from './Bookshelf.jsx';
+import EditProfile from './EditProfile.jsx';
+import Reviewshelf from './Reviewshelf.jsx';
+import UploadProfilePicture from './UploadProfilePicture.jsx';
 
 const styles = theme => ({
   root: {
@@ -26,13 +29,19 @@ const User = props =>(
     <Grid container spacing={24}>
 
           <Grid item xs={12} sm={6} className='UserPic'>
-            <h2>Your Profile</h2>
+            <br />
+            <Typography type='display1'>
+              My Profile
+            </Typography>
+            <br />
             <Paper >
 
               
               <Grid container spacing={16}>
                 <Grid item xs={8}  >
-                  <img src='https://cdn1.iconfinder.com/data/icons/social-messaging-productivity-1-1/128/gender-female2-256.png' alt="" />
+
+                  <UploadProfilePicture currentUser={props.user.name}/>
+
                 </Grid>
                 <Grid item xs={3}  >
                   <span className='user'>
@@ -42,31 +51,29 @@ const User = props =>(
                   <span className='user'>
                     Username : <br /> {props.user.username} <br />
                   </span>
-                  <Button 
-                  raised
-                  onClick={props.changePassword} >
-                  Edit Profile
-                  </Button> <br />
+                  
+                  <EditProfile currentUser={props.user.name} setUserProfile={props.setUserProfile} />
+                
                 </Grid>
                 
               </Grid>
             </Paper>
-            <h2>
+            <br />
+            <Typography type='display1'>
               My Reviews
-            </h2>
-            <Paper >  
-              <span>
-              {props.user.favoriteBooks}
-              </span>
-            </Paper>
+            </Typography>
+            <br />
+              <Reviewshelf books={props.user.reviewedBooks} fetch={props.fetch} changeView={props.changeView} user={props.user} key='reviews'/>
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <h2>
+            <br />
+            <Typography type='display1'>
               My Bookshelf
-            </h2>
+            </Typography>
+            <br />
             <Paper >  
-              <Bookshelf book={props.favoriteBooks} />
+              <Bookshelf books={props.user.favoriteBooks} fetch={props.fetch} changeView={props.changeView} key='liked'/>
             </Paper>
           </Grid>
         </Grid>

@@ -1,13 +1,17 @@
 {
-  "name": "github-fetcher-fullstack-v2",
+  "name": "LiteraryLitten",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "6.11.4"
+  },
   "scripts": {
+    "start": "node server/index.js",
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon server/index.js"
   },
-  "author": "Beth Johnson",
+  "author": "Team Lit",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.23.1",
@@ -28,6 +32,7 @@
     "bcrypt": "^1.0.3",
     "body-parser": "^1.17.2",
     "classnames": "^2.2.5",
+    "cloudinary-react": "^1.0.6",
     "express": "^4.15.0",
     "jquery": "^3.2.1",
     "jquery-param": "^0.2.0",
@@ -37,8 +42,10 @@
     "prop-types": "^15.6.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-dropzone": "^4.2.7",
     "react-popper": "^0.7.5",
     "react-render-html": "^0.6.0",
+    "react-swipeable-views": "^0.12.12",
     "xml-js": "^1.6.2"
   }
 }

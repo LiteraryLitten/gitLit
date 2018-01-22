@@ -1,19 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import classnames from 'classnames';
+// import classnames from 'classnames';
 import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
-import Collapse from 'material-ui/transitions/Collapse';
+// import Collapse from 'material-ui/transitions/Collapse';
 import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 import red from 'material-ui/colors/red';
 import FavoriteIcon from 'material-ui-icons/Favorite';
-import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
-import MoreVertIcon from 'material-ui-icons/MoreVert';
+// import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
+// import MoreVertIcon from 'material-ui-icons/MoreVert';
 import Divider from 'material-ui/Divider';
 import renderHTML from 'react-render-html';
+import axios from 'axios';
+// import $ from 'jquery';
 
-import PopUp from './PopUp.jsx';
+import Button from 'material-ui/Button';
+import Dialog, {
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from 'material-ui/Dialog';
+
+// import PopUp from './PopUp.jsx';
 import Rating from './Rating.jsx';
 
 import Grid from 'material-ui/Grid';
@@ -51,29 +61,60 @@ class BookCard extends React.Component {
     super(props);
     this.state = {
       book: this.props.book,
+      isbn: this.props.book.isbn13,
       expanded: false,
       rating: 0,
       description: '',
+      user: this.props.userProfile,
+      liked: false,
+      randRender: 0,
+      popUp: false,
     };
-    this.submitRank = this.submitRank.bind(this);
     this.goToBook = this.goToBook.bind(this);
     this.handleExpandClick = this.handleExpandClick.bind(this);
+    this.addtoFavorites = this.addtoFavorites.bind(this);
+    this.toggleFavorite = this.toggleFavorite.bind(this);
+    this.popUpClick = this.popUpClick.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.updateFavorite = this.updateFavorite.bind(this);
   }
 
   componentDidMount() {
-    let str = this.props.book.description;
-    str = str.replace(/<br>/gi, '\n');
-    str = str.replace(/<p.*>/gi, '\n');
-    str = str.replace(/<a.*href="(.*?)".*>(.*?)<\/a>/gi, ' $2 (Link->$1) ');
-    str = str.replace(/<(?:.|\s)*?>/g, '');
-    const arrayString = `${str.split(' ').join(' ').substring(0, 200)}...`;
+    if (this.props.book.description) {
+      let str = this.props.book.description;
+      str = str.replace(/<br>/gi, '\n');
+      str = str.replace(/<p.*>/gi, '\n');
+      str = str.replace(/<a.*href="(.*?)".*>(.*?)<\/a>/gi, ' $2 (Link->$1) ');
+      str = str.replace(/<(?:.|\s)*?>/g, '');
+      const arrayString = `${str.split(' ').join(' ').substring(0, 200)}...`;
+      this.setState({
+        description: arrayString,
+      });
+    }
+    console.log('BookCard - componentDidMount');
+    // this.loadUserReviews();
+  }
+
+  componentWillMount() {
+    this.updateFavorite();
+  }
+
+  componentWillReceiveProps() {
+    console.log('BookCard recieved props');
     this.setState({
-      description: arrayString,
+      userProfile: this.props.userProfile,
+    }, () => {
+      this.updateFavorite();
     });
   }
 
   goToBook() {
-    this.props.changeView('Book', this.state.book);
+    this.props.getProReviews(this.state.isbn, (response) => {
+      const book = this.state.book;
+      book.proreviews = response.data;
+      console.log('bookCard @102-book.proreviews =', book.proreviews);
+      this.props.changeView('Book', book);
+    });
   }
 
   handleExpandClick() {
@@ -81,8 +122,88 @@ class BookCard extends React.Component {
     this.setState({ expanded: !this.state.expanded });
   }
 
-  submitRank(rating) {
-    // stuff here
+  updateFavorite() {
+    // if()
+    // console.log('checking updateFavorite on bookCard @ 114');
+    // console.log('   -profile', this.props.userProfile);
+
+    // if (this.props.userProfile > 0) {
+    if (this.props.userProfile.favoriteBooks) {
+      // console.log('updateFavorite has a profile and the book is not currently set to liked');
+      let found = false;
+      this.props.userProfile.favoriteBooks.forEach((isbn13) => {
+        // console.log('updateFavorite is checking each isbn againt this books');
+        // console.log(isbn13, this.state.book.isbn13, isbn13 - this.state.book.isbn13 === 0);
+        if (isbn13 - this.state.book.isbn13 === 0) {
+          // console.log('updateFavorite decided that isbn13 was a match');
+          found = true;
+          this.setState({
+            liked: true,
+          }, () => {
+            // console.log('updateFavorite has set', this.state.book.title, ' to liked');
+            this.setState({ randRender: Math.random() });
+          });
+        }
+      });
+      if (!found) {
+        this.setState({
+          liked: false,
+        }, () => { this.setState({ randRender: Math.random() }); });
+      }
+    }
+  }
+
+  toggleFavorite() {
+    this.setState({ liked: !this.state.liked });
+  }
+
+  addtoFavorites() {
+    this.toggleFavorite();
+    const url = `/favorites/${this.props.userProfile.username}/${this.state.book.isbn13}`;
+    axios(url)
+      .then((data) => {
+        const newFavs = data.data.favoriteBooks;
+        const user = this.props.userProfile;
+        user.favoriteBooks = newFavs;
+        this.props.updateUserData(user);
+      });
+  }
+
+  popUpClick() {
+    this.setState({
+      popUp: true,
+    });
+  }
+
+  handleClose() {
+    this.setState({
+      popUp: false,
+    });
+  }
+
+  popUpShow() {
+    if (this.state.popUp && this.state.book.description) {
+      return (
+        <Dialog
+          open={this.state.popUp}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">Description</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {renderHTML(this.state.book.description)}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+      );
+    }
   }
 
   render() {
@@ -95,36 +216,42 @@ class BookCard extends React.Component {
             avatar={
               <img src={this.state.book.imageURL} alt="" />
               }
-            action={
-              <IconButton>
-                <MoreVertIcon />
-              </IconButton>
-              }
             title={this.state.book.title}
             subheader={this.state.book.author}
             onClick={this.goToBook}
             style={{ cursor: 'pointer' }}
           />
-          <Divider light />
+          {this.state.description.length > 0 ? <Divider light /> : null}
+          <CardContent
+            onClick={this.popUpClick}
+            style={{ cursor: 'pointer' }}
+          >
+            <Typography component="p">
+              {this.state.description}
+              {this.popUpShow()}
+
+            </Typography>
+          </CardContent>
+
+
+          {this.state.book.genres.length > 0 ? <Divider light /> : null}
+
+
           <CardContent>
             <Typography component="p">
-              {this.state.description} <PopUp description={this.state.book.description} />
+              {this.state.book.genres.map(genre => (
+                `${genre[0].toUpperCase() + genre.slice(1)} `
+            ))}
             </Typography>
           </CardContent>
 
           <Divider light />
-          <CardContent>
-          <Typography component="p">
-            {this.state.book.genres.map(genre => (
-                genre[0].toUpperCase() + genre.slice(1) + ' '
-            ))}
-          </Typography>
-          </CardContent>
-
-          <Divider light />
           <CardActions disableActionSpacing>
-            <IconButton aria-label="Add to favorites">
-              <FavoriteIcon />
+            <IconButton aria-label="Add to favorites" >
+              <FavoriteIcon
+                color={this.state.liked ? 'accent' : 'action'}
+                onClick={this.addtoFavorites}
+              />
             </IconButton>
 
             <Rating
