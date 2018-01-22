@@ -106,10 +106,12 @@ class ReviewPanel extends React.Component {
   renderUserReviewCard() {
     const reviewCards = [];
     this.props.userReviews.forEach((review) => {
-      // console.log('renderUserReviewCard ForEACH', review);
-      // const { source, date } = review;
-      // const id = `${source}_${date}`; //key={id}
-      reviewCards.push(<UserReviewCard review={review} book={this.props.book} />);
+      // const id = `${source}_${this.props.book.isbn13}`; // key={id}
+      reviewCards.push(<UserReviewCard
+        review={review}
+        book={this.props.book}
+        key={review.idNameNumber}
+      />);
     });
     return reviewCards;
   }
@@ -151,7 +153,7 @@ class ReviewPanel extends React.Component {
           >
             <Tab label="Reviews" />
             <Tab label="User Reviews" />
-            <Tab label="Write a Review" />
+            {/* <Tab label="Write a Review" /> */}
           </Tabs>
         </AppBar>
         <SwipeableViews
@@ -185,26 +187,26 @@ class ReviewPanel extends React.Component {
 
           </TabContainer>
 
-          <TabContainer dir={theme.direction}>
+          {/* <TabContainer dir={theme.direction}>
             <Card >
               <CardContent>
                 <TextField
-                    multiline
-                    rows={5}
-                    label="Review"
-                    InputLabelProps={{
+                  multiline
+                  rows={5}
+                  label="Review"
+                  InputLabelProps={{
                         shrink: true,
                       }}
-                    placeholder="Review Here"
-                    fullWidth
-                    margin="normal"
-                    onChange={this.props.enterReview}
-                  />
+                  placeholder="Review Here"
+                  fullWidth
+                  margin="normal"
+                  onChange={this.props.enterReview}
+                />
               </CardContent>
             </Card >
 
 
-          </TabContainer>
+          </TabContainer> */}
 
         </SwipeableViews>
       </div>

@@ -62,6 +62,7 @@ class BookPage extends React.Component {
     this.passReview = this.passReview.bind(this);
     this.loadUserReviews = this.loadUserReviews.bind(this);
     this.loadProReviews = this.loadProReviews.bind(this);
+    this.mountUserRating = this.mountUserRating.bind(this);
     console.log('');
     console.log('BookPage props =', this.props);
   }
@@ -82,8 +83,33 @@ class BookPage extends React.Component {
         });
       });
     }
+    // if (this.props.userProfile.length > 0) {
+    //   this.setState({
+    //     rating: this.props.userProfile
+    //   })
+    // }
     this.loadUserReviews();
     this.loadProReviews();
+  }
+
+  mountUserRating() {
+    console.log('');
+    console.log('mountUserRating');
+    // if (this.props.userProfile.length > 0) {
+    this.state.userReviews.forEach((review) => {
+      console.log('checking review');
+      console.log(review);
+      console.log(review.isbn13 - this.state.book.isbn13);
+      if (review.isbn13 - this.state.book.isbn13 === 0) {
+        console.log('setting state', review.rating);
+        this.setState({
+          rating: review.rating,
+        }, () => {
+          this.setState({ randRender: Math.random() });
+        });
+      }
+    });
+    // }
   }
 
   loadProReviews() {
@@ -106,7 +132,14 @@ class BookPage extends React.Component {
 
   passReview() {
     const { isbn13 } = this.state.book;
+    const userReviews = this.state.userReviews.slice();
     this.props.submitReview(this.state.typeReview, isbn13, this.state.rating);
+    userReviews.push(this.state.typeReview);
+    this.setState({
+      typeReview: '',
+    }, () => {
+      this.loadUserReviews();
+    });
   }
 
   submitRating(rating) {
@@ -124,6 +157,8 @@ class BookPage extends React.Component {
         console.log('   #returned to BookPage @ loadUserReviews 124-data=', data);
         this.setState({
           userReviews: data.data,
+        }, () => {
+          this.mountUserRating();
         });
       })
       .catch(err => console.log('   !error when loading loadUserReviews on BookPage'));
@@ -185,6 +220,7 @@ class BookPage extends React.Component {
                     shrink: true,
                   }}
                 placeholder="Review Here"
+                value={this.state.typeReview}
                 fullWidth
                 margin="normal"
                 onChange={this.enterReview}

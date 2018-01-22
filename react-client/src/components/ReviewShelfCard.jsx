@@ -53,7 +53,7 @@ class ReviewShelfCard extends React.Component {
       expanded: false,
       rating: 0,
       description: '',
-      review: 'testaggdgadfgfdsgfdsgdsfg',
+      review: '',
     };
     // this.submitRank = this.submitRank.bind(this);
     this.goToBook = this.goToBook.bind(this);

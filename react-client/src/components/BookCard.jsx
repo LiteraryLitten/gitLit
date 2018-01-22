@@ -128,7 +128,7 @@ class BookCard extends React.Component {
     // console.log('   -profile', this.props.userProfile);
 
     // if (this.props.userProfile > 0) {
-    if (this.props.userProfile.favoriteBooks) {
+    if (this.props.userProfile.favoriteBooks && false) {
       // console.log('updateFavorite has a profile and the book is not currently set to liked');
       let found = false;
       this.props.userProfile.favoriteBooks.forEach((isbn13) => {
@@ -159,14 +159,14 @@ class BookCard extends React.Component {
 
   addtoFavorites() {
     this.toggleFavorite();
-    const url = `/favorites/${this.props.userProfile.username}/${this.state.book.isbn13}`;
-    axios(url)
-      .then((data) => {
-        const newFavs = data.data.favoriteBooks;
-        const user = this.props.userProfile;
-        user.favoriteBooks = newFavs;
-        this.props.updateUserData(user);
-      });
+    // const url = `/favorites/${this.props.userProfile.username}/${this.state.book.isbn13}`;
+    // axios(url)
+    //   .then((data) => {
+    //     const newFavs = data.data.favoriteBooks;
+    //     const user = this.props.userProfile;
+    //     user.favoriteBooks = newFavs;
+    //     this.props.updateUserData(user);
+    //   });
   }
 
   popUpClick() {

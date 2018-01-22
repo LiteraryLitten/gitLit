@@ -24,63 +24,62 @@ const styles = theme => ({
   },
 });
 
-const User = props =>(
-    <div>
+const User = props => (
+  <div>
     <Grid container spacing={24}>
 
-          <Grid item xs={12} sm={6} className='UserPic'>
-            <br />
-            <Typography type='display1'>
+      <Grid item xs={12} sm={6} className="UserPic">
+        <br />
+        <Typography type="display1">
               My Profile
-            </Typography>
-            <br />
-            <Paper >
+        </Typography>
+        <br />
+        <Paper >
 
-              
-              <Grid container spacing={16}>
-                <Grid item xs={8}  >
 
-                  <UploadProfilePicture currentUser={props.user.name}/>
+          <Grid container spacing={12}>
+            <Grid item xs={4}>
 
-                </Grid>
-                <Grid item xs={3}  >
-                  <span className='user'>
+              <UploadProfilePicture currentUser={props.user.name} />
+
+            </Grid>
+            <Grid item xs={8} >
+              <span className="user">
                     Name : <br /> {props.user.name}
-                  </span>
-                  <br />
-                  <span className='user'>
+              </span>
+              <br />
+              <span className="user">
                     Username : <br /> {props.user.username} <br />
-                  </span>
-                  
-                  <EditProfile currentUser={props.user.name} setUserProfile={props.setUserProfile} />
-                
-                </Grid>
-                
-              </Grid>
-            </Paper>
-            <br />
-            <Typography type='display1'>
-              My Reviews
-            </Typography>
-            <br />
-              <Reviewshelf books={props.user.reviewedBooks} fetch={props.fetch} changeView={props.changeView} user={props.user} key='reviews'/>
-          </Grid>
+              </span>
 
-          <Grid item xs={12} sm={6}>
-            <br />
-            <Typography type='display1'>
-              My Bookshelf
-            </Typography>
-            <br />
-            <Paper >  
-              <Bookshelf books={props.user.favoriteBooks} fetch={props.fetch} changeView={props.changeView} key='liked'/>
-            </Paper>
+              <EditProfile currentUser={props.user.name} setUserProfile={props.setUserProfile} />
+
+            </Grid>
+
           </Grid>
-        </Grid>
-          <div className="name">
+        </Paper>
+        <br />
+        <Typography type="display1">
+              My Reviews
+        </Typography>
+        <br />
+        <Reviewshelf books={props.user.reviewedBooks} fetch={props.fetch} changeView={props.changeView} user={props.user} key="reviews" />
+      </Grid>
+
+      <Grid item xs={12} sm={6}>
+        <br />
+        <Typography type="display1">
+              My Bookshelf
+        </Typography>
+        <br />
+        <Paper >
+          <Bookshelf books={props.user.favoriteBooks} fetch={props.fetch} changeView={props.changeView} key="liked" />
+        </Paper>
+      </Grid>
+    </Grid>
+    <div className="name" />
   </div>
-    </div>
-    );
+);
 
 
 export default User;

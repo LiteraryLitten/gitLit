@@ -41,13 +41,13 @@ class UserReviewCard extends React.Component {
             // get the user avatars for each review?
             // <img src={this.props.book.imageURL} alt="" />
             <Avatar aria-label="Recipe" className={classes.avatar}>
-              {this.props.book.author[0].toUpperCase()}
+              {this.props.review.user[0].toUpperCase()}
               {/* <img src={this.state.book.imageURL} alt="" /> */}
             </Avatar>
               }
 
           // userName here
-          title={this.props.book.author}
+          title={this.props.review.user}
           subheader={this.props.review.text}
         />
       </Card>
