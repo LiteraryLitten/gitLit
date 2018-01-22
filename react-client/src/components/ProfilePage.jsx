@@ -56,7 +56,7 @@ class ProfilePage extends React.Component {
         } else if (data.type === 'wrong password') {
           alert('Wrong Password: Try Again');
         } else {
-          alert ('Invalid username: Try Again');
+          alert('Invalid username: Try Again');
         }
         this.renderView();
       },
@@ -86,7 +86,7 @@ class ProfilePage extends React.Component {
         console.log(data);
         if (data.type === 'success') {
           alert('User Profile Created! Login to continue');
-        } else{
+        } else {
           alert('Oh no! That username is already taken. Try again!');
         }
       },
@@ -153,31 +153,29 @@ class ProfilePage extends React.Component {
           </div>
         </div>
       );
-    } else {
-      let user = this.state.userProfile;
-      return (
-        <div className="userProfile">
-          <User user={user} onClick={this.editProfile.bind(this)} />
-          <button onClick={this.handleLogout} > Logout </button>
-        </div>
-      );
     }
+    const user = this.state.userProfile;
+    return (
+      <div className="userProfile">
+        <User user={user} onClick={this.editProfile.bind(this)} />
+        <button onClick={this.handleLogout} > Logout </button>
+      </div>
+    );
   }
 
   render() {
-    if (this.props.user.hasOwnProperty('name')){
+    if (this.props.userProfile.hasOwnProperty('name')) {
       return (
         <div className="userProfile">
-          <User user={this.props.user} onClick={this.editProfile.bind(this)} fetch={this.props.fetch} changeView={this.props.changeView} />
+          <User user={this.props.userProfile} onClick={this.editProfile.bind(this)} fetch={this.props.fetch} changeView={this.props.changeView} />
         </div>
       );
-    } else {
-      return (
-        <h3>
-        Login to see your profile
-        </h3>
-      );
     }
+    return (
+      <h3>
+        Login to see your profile
+      </h3>
+    );
   }
 }
 

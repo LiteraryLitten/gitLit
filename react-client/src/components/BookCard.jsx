@@ -128,7 +128,7 @@ class BookCard extends React.Component {
     // console.log('   -profile', this.props.userProfile);
 
     // if (this.props.userProfile > 0) {
-    if (this.props.userProfile.favoriteBooks && !this.state.liked) {
+    if (this.props.userProfile.favoriteBooks) {
       // console.log('updateFavorite has a profile and the book is not currently set to liked');
       let found = false;
       this.props.userProfile.favoriteBooks.forEach((isbn13) => {

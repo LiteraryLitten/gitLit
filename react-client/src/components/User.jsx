@@ -10,6 +10,7 @@ import Button from 'material-ui/Button';
 import Bookshelf from './Bookshelf.jsx';
 import EditProfile from './EditProfile.jsx';
 import Reviewshelf from './Reviewshelf.jsx';
+import UploadProfilePicture from './UploadProfilePicture.jsx';
 
 const styles = theme => ({
   root: {
@@ -38,7 +39,9 @@ const User = props =>(
               
               <Grid container spacing={16}>
                 <Grid item xs={8}  >
-                  <img src='https://cdn1.iconfinder.com/data/icons/social-messaging-productivity-1-1/128/gender-female2-256.png' alt="" />
+
+                  <UploadProfilePicture currentUser={props.user.name}/>
+
                 </Grid>
                 <Grid item xs={3}  >
                   <span className='user'>

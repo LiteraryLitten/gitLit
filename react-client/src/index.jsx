@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import axios from 'axios';
+import {Image} from 'cloudinary-react';
+import { Transformation } from 'cloudinary-react';
+
 
 import ProfilePage from './components/ProfilePage.jsx';
 import BookPage from './components/BookPage.jsx';

@@ -93,7 +93,7 @@ module.exports = {
   postSignUp: (req, res) => {
     req.on('data', (chunk) => {
       const userData = JSON.parse(chunk.toString());
-      console.log(userData);
+      // console.log(userData);
       const pw = userData.password;
       const response = {
         type: '',
@@ -230,7 +230,7 @@ module.exports = {
     });
   },
   editProfile: (req, res) => {
-    console.log(req.body.user);
+    // console.log(req.body.user);
     db.editProfile(req.body.currentUser, req.body.user, req.body.username, (err, data) => {
       if (err) {
         res.sendStatus(500);
