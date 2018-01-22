@@ -6,11 +6,11 @@ const Dropzone = (props) => {
     return <h1>Loading...</h1>;
   }
 
-  return(
+  return (
     <div>
       {this.state.uploadedFileCloudinaryUrl === '' ? null :
       <div>
-        <img src={props.uploadedFileCloudinaryUrl} />
+        <img id="cloudPic" src={props.uploadedFileCloudinaryUrl} />
       </div>}
     </div>
   );

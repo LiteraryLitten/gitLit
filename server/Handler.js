@@ -211,21 +211,21 @@ module.exports = {
   },
   postFavorites: (req, res) => {
     const { username, isbn13 } = req.params;
-    //console.log('on line 223 @ handler.postFavorites-req.params =', username, isbn13); //giving an object with isbn13
+    // console.log('on line 223 @ handler.postFavorites-req.params =', username, isbn13); //giving an object with isbn13
     db.saveFavorite(username, isbn13, (err, data) => {
       if (err) {
         res.json(null);
       } else {
-      res.json(data);
+        res.json(data);
       }
     });
   },
   getUserReviews: (req, res) => {
     // console.log('');
     const { isbn13 } = req.params;
-   // console.log('in getUserReviews @ 177-isbn13=', isbn13);
+    // console.log('in getUserReviews @ 177-isbn13=', isbn13);
     db.findReviewsByIsbn13(isbn13, (err, reviews) => {
-     // console.log('in getUserReviews @ 179-reviews=', reviews);
+      // console.log('in getUserReviews @ 179-reviews=', reviews);
       res.json(reviews);
     });
   },
@@ -247,5 +247,5 @@ module.exports = {
       // console.log('in getUserReviews @ 179-reviews=', reviews);
       res.json(reviews);
     });
-  }
+  },
 };

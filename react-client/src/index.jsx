@@ -44,7 +44,7 @@ class App extends React.Component {
   getProReviews(isbn, callback) {
     axios.get(`/proreviews/${isbn}`)
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         callback(response);
       })
       .catch((error) => {

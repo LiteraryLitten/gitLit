@@ -10,11 +10,11 @@ const styles = theme => ({
 });
 
 class Bookshelf extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       bookObjects: [],
-    }
+    };
     this.getBookData = this.getBookData.bind(this);
     this.renderView = this.renderView.bind(this);
   }
@@ -27,15 +27,15 @@ class Bookshelf extends React.Component {
 
   getBookData(isbn) {
     this.props.fetch('book', isbn, (book) => {
-      this.setState({ bookObjects: [...this.state.bookObjects, book] }, function() {
+      this.setState({ bookObjects: [...this.state.bookObjects, book] }, function () {
         // console.log(this.state.bookObjects);
-        //create a renderview
+        // create a renderview
         this.renderView();
       });
     });
   }
 
-  renderView () {
+  renderView() {
     return (
       <div>
         <Grid
@@ -43,23 +43,23 @@ class Bookshelf extends React.Component {
           justify="center"
         >
           {this.state.bookObjects.map(book => (
-            <div>
-              <BookShelfCard
-                book={book}
-                key={book.isbn13}
-                changeView={this.props.changeView}
-              />
-            </div>
+            // <div>
+            <BookShelfCard
+              book={book}
+              key={book.isbn13}
+              changeView={this.props.changeView}
+            />
+            // </div>
             ))}
         </Grid>
       </div>
     );
   }
 
-  render () {
+  render() {
     return (
       this.renderView()
-      
+
     );
   }
 }
@@ -67,7 +67,7 @@ class Bookshelf extends React.Component {
 
 export default withStyles(styles)(Bookshelf);
 
-/***
+/** *
 <BookCard
           book={book}
           key={book.isbn13}
