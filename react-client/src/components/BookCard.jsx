@@ -91,8 +91,21 @@ class BookCard extends React.Component {
         description: arrayString,
       });
     }
+    console.log('BookCard - componentDidMount');
     // this.loadUserReviews();
-    // this.updateFavorite();
+  }
+
+  componentWillMount() {
+    this.updateFavorite();
+  }
+
+  componentWillReceiveProps() {
+    console.log('BookCard recieved props');
+    this.setState({
+      userProfile: this.props.userProfile,
+    }, () => {
+      this.updateFavorite();
+    });
   }
 
   goToBook() {
@@ -111,14 +124,25 @@ class BookCard extends React.Component {
 
   updateFavorite() {
     // if()
-    if (this.props.userProfile > 0 && !this.state.liked) {
+    // console.log('checking updateFavorite on bookCard @ 114');
+    // console.log('   -profile', this.props.userProfile);
+
+    // if (this.props.userProfile > 0) {
+    if (this.props.userProfile.favoriteBooks && !this.state.liked) {
+      // console.log('updateFavorite has a profile and the book is not currently set to liked');
       let found = false;
       this.props.userProfile.favoriteBooks.forEach((isbn13) => {
+        // console.log('updateFavorite is checking each isbn againt this books');
+        // console.log(isbn13, this.state.book.isbn13, isbn13 - this.state.book.isbn13 === 0);
         if (isbn13 - this.state.book.isbn13 === 0) {
+          // console.log('updateFavorite decided that isbn13 was a match');
           found = true;
           this.setState({
             liked: true,
-          }, () => { this.setState({ randRender: Math.random() }); });
+          }, () => {
+            // console.log('updateFavorite has set', this.state.book.title, ' to liked');
+            this.setState({ randRender: Math.random() });
+          });
         }
       });
       if (!found) {
@@ -183,7 +207,6 @@ class BookCard extends React.Component {
   }
 
   render() {
-    this.updateFavorite();
     const { classes } = this.props;
 
     return (

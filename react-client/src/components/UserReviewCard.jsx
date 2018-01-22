@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Card, { CardHeader } from 'material-ui/Card';
 import red from 'material-ui/colors/red';
+import Avatar from 'material-ui/Avatar';
 
 const styles = theme => ({
   card: {
@@ -38,7 +39,11 @@ class UserReviewCard extends React.Component {
           avatar={
             // replace with review data
             // get the user avatars for each review?
-            <img src={this.props.book.imageURL} alt="" />
+            // <img src={this.props.book.imageURL} alt="" />
+            <Avatar aria-label="Recipe" className={classes.avatar}>
+              {this.props.book.author[0].toUpperCase()}
+              {/* <img src={this.state.book.imageURL} alt="" /> */}
+            </Avatar>
               }
 
           // userName here
