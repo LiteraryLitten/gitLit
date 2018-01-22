@@ -25,6 +25,8 @@ class UploadProfilePicture extends React.Component {
   onImageDrop(files) {
     this.setState({
       file: files[0],
+    }, () => {
+      this.submit();
     });
   }
 
@@ -68,7 +70,7 @@ class UploadProfilePicture extends React.Component {
           >
             <p>Drop an image or click to select a file to upload.</p>
           </Dropzone>
-          <button onClick={this.submit}>Submit</button>
+          {/* <button onClick={this.submit}>Submit</button> */}
         </div>
 		    :
         <div style={{ maxWidth: '210px' }} className="profilePicture">

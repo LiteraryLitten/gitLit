@@ -69,7 +69,7 @@ class BookPage extends React.Component {
 
   componentDidMount() {
     if (typeof this.props.book === 'object' && this.props.book.isbn13) {
-      console.log('BookPage ISBN13=', this.props.book.isbn13);
+      // console.log('BookPage ISBN13=', this.props.book.isbn13);
       this.setState({
         book: this.props.book,
       });
@@ -113,9 +113,9 @@ class BookPage extends React.Component {
   }
 
   loadProReviews() {
-    console.log('proReviews are trying to mount');
+    // console.log('proReviews are trying to mount');
     this.props.getProReviews(this.props.book.isbn13, (response) => {
-      console.log('ProREview response bookPage @ 87', response);
+      // console.log('ProREview response bookPage @ 87', response);
       // const book = this.state.book;
       this.setState({
         proreviews: response.data,

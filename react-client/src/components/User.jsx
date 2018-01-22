@@ -28,7 +28,7 @@ const User = props => (
   <div>
     <Grid container spacing={24}>
 
-      <Grid item xs={12} sm={6} className="UserPic">
+      <Grid item xs={16} sm={6} className="UserPic">
         <br />
         <Typography type="display1">
               My Profile
@@ -37,7 +37,7 @@ const User = props => (
         <Paper >
 
 
-          <Grid container spacing={12}>
+          <Grid container spacing={16}>
             <Grid item xs={4}>
 
               <UploadProfilePicture currentUser={props.user.name} />
@@ -66,7 +66,7 @@ const User = props => (
         <Reviewshelf books={props.user.reviewedBooks} fetch={props.fetch} changeView={props.changeView} user={props.user} key="reviews" />
       </Grid>
 
-      <Grid item xs={12} sm={6}>
+      <Grid item xs={16} sm={6}>
         <br />
         <Typography type="display1">
               My Bookshelf
