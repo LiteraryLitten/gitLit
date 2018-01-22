@@ -6,7 +6,7 @@ body {
 	background-color: #EFEBE9;
 }
 
-img {
+.profilePicture {
 	width: 200px;
   height: 200px;
 }
