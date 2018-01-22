@@ -17,11 +17,11 @@ app.get('/bestSellers', handler.getBestSellers);
 app.post('/review', handler.postReview);
 app.get('/proreviews/:isbn', handler.getProReviews);
 // app.get('/proreviews/:isbn', (req, res) => res.json('hi'));
-app.post('/favorites', handler.postFavorites);
+app.get('/favorites/:username/:isbn13', handler.postFavorites);
 app.get('/userReviews/:isbn13', handler.getUserReviews);
 app.put('/editprofile', handler.editProfile);
 app.get('/reviewShelf/:user', handler.getReviewsByUser);
 
 app.listen(3000, () => {
-  console.log('listening on port 3000!');
+  console.log('listening on port 3k!');
 });

@@ -7,7 +7,6 @@ import Collapse from 'material-ui/transitions/Collapse';
 import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 import red from 'material-ui/colors/red';
-// import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
 import Divider from 'material-ui/Divider';
 import renderHTML from 'react-render-html';
@@ -83,52 +82,9 @@ class ProReviewsCard extends React.Component {
           style={{ cursor: 'pointer' }}
         />
       </Card>
-
-      /* {<Grid item style={{ padding: 20 }} >
-        <Card className={classes.card}>
-          <CardHeader
-            avatar={
-              <img src={this.props.review.source_logo} alt="" />
-              }
-            action={
-              <IconButton>
-                <MoreVertIcon />
-              </IconButton>
-              }
-            title={this.props.review.source}
-            subheader={this.props.review.review_date}
-          />
-          <Divider light />
-          <CardContent>
-            <Typography component="p">
-              {this.props.review.snippet} 
-            </Typography>
-          </CardContent>
-
-          <CardContent>
-
-            <Typography component="a" href={this.props.review.review_link} target="_blank">
-              Read full review
-
-            </Typography>
-
-          </CardContent>
-
-          <Divider light />
-
-          <CardActions disableActionSpacing>
-            <IconButton aria-label="Add to favorites">
-              <FavoriteIcon />
-            </IconButton>
-
-            <div className={styles.flexGrow} />
-          </CardActions>
-        </Card>
-      </Grid> } */
     );
   }
 }
 
 
 export default withStyles(styles)(ProReviewsCard);
-

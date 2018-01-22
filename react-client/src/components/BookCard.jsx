@@ -9,7 +9,7 @@ import Typography from 'material-ui/Typography';
 import red from 'material-ui/colors/red';
 import FavoriteIcon from 'material-ui-icons/Favorite';
 // import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
-import MoreVertIcon from 'material-ui-icons/MoreVert';
+// import MoreVertIcon from 'material-ui-icons/MoreVert';
 import Divider from 'material-ui/Divider';
 import renderHTML from 'react-render-html';
 import axios from 'axios';
@@ -67,7 +67,7 @@ class BookCard extends React.Component {
       description: '',
       user: this.props.userProfile,
       liked: false,
-      thing: 0,
+      randRender: 0,
       popUp: false,
     };
     this.goToBook = this.goToBook.bind(this);
@@ -76,11 +76,7 @@ class BookCard extends React.Component {
     this.toggleFavorite = this.toggleFavorite.bind(this);
     this.popUpClick = this.popUpClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    // this.loadUserReviews = this.loadUserReviews.bind(this);
-    // console.log('on line 63 @ class bookcard', this.props.user);
-    // this.addtoFavorites = this.addtoFavorites.bind(this);
-    // console.log(" this.props.")
-
+    this.updateFavorite = this.updateFavorite.bind(this);
   }
 
   componentDidMount() {
@@ -96,6 +92,7 @@ class BookCard extends React.Component {
       });
     }
     // this.loadUserReviews();
+    // this.updateFavorite();
   }
 
   goToBook() {
@@ -113,14 +110,22 @@ class BookCard extends React.Component {
   }
 
   updateFavorite() {
-    if (this.props.userProfile.favoriteBooks.length > 0 && !this.state.liked) {
+    // if()
+    if (this.props.userProfile > 0 && !this.state.liked) {
+      let found = false;
       this.props.userProfile.favoriteBooks.forEach((isbn13) => {
         if (isbn13 - this.state.book.isbn13 === 0) {
+          found = true;
           this.setState({
             liked: true,
-          }, () => { this.setState({ thing: Math.random() }); });
+          }, () => { this.setState({ randRender: Math.random() }); });
         }
       });
+      if (!found) {
+        this.setState({
+          liked: false,
+        }, () => { this.setState({ randRender: Math.random() }); });
+      }
     }
   }
 
@@ -129,22 +134,13 @@ class BookCard extends React.Component {
   }
 
   addtoFavorites() {
-    // console.log(this.props.userProfile);
-    // alert('you clicked me', this.props.userProfile);
     this.toggleFavorite();
-    axios({
-      method: 'post',
-      url: '/favorites',
-      data: {
-        user: this.props.userProfile,
-        isbn13: this.state.book.isbn13,
-      },
-    })
-      .then((response) => {
-        const newFavs = JSON.parse(response.config.data);
-        // console.log('response.body', newFavs);
+    const url = `/favorites/${this.props.userProfile.username}/${this.state.book.isbn13}`;
+    axios(url)
+      .then((data) => {
+        const newFavs = data.data.favoriteBooks;
         const user = this.props.userProfile;
-        user.favoriteBooks = response;
+        user.favoriteBooks = newFavs;
         this.props.updateUserData(user);
       });
   }
@@ -187,6 +183,7 @@ class BookCard extends React.Component {
   }
 
   render() {
+    this.updateFavorite();
     const { classes } = this.props;
 
     return (
@@ -229,6 +226,7 @@ class BookCard extends React.Component {
           <CardActions disableActionSpacing>
             <IconButton aria-label="Add to favorites" >
               <FavoriteIcon
+                color={this.state.liked ? 'accent' : 'action'}
                 onClick={this.addtoFavorites}
               />
             </IconButton>

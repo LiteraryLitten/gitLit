@@ -16,7 +16,6 @@ class App extends React.Component {
       // view: null,
       view: 'Profile',
       items: [],
-      // userProfile: { favoriteBooks: [], },
       // // sample user to build bookshelf:
       userProfile: {
         name: 'user',
@@ -40,7 +39,7 @@ class App extends React.Component {
   }
 
   getProReviews(isbn, callback) {
-      axios.get(`/proreviews/${isbn}`)
+    axios.get(`/proreviews/${isbn}`)
       .then((response) => {
         console.log(response);
         callback(response);
@@ -82,7 +81,7 @@ class App extends React.Component {
   }
 
   updateUserData(userProfile) {
-    console.log('in updateUserData @ 64', userProfile);
+    // console.log('in updateUserData @ 64', userProfile);
     this.setState({
       userProfile,
     });
@@ -112,8 +111,6 @@ class App extends React.Component {
   handleSearch(query) {
     // do the fetch here
     // pass that data into the search page
-
-
     this.setState({ view: 'Search', searchedBook: query }, function () {
       // console.log(this.state.searchedBook);
       this.fetch('search', this.state.searchedBook, (results) => {
@@ -137,10 +134,6 @@ class App extends React.Component {
     this.setState({ userProfile: {} });
   }
 
-  changePassword() {
-
-  }
-
   handleProfileClick() {
     this.setState({ view: 'Profile' });
     this.renderView();
@@ -155,6 +148,8 @@ class App extends React.Component {
           fetch={this.fetch}
           submitReview={this.submitReview}
           getProReviews={this.getProReviews}
+          userProfile={this.state.userProfile}
+          updateUserData={this.updateUserData}
         />
       );
     } else if (this.state.view === 'Profile') {
@@ -162,7 +157,8 @@ class App extends React.Component {
         <ProfilePage
           fetch={this.fetch}
           changeView={this.changeView}
-          user={this.state.userProfile}
+          userProfile={this.state.userProfile}
+          updateUserData={this.updateUserData}
         />
       );
     } else if (this.state.view === 'Search') {
@@ -172,6 +168,9 @@ class App extends React.Component {
           changeView={this.changeView}
           searchedBook={this.state.searchedBook}
           searchResults={this.state.searchResults}
+          userProfile={this.state.userProfile}
+          updateUserData={this.updateUserData}
+          getProReviews={this.getProReviews}
         />
       );
     }
@@ -181,6 +180,8 @@ class App extends React.Component {
         fetch={this.fetch}
         view={this.state.view}
         getProReviews={this.getProReviews}
+        userProfile={this.state.userProfile}
+        updateUserData={this.updateUserData}
       />
     );
   }
@@ -197,6 +198,7 @@ class App extends React.Component {
           handleProfileClick={this.handleProfileClick}
           handleLogout={this.handleLogout}
           handleMenuBarClick={this.handleMenuBarClick}
+
         />
         <div style={{ padding: '25px', width: '100%' }} />
         <div className="main-view">

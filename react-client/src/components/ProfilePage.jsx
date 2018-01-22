@@ -165,10 +165,10 @@ class ProfilePage extends React.Component {
   }
 
   render() {
-    if (this.props.user.hasOwnProperty('name')){
+    if (this.props.userProfile.name){
       return (
         <div className="userProfile">
-          <User user={this.props.user} onClick={this.editProfile.bind(this)} fetch={this.props.fetch} changeView={this.props.changeView} />
+          <User user={this.props.userProfile} onClick={this.editProfile.bind(this)} fetch={this.props.fetch} changeView={this.props.changeView} />
         </div>
       );
     } else {
