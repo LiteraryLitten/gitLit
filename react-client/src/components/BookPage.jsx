@@ -56,6 +56,7 @@ class BookPage extends React.Component {
       rating: 0,
       pro: false,
       userReviews: [],
+
     };
     this.submitRating = this.submitRating.bind(this);
     this.enterReview = this.enterReview.bind(this);
@@ -234,6 +235,7 @@ class BookPage extends React.Component {
                 proReviews={this.state.proreviews}
                 userReviews={this.state.userReviews}
                 book={this.props.book}
+                enterReview={this.enterReview}
               />
 
             </Paper>

@@ -36,7 +36,6 @@ class BookShelfCard extends React.Component {
     this.state = {
       book: this.props.book,
     };
-    // this.submitRank = this.submitRank.bind(this);
     this.goToBook = this.goToBook.bind(this);
   }
 
