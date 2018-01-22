@@ -3,9 +3,9 @@ import $ from 'jquery';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import { CircularProgress } from 'material-ui/Progress';
-import Paper from 'material-ui/Paper';
+import Divider from 'material-ui/Divider';
 
-import BookCard from './BookCard.jsx';
+import BookCard from './BookCard';
 
 const styles = theme => ({
   root: {
@@ -126,9 +126,8 @@ class HomePage extends React.Component {
 
     return (
       <div>
-        <Paper >
-          <h1 style={{ textAlign: 'center', backgroundColor: '#efd669' }}> Best Sellers </h1>
-        </Paper>
+        <h1 style={{ textAlign: 'center' }}> Best Sellers </h1>
+        <Divider light />
         {this.state.loading
           ?
             <div style={{ textAlign: 'center' }}>

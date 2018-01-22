@@ -1,3 +1,9 @@
+// const mongoose = require('mongoose');
+// mongoose.connect('mongodb://localhost/lit');
+// const db = mongoose.connection;
+
+// Recommended driver settings for the Mongoose 4.3.x driver.
+
 const mongoose = require('mongoose');
 // mongoose.Promise = global.Promise;
 
@@ -324,12 +330,11 @@ const findReviewsByIsbn13 = (isbn13, cb) => {
 
 const editProfile = (currentUser, name, username, cb) => {
   console.log(currentUser);
-  User.update({ name: `${currentUser}` }, { name: `${name}`, username: `${username}` }).exec(
-    (err, data) => {
-      console.log(data);
-      cb(err, data);
-    });
-}
+  User.update({ name: `${currentUser}` }, { name: `${name}`, username: `${username}` }).exec((err, data) => {
+    console.log(data);
+    cb(err, data);
+  });
+};
 
 const findReviewsByUser = (user, cb) => {
   Review.find({ user }).exec((err, reviews) => {

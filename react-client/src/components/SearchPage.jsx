@@ -3,6 +3,7 @@ import $ from 'jquery';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import { CircularProgress } from 'material-ui/Progress';
+import Divider from 'material-ui/Divider';
 
 import BookCard from './BookCard.jsx';
 
@@ -24,7 +25,7 @@ class SearchPage extends React.Component {
     this.setState({ searchResults: this.props.searchResults });
   }
 
-  buildBook (book) {
+  buildBook(book) {
     const cleanBook = {};
     cleanBook.year = book.publication_year._text;
     cleanBook.month = book.publication_month._text;
@@ -41,6 +42,7 @@ class SearchPage extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
     const searchCards = [];
 
     if (this.props.searchResults) {
@@ -52,13 +54,20 @@ class SearchPage extends React.Component {
       });
       return (
         <div>
-          <h2>SEARCH RESULTS</h2> <br />
+          <h1 style={{ textAlign: 'center' }}> Best Sellers </h1>
+          <Divider light />
           <Grid
             container
             justify="center"
           >
             {searchCards.map(book => (
-              <BookCard key={book.isbn13} book={book} changeView={this.props.changeView} />
+              <BookCard
+                key={book.isbn13}
+                book={book}
+                changeView={this.props.changeView}
+                userProfile={this.props.userProfile}
+                getProReviews={this.props.getProReviews}
+              />
             // <span key={book.title}>{JSON.stringify(book)}</span>
           ))}
           </Grid>
@@ -68,8 +77,13 @@ class SearchPage extends React.Component {
 
     return (
       <div>
-        <h2>LOADING SEARCH RESULTS</h2> <br />
-
+        {/* <h2>LOADING SEARCH RESULTS</h2> <br /> */}
+        <div style={{ textAlign: 'center' }}>
+          <CircularProgress
+            className={classes.progress}
+            size={100}
+          />
+        </div>
       </div>
     );
   }

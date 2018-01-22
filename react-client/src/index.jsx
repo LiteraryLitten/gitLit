@@ -23,7 +23,7 @@ class App extends React.Component {
       //   favoriteBooks: [9780399169274],
       //   reviewedBooks: [9780399169274],
       // },
-      userProfile : {},
+      userProfile: {},
       selectedBook: {},
       proreviews: [],
     };
@@ -39,7 +39,7 @@ class App extends React.Component {
   }
 
   getProReviews(isbn, callback) {
-      axios.get(`/proreviews/${isbn}`)
+    axios.get(`/proreviews/${isbn}`)
       .then((response) => {
         console.log(response);
         callback(response);
@@ -83,7 +83,7 @@ class App extends React.Component {
   updateUserData(userProfile) {
     // console.log('in updateUserData @ 64', userProfile);
     this.setState({
-      userProfile: userProfile,
+      userProfile,
     });
   }
 
@@ -170,6 +170,7 @@ class App extends React.Component {
           searchResults={this.state.searchResults}
           userProfile={this.state.userProfile}
           updateUserData={this.updateUserData}
+          getProReviews={this.getProReviews}
         />
       );
     }

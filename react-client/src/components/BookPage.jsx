@@ -56,7 +56,6 @@ class BookPage extends React.Component {
       rating: 0,
       pro: false,
       userReviews: [],
-
     };
     this.submitRating = this.submitRating.bind(this);
     this.enterReview = this.enterReview.bind(this);
@@ -176,7 +175,22 @@ class BookPage extends React.Component {
             </Button>
           </Grid>
           <Grid item xs={12} sm={7}>
-            
+            <Paper className={classes.paper}>
+
+              <TextField
+                multiline
+                rows={5}
+                label="Review"
+                InputLabelProps={{
+                    shrink: true,
+                  }}
+                placeholder="Review Here"
+                fullWidth
+                margin="normal"
+                onChange={this.enterReview}
+              />
+
+            </Paper>
 
             <Paper>
 
@@ -184,7 +198,6 @@ class BookPage extends React.Component {
                 proReviews={this.state.proreviews}
                 userReviews={this.state.userReviews}
                 book={this.props.book}
-                enterReview={this.enterReview}
               />
 
             </Paper>

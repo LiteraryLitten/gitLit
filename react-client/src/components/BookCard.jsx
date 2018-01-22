@@ -9,7 +9,7 @@ import Typography from 'material-ui/Typography';
 import red from 'material-ui/colors/red';
 import FavoriteIcon from 'material-ui-icons/Favorite';
 // import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
-import MoreVertIcon from 'material-ui-icons/MoreVert';
+// import MoreVertIcon from 'material-ui-icons/MoreVert';
 import Divider from 'material-ui/Divider';
 import renderHTML from 'react-render-html';
 import axios from 'axios';
@@ -110,7 +110,8 @@ class BookCard extends React.Component {
   }
 
   updateFavorite() {
-    if (this.props.userProfile.favoriteBooks.length > 0 && !this.state.liked) {
+    // if()
+    if (this.props.userProfile > 0 && !this.state.liked) {
       let found = false;
       this.props.userProfile.favoriteBooks.forEach((isbn13) => {
         if (isbn13 - this.state.book.isbn13 === 0) {
@@ -120,10 +121,10 @@ class BookCard extends React.Component {
           }, () => { this.setState({ randRender: Math.random() }); });
         }
       });
-      if (found = false) {
+      if (!found) {
         this.setState({
-            liked: false,
-          }, () => { this.setState({ randRender: Math.random() }); });
+          liked: false,
+        }, () => { this.setState({ randRender: Math.random() }); });
       }
     }
   }
@@ -133,10 +134,8 @@ class BookCard extends React.Component {
   }
 
   addtoFavorites() {
-    // console.log(this.props.userProfile);
-    // alert('you clicked me', this.props.userProfile);
-   this.toggleFavorite();
-   const url = `/favorites/${this.props.userProfile.username}/${this.state.book.isbn13}`;
+    this.toggleFavorite();
+    const url = `/favorites/${this.props.userProfile.username}/${this.state.book.isbn13}`;
     axios(url)
       .then((data) => {
         const newFavs = data.data.favoriteBooks;
@@ -227,8 +226,8 @@ class BookCard extends React.Component {
           <CardActions disableActionSpacing>
             <IconButton aria-label="Add to favorites" >
               <FavoriteIcon
-              color={this.state.liked ? "accent" : "action"}
-              onClick={this.addtoFavorites}
+                color={this.state.liked ? 'accent' : 'action'}
+                onClick={this.addtoFavorites}
               />
             </IconButton>
 
